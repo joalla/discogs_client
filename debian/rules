@@ -8,5 +8,5 @@ export PYBUILD_NAME=python3-webdavclient
 %:
 	dh $@ --with python3 --buildsystem=pybuild
 
-#override_dh_auto_test:
-#	echo "Do nothing."
+override_dh_auto_test:
+	echo "Do nothing."
