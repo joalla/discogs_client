@@ -1,0 +1,38 @@
+Source: python3-discogs-client
+Section: python
+Priority: optional
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Uploaders:
+ J0J0 T <jt@peek-a-boo.at>,
+Build-Depends:
+ debhelper (>= 10~),
+ debhelper-compat (= 10),
+ dh-python,
+ python3,
+ python3-setuptools,
+Standards-Version: 4.1.2
+Vcs-Git: https://salsa.debian.org/python-team/modules/python3-discogs-client
+Vcs-Browser: https://salsa.debian.org/python-team/modules/python3-discogs-client
+Homepage: https://github.com/JOJ0/discogs_client
+
+Package: python3-discogs-client
+Architecture: all
+Depends:
+ python3-dateutil,
+ python3-pkg-resources,
+ python3-requests,
+ python3-oauthlib,
+ python3-urllib3,
+ python3-six,
+ python3-chardet,
+ python3-certifi,
+ python3-idna,
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Python Client for the Discogs API
+ This fork of the Official Python Client for the Discogs API incorporates two
+ essential fixes/features:
+ * Fixes discogs#82 - Exposes X-Discogs-Ratelimit-Remaining header
+   (https://github.com/discogs/discogs_client/pull/89)
+ * add a release to a CollectionFolder
+   (https://github.com/discogs/discogs_client/pull/106)
