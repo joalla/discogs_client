@@ -9,6 +9,7 @@ Build-Depends:
  debhelper-compat (= 10),
  dh-python,
  python3,
+ python3-oauthlib,
  python3-setuptools,
 Standards-Version: 4.1.2
 Vcs-Git: https://salsa.debian.org/python-team/modules/python3-discogs-client
@@ -18,15 +19,15 @@ Homepage: https://github.com/JOJ0/discogs_client
 Package: python3-discogs-client
 Architecture: all
 Depends:
+ python3-certifi,
+ python3-chardet,
  python3-dateutil,
+ python3-idna,
+ python3-oauthlib,
  python3-pkg-resources,
  python3-requests,
- python3-oauthlib,
- python3-urllib3,
  python3-six,
- python3-chardet,
- python3-certifi,
- python3-idna,
+ python3-urllib3,
  ${misc:Depends},
  ${python3:Depends},
 Description: Python Client for the Discogs API
