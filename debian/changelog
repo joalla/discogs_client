@@ -1,5 +1,5 @@
 python3-discogs-client (2.2.2+jt0.1-1) unstable; urgency=medium
 
-  * Initial release.
+  * Initial release. (Closes: #961714)
 
  -- J0J0 T <jt@peek-a-boo.at>  Wed, 27 May 2020 15:23:36 +0200
