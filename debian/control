@@ -7,7 +7,7 @@ Uploaders:
 Build-Depends:
  debhelper-compat (= 11),
  dh-python,
- python3,
+ python3-all,
  python3-oauthlib,
  python3-setuptools,
 Standards-Version: 4.1.2
