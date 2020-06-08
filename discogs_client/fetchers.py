@@ -51,7 +51,7 @@ class RequestsFetcher(Fetcher):
     def fetch(self, client, method, url, data=None, headers=None, json=True):
         resp = requests.request(method, url, data=data, headers=headers)
         self.rate_limit_remaining = resp.headers.get(
-                'X-Discogs-Rate-Limit-Remaining')
+                'X-Discogs-Ratelimit-Remaining')
         return resp.content, resp.status_code
 
 
@@ -98,7 +98,7 @@ class OAuth2Fetcher(Fetcher):
 
         resp = request(method, uri, headers=headers, data=body)
         self.rate_limit_remaining = resp.headers.get(
-                'X-Discogs-Rate-Limit-Remaining')
+                'X-Discogs-Ratelimit-Remaining')
         return resp.content, resp.status_code
 
 
