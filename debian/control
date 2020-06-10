@@ -1,4 +1,4 @@
-Source: python3-discogs-client
+Source: python-discogs-client
 Section: python
 Priority: optional
 Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
@@ -10,7 +10,7 @@ Build-Depends:
  python3-all,
  python3-oauthlib,
  python3-setuptools,
-Standards-Version: 4.1.2
+Standards-Version: 4.5.0
 Vcs-Git: https://salsa.debian.org/python-team/modules/python3-discogs-client
 Vcs-Browser: https://salsa.debian.org/python-team/modules/python3-discogs-client
 Homepage: https://github.com/JOJ0/discogs_client
@@ -33,8 +33,13 @@ Depends:
  ${misc:Depends},
  ${python3:Depends},
 Description: Python Client for the Discogs API
- This fork of the Official Python Client for the Discogs API incorporates two
- essential fixes/features:
+ This is a fork of the now deprecated Official Python Client for the Discogs
+ API. It enables you to query the Discogs database for information on artists,
+ releases, labels, users, Marketplace listings, and more. It also supports
+ OAuth 1.0a authorization, which allows you to change user data such as profile
+ information, collections and wantlists, inventory, and orders.
+ .
+ This fork of the Python Client incorporates two essential fixes/features:
  * Fixes discogs#82 - Exposes X-Discogs-Ratelimit-Remaining header
    (https://github.com/discogs/discogs_client/pull/89)
  * add a release to a CollectionFolder

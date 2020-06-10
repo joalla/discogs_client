@@ -7,9 +7,11 @@ Files: *
 Copyright: Copyright © 2015 Discogs. All rights reserved.
 License: BSD-2-clause
 
+Files: debian/*
+Copyright: (c) 2020, J0J0 T <jt@peek-a-boo.at>
 License: BSD-2-clause
- Copyright © 2015 Discogs. All rights reserved.
- .
+
+License: BSD-2-clause
  Redistribution and use in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
  .
