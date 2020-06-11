@@ -405,7 +405,6 @@ class Wantlist(PaginatedList):
         self.client._delete(self.url + '/' + str(release_id))
         self._invalidate()
 
-
 class OrderMessagesList(PaginatedList):
     def add(self, message=None, status=None, email_buyer=True, email_seller=False):
         data = {
@@ -566,6 +565,10 @@ class User(PrimaryAPIObject):
         return PaginatedList(self.client, self.client._base_url + '/marketplace/orders', 'orders', Order)
 
     @property
+    def lists(self):
+        return PaginatedList(self.client, self.fetch('resource_url') + '/lists', 'lists', List)
+
+    @property
     def collection_folders(self):
         resp = self.client._get(self.fetch('collection_folders_url'))
         return [CollectionFolder(self.client, d) for d in resp['folders']]
@@ -619,6 +622,24 @@ class CollectionFolder(PrimaryAPIObject):
 
     def __repr__(self):
         return self.repr_str('<CollectionFolder {0!r} {1!r}>'.format(self.id, self.name))
+
+
+class List(PrimaryAPIObject):
+    id = SimpleField()
+    name = SimpleField()
+    description = SimpleField()
+    public = SimpleField()
+    url = SimpleField(key='uri')
+    date_changed = SimpleField(transform=parse_timestamp)
+    date_added = SimpleField(transform=parse_timestamp)
+    items = ListField('ListItem')
+
+    def __init__(self, client, dict_):
+        super(List, self).__init__(client, dict_)
+        self.data['resource_url'] = '{0}/lists/{1}'.format(client._base_url, dict_['id'])
+
+    def __repr__(self):
+        return self.repr_str('<List {0!r} {1!r}>'.format(self.id, self.name))
 
 
 class Listing(PrimaryAPIObject):
@@ -717,6 +738,19 @@ class Video(SecondaryAPIObject):
     def __repr__(self):
         return self.repr_str('<Video {0!r}>'.format(self.title))
 
+
+class ListItem(SecondaryAPIObject):
+    id = SimpleField()
+    comment = SimpleField()
+    display_title = SimpleField()
+    type = SimpleField()
+    image_url = SimpleField()
+    url = SimpleField(key='uri')
+
+    def __repr__(self):
+        return self.repr_str('<ListItem {0!r}>'.format(self.id))
+
+
 CLASS_MAP = {
     'artist': Artist,
     'release': Release,
@@ -727,6 +761,8 @@ CLASS_MAP = {
     'track': Track,
     'user': User,
     'order': Order,
+    'list': List,
+    'listitem': ListItem,
     'listing': Listing,
     'wantlistitem': WantlistItem,
     'ordermessage': OrderMessage,

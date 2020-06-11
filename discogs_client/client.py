@@ -171,6 +171,10 @@ class Client(object):
         """Fetch a Label by ID."""
         return models.Label(self, {'id': id})
 
+    def list(self, id):
+        """Fetch a List by ID."""
+        return models.List(self, {'id': id})
+
     def user(self, username):
         """Fetch a User by username."""
         return models.User(self, {'username': username})

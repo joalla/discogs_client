@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import unittest
-from discogs_client.models import Artist, Release
+from discogs_client.models import Artist, Release, ListItem
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client.exceptions import HTTPError
 
@@ -27,6 +27,15 @@ class ModelsTestCase(DiscogsClientTestCase):
         u = self.d.user('example')
         self.assertEqual(u.username, 'example')
         self.assertEqual(u.name, 'Example Sampleman')
+
+    def test_list(self):
+        """Lists can be fetched and parsed"""
+        l = self.d.list(1)
+        i = l.items
+        self.assertEqual(l.name, 'Example List')
+        self.assertEqual(l.description, 'description')
+        self.assertEqual(l.public, True)
+        self.assertTrue(isinstance(i[0], ListItem))
 
     def test_search(self):
         results = self.d.search('trash80')
