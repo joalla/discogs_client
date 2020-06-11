@@ -618,7 +618,8 @@ class CollectionFolder(PrimaryAPIObject):
         return PaginatedList(self.client, self.fetch('resource_url') + '/releases', 'releases', CollectionItemInstance)
 
     def add_release(self, release):
-        add_release_url = self.fetch('resource_url') + '/releases/{}'.format(release)
+        release_id = release.id if isinstance(release, Release) else release
+        add_release_url = self.fetch('resource_url') + '/releases/{}'.format(release_id)
         self.client._post(add_release_url, None)
 
     def __repr__(self):
