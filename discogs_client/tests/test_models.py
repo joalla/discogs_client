@@ -166,15 +166,25 @@ class ModelsTestCase(DiscogsClientTestCase):
                  }''', 200),
             '/users/example/collection/folders/1': (b'{}', 200),
             '/users/example/collection/folders/1/releases/123456': (b'{"instance_id": 123}', 201),
+            '/users/example/collection/folders/1/releases/1': (b'{"instance_id": 124}', 201),
         }
 
         # Now bind the user to the memory client
         u.client = self.m
 
+        # test adding a release by id
         u.collection_folders[1].add_release(123456)
         method, url, data, headers = self.m._fetcher.last_request
         self.assertEqual(method, 'POST')
         self.assertEqual(url, '/users/example/collection/folders/1/releases/123456')
+
+        # test adding a release object
+        r = self.d.release(1)
+        self.assertEqual(r.title, 'Stockholm')
+        u.collection_folders[1].add_release(r)
+        method, url, data, headers = self.m._fetcher.last_request
+        self.assertEqual(method, 'POST')
+        self.assertEqual(url, '/users/example/collection/folders/1/releases/1')
 
     def test_delete_object(self):
         """Can request DELETE on an APIObject"""
