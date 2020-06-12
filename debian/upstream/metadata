@@ -1,7 +1,7 @@
-Bug-Database: https://github.com/joj0/discogs_client/issues
-Bug-Submit: https://github.com/joj0/discogs_client/issues
+Bug-Database: https://github.com/joalla/discogs_client/issues
+Bug-Submit: https://github.com/joalla/discogs_client/issues
 Contact: J0J0 T <jt@peek-a-boo.at>
-Documentation: https://github.com/joj0/discogs_client/blob/master/README.md
-Name: discogs_client
-Repository: https://github.com/joj0/discogs_client
-Repository-Browse: https://github.com/joj0/discogs_client
+Documentation: https://github.com/joalla/discogs_client/blob/master/README.mkd
+Name: python3-discogs-client
+Repository: https://github.com/joalla/discogs_client
+Repository-Browse: https://github.com/joalla/discogs_client
