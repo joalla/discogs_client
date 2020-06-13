@@ -147,6 +147,54 @@ class ModelsTestCase(DiscogsClientTestCase):
         self.assertEqual(method, 'DELETE')
         self.assertEqual(url, '/users/example/wants/1')
 
+    def test_collection(self):
+        """Collection folders can be manipulated"""
+        # Fetch the users collection folders from the filesystem
+        u = self.d.user('example')
+        self.assertEqual(len(u.collection_folders), 3)
+        # Fetch basic information from folders endpoint
+        self.assertEqual(u.collection_folders[0].id, 0)
+        self.assertEqual(u.collection_folders[0].name, "All")
+        self.assertEqual(u.collection_folders[1].id, 1)
+        self.assertEqual(u.collection_folders[1].name, "Uncategorized folder")
+        # Fetch details from folders/<id>/releases endpoint
+        self.assertEqual(u.collection_folders[0].releases[2].id, 656052)
+        self.assertEqual(u.collection_folders[0].releases[2].release.title, "Control / Command & Conquer")
+
+        # Mock expected responses for add_release test - FileSystemFetcher disabled now
+        self.m._fetcher.fetcher.responses = {
+            '/users/example/collection/folders': (b'''
+                {"folders": [{"resource_url": "/users/example/collection/folders/0",
+                              "id": 0,
+                              "name": "All"
+                             },
+                             {"resource_url": "/users/example/collection/folders/1",
+                              "id": 1,
+                              "name": "Uncategorized folder"
+                             }]
+                 }''', 200),
+            '/users/example/collection/folders/1': (b'{}', 200),
+            '/users/example/collection/folders/1/releases/123456': (b'{"instance_id": 123}', 201),
+            '/users/example/collection/folders/1/releases/1': (b'{"instance_id": 124}', 201),
+        }
+
+        # Now bind the user to the memory client
+        u.client = self.m
+
+        # test adding a release by id
+        u.collection_folders[1].add_release(123456)
+        method, url, data, headers = self.m._fetcher.last_request
+        self.assertEqual(method, 'POST')
+        self.assertEqual(url, '/users/example/collection/folders/1/releases/123456')
+
+        # test adding a release object
+        r = self.d.release(1)
+        self.assertEqual(r.title, 'Stockholm')
+        u.collection_folders[1].add_release(r)
+        method, url, data, headers = self.m._fetcher.last_request
+        self.assertEqual(method, 'POST')
+        self.assertEqual(url, '/users/example/collection/folders/1/releases/1')
+
     def test_delete_object(self):
         """Can request DELETE on an APIObject"""
         u = self.d.user('example')
