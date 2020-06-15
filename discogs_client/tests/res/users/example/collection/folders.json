@@ -1,0 +1,22 @@
+{
+    "folders": [
+        {
+            "id": 0,
+            "name": "All",
+            "count": 3,
+            "resource_url": "/users/example/collection/folders/0"
+        },
+        {
+            "id": 1,
+            "name": "Uncategorized folder",
+            "count": 0,
+            "resource_url": "/users/example/collection/folders/1"
+        },
+        {
+            "id": 2,
+            "name": "Collection folder 2",
+            "count": 0,
+            "resource_url": "/users/example/collection/folders/2"
+        }
+    ]
+}

@@ -1,0 +1,216 @@
+{
+    "pagination": {
+        "items": 3,
+        "page": 1,
+        "pages": 1,
+        "per_page": 50,
+        "urls": {
+            "last": "/users/example/collection/folders/0/releases?page=1&per_page=50",
+            "next": "/users/example/collection/folders/0/releases?page=1&per_page=50"
+        }
+    },
+    "releases": [
+        {
+            "basic_information": {
+                "artists": [
+                    {
+                        "anv": "Kruder Dorfmeister",
+                        "id": 1434,
+                        "join": "",
+                        "name": "Kruder & Dorfmeister",
+                        "resource_url": "/artists/1434",
+                        "role": "",
+                        "tracks": ""
+                    }
+                ],
+                "cover_image": "https://img.discogs.com/O_JhZV0Ebg2aXZFubaYYmfZE_ko=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-6794957-1426780517-4728.jpeg.jpg",
+                "formats": [
+                    {
+                        "descriptions": [
+                            "LP",
+                            "Compilation",
+                            "Reissue",
+                            "Remastered"
+                        ],
+                        "name": "Vinyl",
+                        "qty": "5",
+                        "text": "Trifold Cover, 180 g"
+                    }
+                ],
+                "genres": [
+                    "Electronic"
+                ],
+                "id": 6794957,
+                "labels": [
+                    {
+                        "catno": "!K7073LP",
+                        "entity_type": "1",
+                        "entity_type_name": "Label",
+                        "id": 29377,
+                        "name": "!K7 Records",
+                        "resource_url": "/labels/29377"
+                    }
+                ],
+                "master_id": 52323,
+                "master_url": "/masters/52323",
+                "resource_url": "/releases/6794957",
+                "styles": [
+                    "Downtempo",
+                    "Dub",
+                    "Trip Hop"
+                ],
+                "thumb": "https://img.discogs.com/-S3RUg7K9NE9KmXGUJGlfgac7HY=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-6794957-1426780517-4728.jpeg.jpg",
+                "title": "The K&D Sessions\u2122",
+                "year": 2015
+            },
+            "date_added": "2015-04-14T03:23:29-07:00",
+            "folder_id": 1,
+            "id": 6794957,
+            "instance_id": 101,
+            "rating": 0
+        },
+        {
+            "basic_information": {
+                "artists": [
+                    {
+                        "anv": "",
+                        "id": 24214,
+                        "join": "/",
+                        "name": "Suburbass",
+                        "resource_url": "/artists/24214",
+                        "role": "",
+                        "tracks": ""
+                    },
+                    {
+                        "anv": "",
+                        "id": 316643,
+                        "join": "",
+                        "name": "MRMNK",
+                        "resource_url": "/artists/316643",
+                        "role": "",
+                        "tracks": ""
+                    }
+                ],
+                "cover_image": "https://img.discogs.com/fJTyWDScMHTWezHjjNO_ytrSQ9A=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-457553-1116175264.jpg.jpg",
+                "formats": [
+                    {
+                        "descriptions": [
+                            "12\""
+                        ],
+                        "name": "Vinyl",
+                        "qty": "1"
+                    }
+                ],
+                "genres": [
+                    "Electronic"
+                ],
+                "id": 457553,
+                "labels": [
+                    {
+                        "catno": "10_Traktion 02",
+                        "entity_type": "1",
+                        "entity_type_name": "Label",
+                        "id": 42254,
+                        "name": "10_Traktion",
+                        "resource_url": "/labels/42254"
+                    }
+                ],
+                "master_id": 0,
+                "master_url": null,
+                "resource_url": "/releases/457553",
+                "styles": [
+                    "Techno"
+                ],
+                "thumb": "https://img.discogs.com/2taw-jEIUvxbBF0Cj9UWjyACKEg=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-457553-1116175264.jpg.jpg",
+                "title": "10_Traktion 02",
+                "year": 2004
+            },
+            "date_added": "2009-08-20T00:00:00-07:00",
+            "folder_id": 1,
+            "id": 457553,
+            "instance_id": 102,
+            "rating": 0
+        },
+        {
+            "basic_information": {
+                "artists": [
+                    {
+                        "anv": "",
+                        "id": 48163,
+                        "join": "Featuring",
+                        "name": "Orion (2)",
+                        "resource_url": "/artists/48163",
+                        "role": "",
+                        "tracks": ""
+                    },
+                    {
+                        "anv": "",
+                        "id": 485563,
+                        "join": "/",
+                        "name": "Royal (4)",
+                        "resource_url": "/artists/485563",
+                        "role": "",
+                        "tracks": ""
+                    },
+                    {
+                        "anv": "",
+                        "id": 475678,
+                        "join": "&",
+                        "name": "Theory (3)",
+                        "resource_url": "/artists/475678",
+                        "role": "",
+                        "tracks": ""
+                    },
+                    {
+                        "anv": "Dr.No",
+                        "id": 475677,
+                        "join": "",
+                        "name": "Dr. Know (4)",
+                        "resource_url": "/artists/475677",
+                        "role": "",
+                        "tracks": ""
+                    }
+                ],
+                "cover_image": "https://img.discogs.com/a20zQSOAYQoeA0MWwzKk2QqiSTE=/fit-in/600x597/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-656052-1262439560.jpeg.jpg",
+                "formats": [
+                    {
+                        "descriptions": [
+                            "12\"",
+                            "45 RPM"
+                        ],
+                        "name": "Vinyl",
+                        "qty": "1"
+                    }
+                ],
+                "genres": [
+                    "Electronic"
+                ],
+                "id": 656052,
+                "labels": [
+                    {
+                        "catno": "13M001",
+                        "entity_type": "1",
+                        "entity_type_name": "Label",
+                        "id": 56524,
+                        "name": "13 Music",
+                        "resource_url": "/labels/56524"
+                    }
+                ],
+                "master_id": 442393,
+                "master_url": "/masters/442393",
+                "resource_url": "/releases/656052",
+                "styles": [
+                    "Drum n Bass"
+                ],
+                "thumb": "https://img.discogs.com/4bFK4HNtoAsEcZ9b9J8UA0ZlEr4=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-656052-1262439560.jpeg.jpg",
+                "title": "Control / Command & Conquer",
+                "year": 2006
+            },
+            "date_added": "2009-08-20T00:00:00-07:00",
+            "folder_id": 1,
+            "id": 656052,
+            "instance_id": 103,
+            "rating": 0
+        }
+    ]
+}
