@@ -6,6 +6,9 @@ python3-discogs-client enables you to query the Discogs database (discogs.com) t
 
 Find usage information on this README page or search and ask in the API section of the Discogs developer forum at https://www.discogs.com/forum/topic/1082.
 
+[![Build Status](https://travis-ci.org/joalla/discogs_client.svg?branch=master)](https://travis-ci.org/joalla/discogs_client)
+[![Coverage Status](https://coveralls.io/repos/github/joalla/discogs_client/badge.svg)](https://coveralls.io/github/joalla/discogs_client)
+
 ## Installation
 
 Install the client from PyPI using your favorite package manager.
