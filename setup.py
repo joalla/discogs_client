@@ -3,12 +3,12 @@
 from setuptools import setup
 
 setup(
-        name='discogs-client',
-        version='2.3.0',
-        description='Official Python API client for Discogs',
-        url='https://github.com/discogs/discogs_client',
-        author='Discogs',
-        author_email='api@discogsinc.com',
+        name='python3-discogs-client',
+        version='2.3.1',
+        description='Python API client for Discogs',
+        url='https://github.com/joalla/discogs_client',
+        author='joalla',
+        author_email='jt@peek-a-boo.at',
         test_suite='discogs_client.tests',
         classifiers=[
             'Development Status :: 7 - Inactive',
