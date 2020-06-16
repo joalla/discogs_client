@@ -5,10 +5,10 @@ python-discogs-client (2.3.1-1) unstable; urgency=medium
     discogs.com as of June 2020. This active fork of the client incorporates
     the following new features:
   * Support adding releases to the user's collection folders.
-  * The "Discogs ratelimit headers" are now accessible through the client, which
-    finally enables developers to take care of limitting requests to the API
+  * The "Discogs ratelimit headers" are now accessible through the client,
+    which enables developers to take care of limitting requests to the API
     accordingly and thus prevent "Too many requests errors".
   * Support "Discogs lists" (https://www.discogs.com/lists),
     either through direct access or through the user model.
 
- -- J0J0 T <jt@peek-a-boo.at>  Wed, 12 June 2020 13:07:36 +0200
+ -- J0J0 T <jt@peek-a-boo.at>  Mon, 15 Jun 2020 23:07:36 +0200
