@@ -1,0 +1,50 @@
+Source: python-discogs-client
+Section: python
+Priority: optional
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Uploaders:
+ J0J0 T <jt@peek-a-boo.at>,
+Build-Depends:
+ debhelper-compat (= 11),
+ dh-python,
+ python3-all,
+ python3-oauthlib,
+ python3-setuptools,
+Standards-Version: 4.5.0
+Vcs-Git: https://salsa.debian.org/python-team/modules/python3-discogs-client
+Vcs-Browser: https://salsa.debian.org/python-team/modules/python3-discogs-client
+Homepage: https://github.com/joalla/discogs_client
+
+Package: python3-discogs-client
+Architecture: all
+Depends:
+ python3-certifi,
+ python3-chardet,
+ python3-coverage,
+ python3-dateutil,
+ python3-docopt,
+ python3-idna,
+ python3-oauthlib,
+ python3-pkg-resources,
+ python3-requests,
+ python3-six,
+ python3-urllib3,
+ python3-yaml,
+ ${misc:Depends},
+ ${python3:Depends},
+Description: Python module to access the Discogs API
+ This is an active fork of the "official Discogs API client for Python", which
+ was deprecated by discogs.com as of June 2020. We think it is a very useful
+ Python module and decided to continue maintaining it. If you'd like to
+ contribute your code, you are very welcome to submit a pull-request to
+ https://github.com/joalla/discogs_client.
+ .
+ python3-discogs-client enables you to query the Discogs database (discogs.com)
+ through its REST-API for information on artists, releases, labels, users,
+ Marketplace listings, and more. It also supports OAuth 1.0a authorization,
+ which allows you to change user data such as profile information, collections
+ and wantlists, inventory, and orders.
+ .
+ Find usage information at https://github.com/joalla/discogs_client/README.mkd
+ or search and ask in the API section of the Discogs developer forum at
+ https://www.discogs.com/forum/topic/1082
