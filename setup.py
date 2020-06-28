@@ -4,8 +4,9 @@ from setuptools import setup
 
 setup(
         name='python3-discogs-client',
-        version='2.3.1',
+        version='2.3.2',
         description='Python API client for Discogs',
+        long_description='This is an active fork of the official "Discogs API client for Python", which was deprecated by discogs.com as of June 2020. We think it is a very useful Python module and decided to continue maintaining it. Please visit: https://github.com/joalla/discogs_client for more information.',
         url='https://github.com/joalla/discogs_client',
         author='joalla',
         author_email='jt@peek-a-boo.at',
