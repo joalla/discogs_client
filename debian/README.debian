@@ -1,0 +1,11 @@
+python3-discogs-client
+----------------------
+* The official "Python client for the Discogs API" was deprecated by
+  discogs.com as of June 2020. This is an actively maintained fork of
+  the client.
+* Find the upstream changelog here:
+  https://github.com/joalla/discogs_client/releases
+  and more information about the "Joalla Python Discogs API Client"
+  project here: https://www.discogs.com/forum/thread/822690?page=1#8168339
+ -- J0J0 T <jt@peek-a-boo.at>,  Mon, 15 Jun 2020 23:07:36 +0200
+

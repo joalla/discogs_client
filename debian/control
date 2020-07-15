@@ -5,7 +5,7 @@ Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.
 Uploaders:
  J0J0 T <jt@peek-a-boo.at>,
 Build-Depends:
- debhelper-compat (= 11),
+ debhelper-compat (= 12),
  dh-python,
  python3-all,
  python3-oauthlib,
