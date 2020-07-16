@@ -1,17 +1,17 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: python3-discogs-client
-Upstream-Contact: J0J0 T <jt@peek-a-boo.at>
+Upstream-Contact: Johannes Tiefenbacher <jt@peek-a-boo.at>
 Source: https://github.com/joalla/discogs_client
 
 Files: *
-Copyright: (c) 2020, J0J0 T <jt@peek-a-boo.at>
+Copyright: (c) 2020, Johannes Tiefenbacher <jt@peek-a-boo.at>
            (c) 2020, Alistair Hughes <ali.fhughes@gmail.com>
            (c) 2020, hellricer <astrometry.bot@gmail.com>
            (c) 2015, Discogs. All rights reserved.
 License: BSD-2-clause
 
 Files: debian/*
-Copyright: (c) 2020, J0J0 T <jt@peek-a-boo.at>
+Copyright: (c) 2020, Johannes Tiefenbacher <jt@peek-a-boo.at>
 License: BSD-2-clause
 
 License: BSD-2-clause

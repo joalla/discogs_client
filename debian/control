@@ -3,7 +3,7 @@ Section: python
 Priority: optional
 Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
 Uploaders:
- J0J0 T <jt@peek-a-boo.at>,
+ Johannes Tiefenbacher <jt@peek-a-boo.at>,
 Build-Depends:
  debhelper-compat (= 12),
  dh-python,
