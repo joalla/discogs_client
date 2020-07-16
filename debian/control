@@ -11,8 +11,8 @@ Build-Depends:
  python3-oauthlib,
  python3-setuptools,
 Standards-Version: 4.5.0
-Vcs-Git: https://salsa.debian.org/python-team/modules/python3-discogs-client
-Vcs-Browser: https://salsa.debian.org/python-team/modules/python3-discogs-client
+Vcs-Git: https://salsa.debian.org/python-team/modules/python-discogs-client
+Vcs-Browser: https://salsa.debian.org/python-team/modules/python-discogs-client
 Homepage: https://github.com/joalla/discogs_client
 
 Package: python3-discogs-client
