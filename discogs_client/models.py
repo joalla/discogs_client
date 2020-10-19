@@ -1,13 +1,8 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
-import sys
-
-from six import with_metaclass
-
 from discogs_client.exceptions import HTTPError
 from discogs_client.utils import parse_timestamp, update_qs, omit_none
 
 
-class SimpleFieldDescriptor(object):
+class SimpleFieldDescriptor:
     """
     An attribute that determines its value using the object's fetch() method.
 
@@ -40,7 +35,7 @@ class SimpleFieldDescriptor(object):
         raise AttributeError("can't set attribute")
 
 
-class ObjectFieldDescriptor(object):
+class ObjectFieldDescriptor:
     """
     An attribute that determines its value using the object's fetch() method,
     and passes the resulting value through an APIObject.
@@ -79,7 +74,7 @@ class ObjectFieldDescriptor(object):
         raise AttributeError("can't set attribute")
 
 
-class ListFieldDescriptor(object):
+class ListFieldDescriptor:
     """
     An attribute that determines its value using the object's fetch() method,
     and passes each item in the resulting list through an APIObject.
@@ -104,7 +99,7 @@ class ListFieldDescriptor(object):
         raise AttributeError("can't set attribute")
 
 
-class ObjectCollectionDescriptor(object):
+class ObjectCollectionDescriptor:
     """
     An attribute that determines its value by fetching a URL to a paginated
     list of related objects, and passes each item in the resulting list through
@@ -138,7 +133,7 @@ class ObjectCollectionDescriptor(object):
         raise AttributeError("can't set attribute")
 
 
-class Field(object):
+class Field:
     """
     A placeholder for a descriptor. Is transformed into a descriptor by the
     APIObjectMeta metaclass when the APIObject classes are created.
@@ -175,18 +170,15 @@ class ObjectCollection(Field):
 
 
 class APIObjectMeta(type):
-    def __new__(cls, name, bases, dict_):
-        for k, v in dict_.items():
+    def __new__(cls, name, bases, namespace):
+        for k, v in namespace.items():
             if isinstance(v, Field):
-                dict_[k] = v.to_descriptor(k)
-        return super(APIObjectMeta, cls).__new__(cls, name, bases, dict_)
+                namespace[k] = v.to_descriptor(k)
+        return super(APIObjectMeta, cls).__new__(cls, name, bases, namespace)
 
 
-class APIObject(with_metaclass(APIObjectMeta, object)):
-    def repr_str(self, string):
-        if sys.version_info < (3,):
-            return string.encode('utf-8')
-        return string
+class APIObject(metaclass=APIObjectMeta):
+    pass
 
 
 class PrimaryAPIObject(APIObject):
@@ -265,7 +257,7 @@ class SecondaryAPIObject(APIObject):
         return self.data.get(key, default)
 
 
-class BasePaginatedResponse(object):
+class BasePaginatedResponse:
     """Base class for lists of objects spread across many URLs."""
     def __init__(self, client, url):
         self.client = client
@@ -456,7 +448,7 @@ class Artist(PrimaryAPIObject):
         return MixedPaginatedList(self.client, self.fetch('releases_url'), 'releases')
 
     def __repr__(self):
-        return self.repr_str('<Artist {0!r} {1!r}>'.format(self.id, self.name))
+        return '<Artist {0!r} {1!r}>'.format(self.id, self.name)
 
 
 class Release(PrimaryAPIObject):
@@ -493,7 +485,7 @@ class Release(PrimaryAPIObject):
             return None
 
     def __repr__(self):
-        return self.repr_str('<Release {0!r} {1!r}>'.format(self.id, self.title))
+        return '<Release {0!r} {1!r}>'.format(self.id, self.title)
 
 
 class Master(PrimaryAPIObject):
@@ -514,7 +506,7 @@ class Master(PrimaryAPIObject):
         self.data['resource_url'] = '{0}/masters/{1}'.format(client._base_url, dict_['id'])
 
     def __repr__(self):
-        return self.repr_str('<Master {0!r} {1!r}>'.format(self.id, self.title))
+        return '<Master {0!r} {1!r}>'.format(self.id, self.title)
 
 
 class Label(PrimaryAPIObject):
@@ -535,7 +527,7 @@ class Label(PrimaryAPIObject):
         self.data['resource_url'] = '{0}/labels/{1}'.format(client._base_url, dict_['id'])
 
     def __repr__(self):
-        return self.repr_str('<Label {0!r} {1!r}>'.format(self.id, self.name))
+        return '<Label {0!r} {1!r}>'.format(self.id, self.name)
 
 
 class User(PrimaryAPIObject):
@@ -574,7 +566,7 @@ class User(PrimaryAPIObject):
         return [CollectionFolder(self.client, d) for d in resp['folders']]
 
     def __repr__(self):
-        return self.repr_str('<User {0!r} {1!r}>'.format(self.id, self.username))
+        return '<User {0!r} {1!r}>'.format(self.id, self.username)
 
 
 class WantlistItem(PrimaryAPIObject):
@@ -588,7 +580,7 @@ class WantlistItem(PrimaryAPIObject):
         super(WantlistItem, self).__init__(client, dict_)
 
     def __repr__(self):
-        return self.repr_str('<WantlistItem {0!r} {1!r}>'.format(self.id, self.release.title))
+        return '<WantlistItem {0!r} {1!r}>'.format(self.id, self.release.title)
 
 
 # TODO: folder_id should be a Folder object; needs folder_url
@@ -604,7 +596,7 @@ class CollectionItemInstance(PrimaryAPIObject):
         super(CollectionItemInstance, self).__init__(client, dict_)
 
     def __repr__(self):
-        return self.repr_str('<CollectionItemInstance {0!r} {1!r}>'.format(self.id, self.release.title))
+        return '<CollectionItemInstance {0!r} {1!r}>'.format(self.id, self.release.title)
 
 
 class CollectionFolder(PrimaryAPIObject):
@@ -626,7 +618,7 @@ class CollectionFolder(PrimaryAPIObject):
         self.client._post(add_release_url, None)
 
     def __repr__(self):
-        return self.repr_str('<CollectionFolder {0!r} {1!r}>'.format(self.id, self.name))
+        return '<CollectionFolder {0!r} {1!r}>'.format(self.id, self.name)
 
 
 class List(PrimaryAPIObject):
@@ -644,7 +636,7 @@ class List(PrimaryAPIObject):
         self.data['resource_url'] = '{0}/lists/{1}'.format(client._base_url, dict_['id'])
 
     def __repr__(self):
-        return self.repr_str('<List {0!r} {1!r}>'.format(self.id, self.name))
+        return '<List {0!r} {1!r}>'.format(self.id, self.name)
 
 
 class Listing(PrimaryAPIObject):
@@ -667,7 +659,7 @@ class Listing(PrimaryAPIObject):
         self.data['resource_url'] = '{0}/marketplace/listings/{1}'.format(client._base_url, dict_['id'])
 
     def __repr__(self):
-        return self.repr_str('<Listing {0!r} {1!r}>'.format(self.id, self.release.data['description']))
+        return '<Listing {0!r} {1!r}>'.format(self.id, self.release.data['description'])
 
 
 class Order(PrimaryAPIObject):
@@ -700,7 +692,7 @@ class Order(PrimaryAPIObject):
         self.changes['shipping'] = value
 
     def __repr__(self):
-        return self.repr_str('<Order {0!r}>'.format(self.id))
+        return '<Order {0!r}>'.format(self.id)
 
 
 class OrderMessage(SecondaryAPIObject):
@@ -711,7 +703,7 @@ class OrderMessage(SecondaryAPIObject):
     timestamp = SimpleField(transform=parse_timestamp)
 
     def __repr__(self):
-        return self.repr_str('<OrderMessage to:{0!r}>'.format(self.to.username))
+        return '<OrderMessage to:{0!r}>'.format(self.to.username)
 
 
 class Track(SecondaryAPIObject):
@@ -722,7 +714,7 @@ class Track(SecondaryAPIObject):
     credits = ListField('Artist', key='extraartists')
 
     def __repr__(self):
-        return self.repr_str('<Track {0!r} {1!r}>'.format(self.position, self.title))
+        return '<Track {0!r} {1!r}>'.format(self.position, self.title)
 
 
 class Price(SecondaryAPIObject):
@@ -730,7 +722,7 @@ class Price(SecondaryAPIObject):
     value = SimpleField()
 
     def __repr__(self):
-        return self.repr_str('<Price {0!r} {1!r}>'.format(self.value, self.currency))
+        return '<Price {0!r} {1!r}>'.format(self.value, self.currency)
 
 
 class Video(SecondaryAPIObject):
@@ -741,7 +733,7 @@ class Video(SecondaryAPIObject):
     url = SimpleField(key='uri')
 
     def __repr__(self):
-        return self.repr_str('<Video {0!r}>'.format(self.title))
+        return '<Video {0!r}>'.format(self.title)
 
 
 class ListItem(SecondaryAPIObject):
@@ -753,7 +745,7 @@ class ListItem(SecondaryAPIObject):
     url = SimpleField(key='uri')
 
     def __repr__(self):
-        return self.repr_str('<ListItem {0!r}>'.format(self.id))
+        return '<ListItem {0!r}>'.format(self.id)
 
 
 CLASS_MAP = {

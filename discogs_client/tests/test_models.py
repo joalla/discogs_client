@@ -1,5 +1,3 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 import unittest
 from discogs_client.models import Artist, Release, ListItem
 from discogs_client.tests import DiscogsClientTestCase
@@ -44,7 +42,7 @@ class ModelsTestCase(DiscogsClientTestCase):
         self.assertTrue(isinstance(results[1], Release))
 
     def test_utf8_search(self):
-        uni_string = 'caf\xe9'.encode('utf8')
+        uni_string = 'caf\xe9'
         try:
             results = self.d.search(uni_string)
         except Exception as e:

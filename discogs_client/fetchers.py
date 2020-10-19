@@ -1,19 +1,13 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
 import requests
 from requests.api import request
 from oauthlib import oauth1
 import json
 import os
 import re
-try:
-    # python2
-    from urlparse import parse_qsl
-except ImportError:
-    # python3
-    from urllib.parse import parse_qsl
+from urllib.parse import parse_qsl
 
 
-class Fetcher(object):
+class Fetcher:
     """
     Base class for Fetchers, which wrap and normalize the APIs of various HTTP
     libraries.
@@ -31,7 +25,7 @@ class Fetcher(object):
         raise NotImplementedError()
 
 
-class LoggingDelegator(object):
+class LoggingDelegator:
     """Wraps a fetcher and logs all requests."""
     def __init__(self, fetcher):
         self.fetcher = fetcher
@@ -84,8 +78,8 @@ class OAuth2Fetcher(Fetcher):
 
     def store_token_from_qs(self, query_string):
         token_dict = dict(parse_qsl(query_string))
-        token = token_dict[b'oauth_token'].decode('utf8')
-        secret = token_dict[b'oauth_token_secret'].decode('utf8')
+        token = token_dict[b'oauth_token']
+        secret = token_dict[b'oauth_token_secret']
         self.store_token(token, secret)
         return token, secret
 
@@ -116,7 +110,7 @@ class OAuth2Fetcher(Fetcher):
 
 class FilesystemFetcher(Fetcher):
     """Fetches from a directory of files."""
-    default_response = json.dumps({'message': 'Resource not found.'}).encode('utf8'), 404
+    default_response = json.dumps({'message': 'Resource not found.'}), 404
     path_with_params = re.compile('(?P<dir>(\w+/)+)(?P<query>\w+)\?(?P<params>.*)')
 
     def __init__(self, base_path):
@@ -183,7 +177,7 @@ class FilesystemFetcher(Fetcher):
 
 class MemoryFetcher(Fetcher):
     """Fetches from a dict of URL -> (content, status_code)."""
-    default_response = json.dumps({'message': 'Resource not found.'}).encode('utf8'), 404
+    default_response = json.dumps({'message': 'Resource not found.'}), 404
 
     def __init__(self, responses):
         self.responses = responses

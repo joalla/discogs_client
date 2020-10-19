@@ -1,13 +1,5 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
-
-import warnings
 import json
-try:
-    # python2
-    from urllib import urlencode
-except ImportError:
-    # python3
-    from urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from discogs_client import models
 from discogs_client.exceptions import ConfigurationError, HTTPError, AuthorizationError
@@ -15,7 +7,7 @@ from discogs_client.utils import update_qs
 from discogs_client.fetchers import RequestsFetcher, OAuth2Fetcher, UserTokenRequestsFetcher
 
 
-class Client(object):
+class Client:
     _base_url = 'https://api.discogs.com'
     _request_token_url = 'https://api.discogs.com/oauth/request_token'
     _authorize_url = 'https://www.discogs.com/oauth/authorize'
@@ -73,9 +65,6 @@ class Client(object):
         """
         Uses the verifier to exchange a request token for an access token.
         """
-        if isinstance(verifier, bytes):
-            verifier = verifier.decode('utf8')
-
         self._fetcher.set_verifier(verifier)
 
         params = {}
@@ -112,7 +101,7 @@ class Client(object):
         if status_code == 204:
             return None
 
-        body = json.loads(content.decode('utf8'))
+        body = json.loads(content)
 
         if 200 <= status_code < 300:
             return body
@@ -141,14 +130,7 @@ class Client(object):
         function are serialized into the request's query string.
         """
         if query:
-            unicode_query = []
-            for q in query:
-                try:
-                    unicode_q = q.decode('utf8')
-                except (UnicodeDecodeError, UnicodeEncodeError, AttributeError):
-                    unicode_q = q
-                unicode_query.append(unicode_q)
-            fields['q'] = ' '.join(unicode_query)
+            fields['q'] = ' '.join(query)
         return models.MixedPaginatedList(
             self,
             update_qs(self._base_url + '/database/search', fields),

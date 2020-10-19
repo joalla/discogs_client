@@ -1,5 +1,3 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 import unittest
 from datetime import datetime
 from discogs_client.tests import DiscogsClientTestCase
@@ -34,7 +32,7 @@ class UtilsTestCase(DiscogsClientTestCase):
             'flan': 0,
         })
 
-        self.assertEqual(o(dict((k, None) for k in ('qux', 'quux', 'quuux'))), {})
+        self.assertEqual(o({k: None for k in ('qux', 'quux', 'quuux')}), {})
         self.assertEqual(o({'nope': 'yep'}), {'nope': 'yep'})
         self.assertEqual(o({}), {})
 
