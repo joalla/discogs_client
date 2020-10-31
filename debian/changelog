@@ -8,6 +8,8 @@ python-discogs-client (2.3.1-2) UNRELEASED; urgency=medium
 
   [ Debian Janitor ]
   * Set upstream metadata fields: Repository.
+  * Remove obsolete fields Contact, Name from debian/upstream/metadata (already
+    present in machine-readable debian/copyright).
 
  -- Ondřej Nový <onovy@debian.org>  Thu, 24 Sep 2020 08:40:59 +0200
 

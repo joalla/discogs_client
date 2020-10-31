@@ -1,8 +1,6 @@
 Bug-Database: https://github.com/joalla/discogs_client/issues
 Bug-Submit: https://github.com/joalla/discogs_client/issues
-Contact: Johannes Tiefenbacher <jt@peek-a-boo.at>
 Documentation: https://github.com/joalla/discogs_client/blob/master/README.mkd
-Name: python3-discogs-client
 Repository: https://github.com/joalla/discogs_client.git
 Repository-Browse: https://github.com/joalla/discogs_client
 Changelog: https://github.com/joalla/discogs_client/releases
