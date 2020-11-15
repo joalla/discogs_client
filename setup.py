@@ -23,7 +23,6 @@ setup(
             ],
         install_requires=[
             'requests',
-            'six',
             'oauthlib',
             ],
         packages=[
