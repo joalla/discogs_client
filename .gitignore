@@ -5,3 +5,4 @@ dist/
 .mypy_cache
 .coverage
 env/
+build/
