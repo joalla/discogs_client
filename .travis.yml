@@ -7,7 +7,7 @@ python:
 install:
     - pip install -r requirements.txt
 script: |
-    if [ $(python -c "import sys; print(sys.version_info.minor)") -lt 7 ];
+    if [ $(python -c "import sys; print(sys.version_info.minor)") -lt 7 ]; then
         nosetests
     else
         nosetests --with-coverage --cover-package=discogs_client
