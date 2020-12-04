@@ -12,7 +12,7 @@ setup(
         author_email='jt@peek-a-boo.at',
         test_suite='discogs_client.tests',
         classifiers=[
-            'Development Status :: 7 - Inactive',
+            'Development Status :: 5 - Production/Stable',
             'Environment :: Console',
             'License :: OSI Approved :: BSD License',
             'Natural Language :: English',
