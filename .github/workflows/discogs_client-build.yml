@@ -4,15 +4,13 @@
 name: Python package
 
 on:
-  push:
-    branches: [ $default-branch ]
-  pull_request:
-    branches: [ $default-branch ]
+  on: [push, pull_request]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    name: Build and test
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8, 3.9]
