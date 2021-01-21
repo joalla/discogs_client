@@ -397,6 +397,30 @@ class Wantlist(PaginatedList):
         self.client._delete(self.url + '/' + str(release_id))
         self._invalidate()
 
+
+class Inventory(PaginatedList):
+    def add_listing(self, release, condition, price, status='Draft', sleeve_condition=None, 
+                    comments=None, allow_offers=None, external_id=None, location=None, 
+                    weight=None, format_quantity=None):
+        release_id = release.id if isinstance(release, Release) else release
+        data = {
+            "release_id" : str(release_id),
+            "condition" : condition,
+            "sleeve_condition" : sleeve_condition,
+            "price" : price,
+            "comments" : comments,
+            "allow_offers" : allow_offers,
+            "status" : status,
+            "external_id" : external_id,
+            "location" : location,
+            "weight" : weight,
+            "format_quantity" : format_quantity,
+        }
+        # Results in 400: Not a JSON request
+        # self.client._post(self.client._base_url + '/marketplace/listings', omit_none(data))
+        # self._invalidate()
+
+
 class OrderMessagesList(PaginatedList):
     def add(self, message=None, status=None, email_buyer=True, email_seller=False):
         data = {
@@ -545,7 +569,7 @@ class User(PrimaryAPIObject):
     location = SimpleField(writable=True)
     home_page = SimpleField(writable=True)
     registered = SimpleField(transform=parse_timestamp)
-    inventory = ObjectCollection('Listing', key='listings', url_key='inventory_url')
+    inventory = ObjectCollection('Listing', key='listings', url_key='inventory_url', list_class=Inventory)
     wantlist = ObjectCollection('WantlistItem', key='wants', url_key='wantlist_url', list_class=Wantlist)
 
     def __init__(self, client, dict_):
