@@ -96,7 +96,7 @@ class OAuth2Fetcher(Fetcher):
     def fetch(self, client, method, url, data=None, headers=None, json_format=True):
         body = json.dumps(data) if json_format and data else data
         uri, headers, body = self.client.sign(url, http_method=method,
-                                              body=data, headers=headers)
+                                              body=body, headers=headers)
 
         resp = request(method, uri, headers=headers, data=body)
         self.rate_limit = resp.headers.get(

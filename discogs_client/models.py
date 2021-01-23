@@ -399,7 +399,7 @@ class Wantlist(PaginatedList):
 
 
 class Inventory(PaginatedList):
-    def add_listing(self, release, condition, price, status='Draft', sleeve_condition=None, 
+    def add_listing(self, release, condition, price, status, sleeve_condition=None, 
                     comments=None, allow_offers=None, external_id=None, location=None, 
                     weight=None, format_quantity=None):
         release_id = release.id if isinstance(release, Release) else release
@@ -416,9 +416,8 @@ class Inventory(PaginatedList):
             "weight" : weight,
             "format_quantity" : format_quantity,
         }
-        # Results in 400: Not a JSON request
-        # self.client._post(self.client._base_url + '/marketplace/listings', omit_none(data))
-        # self._invalidate()
+        self.client._post(self.client._base_url + '/marketplace/listings', omit_none(data))
+        self._invalidate()
 
 
 class OrderMessagesList(PaginatedList):
