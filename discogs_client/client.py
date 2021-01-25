@@ -50,7 +50,8 @@ class Client:
             params['oauth_callback'] = callback_url
         postdata = urlencode(params)
 
-        content, status_code = self._fetcher.fetch(self, 'POST', self._request_token_url, data=postdata, headers=params)
+        content, status_code = self._fetcher.fetch(self, 'POST', self._request_token_url, 
+                                                data=postdata, headers=params, json_format=False)
         if status_code != 200:
             raise AuthorizationError('Could not get request token.', status_code, content)
 
