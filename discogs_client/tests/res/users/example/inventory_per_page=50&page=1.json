@@ -1,0 +1,38 @@
+{
+	"pagination": { "per_page": 50, "items": 1, "page": 1, "urls": {}, "pages": 1 },
+	"listings": [
+		{
+			"status": "For Sale",
+			"price": {
+				"currency": "USD",
+				"value": 149.99
+			},
+			"allow_offers": true,
+			"sleeve_condition": "Near Mint (NM or M-)",
+			"id": 150899904,
+			"condition": "Near Mint (NM or M-)",
+			"posted": "2014-07-01T10:20:17-07:00",
+			"ships_from": "United States",
+			"uri": "/sell/item/150899904",
+			"comments": "Includes promotional booklet from original purchase!",
+			"seller": {
+				"username": "example",
+				"resource_url": "/users/example",
+				"id": 1
+			},
+			"release": {
+				"catalog_number": "509990292346, TMR092",
+				"resource_url": "/releases/2992668",
+				"year": 2011,
+				"id": 2992668,
+				"description": "Danger Mouse & Daniele Luppi - Rome (LP, Ora + LP, Whi + Album, Ltd, Tip)",
+				"artist": "Danger Mouse & Daniele Luppi",
+				"title": "Rome",
+				"format": "(LP, Ora + LP, Whi + Album, Ltd, Tip)",
+				"thumbnail": "/image/R-150-1-1193812031.jpeg"
+			},
+			"resource_url": "/marketplace/listings/150899904",
+			"audio": false
+		}
+	]
+}

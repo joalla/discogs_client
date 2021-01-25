@@ -145,6 +145,43 @@ class ModelsTestCase(DiscogsClientTestCase):
         self.assertEqual(method, 'DELETE')
         self.assertEqual(url, '/users/example/wants/1')
 
+    def test_inventory(self):
+        """Inventory can be manipulated"""
+        # Fetch users inventory from the filesystem
+        u = self.d.user('example')
+        self.assertEqual(len(u.inventory), 1)
+        listing = u.inventory[0]
+        self.assertEqual(listing.status, 'For Sale')
+        self.assertEqual(listing.price.value, 149.99)
+        self.assertEqual(listing.allow_offers, True)
+        self.assertEqual(listing.id, 150899904)
+        self.assertEqual(listing.seller.username, 'example')
+        self.assertEqual(listing.release.id, 2992668)
+
+        # Stub out expected responses
+        self.m._fetcher.fetcher.responses = {
+            '/marketplace/listings': (b'{"listing_id": 321}', 201),
+        }
+
+        # Now bind the user to the memory client
+        u.client = self.m
+
+        # Test adding by release id
+        u.inventory.add_listing(release=123, condition='Mint (M)', price=15.99, status='Draft')
+        method, url, data, headers = self.m._fetcher.last_request
+        self.assertEqual(method, 'POST')
+        self.assertEqual(url, '/marketplace/listings')
+        self.assertEqual(data['release_id'], '123')
+
+        # test adding by release object
+        r = self.d.release(1)
+        self.assertEqual(r.title, 'Stockholm')
+        u.inventory.add_listing(release=r, condition='Mint (M)', price=15.99, status='Draft')
+        method, url, data, headers = self.m._fetcher.last_request
+        self.assertEqual(method, 'POST')
+        self.assertEqual(url, '/marketplace/listings')
+        self.assertEqual(data['release_id'], '1')
+
     def test_collection(self):
         """Collection folders can be manipulated"""
         # Fetch the users collection folders from the filesystem
