@@ -663,7 +663,7 @@ class Listing(PrimaryAPIObject):
         self.data['resource_url'] = '{0}/marketplace/listings/{1}'.format(client._base_url, dict_['id'])
 
     def update(self, release=None, condition=None, price=None, status=None, sleeve_condition=None,
-               comments=None, allow_offers=None, external_id=None, location=None,weight=None, format_quantity=None):
+               comments=None, allow_offers=None, external_id=None, location=None, weight=None, format_quantity=None):
         release_id = release.id if isinstance(release, Release) else release
         data = {
             "release_id": release_id,
@@ -681,6 +681,9 @@ class Listing(PrimaryAPIObject):
         data = omit_none(data)
         if data:
             self.client._post(self.data['resource_url'], data)
+
+    def __repr__(self):
+        return '<Listing {0!r} {1!r}>'.format(self.id, self.release.data['description'])
 
 
 class Order(PrimaryAPIObject):
