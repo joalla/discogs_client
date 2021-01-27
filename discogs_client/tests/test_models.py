@@ -196,12 +196,10 @@ class ModelsTestCase(DiscogsClientTestCase):
         listing.status = 'Draft'
         listing.price = 1.99
         listing.allow_offers = False
-        listing.release = 1
         expected = {
             'status': 'Draft',
             'price': 1.99,
             'allow_offers': False,
-            'release_id': 1,
         }
         self.assertEqual(listing.changes, expected)
 
