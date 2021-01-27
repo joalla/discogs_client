@@ -96,7 +96,6 @@ class Client:
 
         if data:
             headers['Content-Type'] = 'application/json'
-            # headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
         content, status_code = self._fetcher.fetch(self, method, url, data=data, headers=headers)
 
