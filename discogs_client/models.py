@@ -649,7 +649,6 @@ class Listing(PrimaryAPIObject):
     comments = SimpleField(writable=True)
     audio = SimpleField()
     url = SimpleField(key='uri')
-    release = ObjectField('Release')
     seller = ObjectField('User')
     posted = SimpleField(transform=parse_timestamp)
     weight = SimpleField(writable=True)
@@ -668,6 +667,15 @@ class Listing(PrimaryAPIObject):
     @price.setter
     def price(self, value):
         self.changes['price'] = value
+    
+    @property
+    def release(self):
+        return Release(self.client, self.fetch('release'))
+
+    @release.setter
+    def release(self, release):
+        release_id = release.id if isinstance(release, Release) else release
+        self.changes['release_id'] = release_id
 
     def __repr__(self):
         return '<Listing {0!r} {1!r}>'.format(self.id, self.release.data['description'])
