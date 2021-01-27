@@ -667,7 +667,7 @@ class Listing(PrimaryAPIObject):
     @price.setter
     def price(self, value):
         self.changes['price'] = value
-    
+
     @property
     def release(self):
         return Release(self.client, self.fetch('release'))
