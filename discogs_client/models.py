@@ -641,46 +641,33 @@ class List(PrimaryAPIObject):
 
 class Listing(PrimaryAPIObject):
     id = SimpleField()
-    status = SimpleField()
-    allow_offers = SimpleField()
-    condition = SimpleField()
-    sleeve_condition = SimpleField()
+    status = SimpleField(writable=True)
+    allow_offers = SimpleField(writable=True)
+    condition = SimpleField(writable=True)
+    sleeve_condition = SimpleField(writable=True)
     ships_from = SimpleField()
-    comments = SimpleField()
+    comments = SimpleField(writable=True)
     audio = SimpleField()
     url = SimpleField(key='uri')
-    price = ObjectField('Price')
     release = ObjectField('Release')
     seller = ObjectField('User')
     posted = SimpleField(transform=parse_timestamp)
-    weight = SimpleField()
-    location = SimpleField()
-    format_quantity = SimpleField()
-    external_id = SimpleField()
+    weight = SimpleField(writable=True)
+    location = SimpleField(writable=True)
+    format_quantity = SimpleField(writable=True)
+    external_id = SimpleField(writable=True)
 
     def __init__(self, client, dict_):
         super(Listing, self).__init__(client, dict_)
         self.data['resource_url'] = '{0}/marketplace/listings/{1}'.format(client._base_url, dict_['id'])
 
-    def update(self, release=None, condition=None, price=None, status=None, sleeve_condition=None,
-               comments=None, allow_offers=None, external_id=None, location=None, weight=None, format_quantity=None):
-        release_id = release.id if isinstance(release, Release) else release
-        data = {
-            "release_id": release_id,
-            "condition": condition,
-            "sleeve_condition": sleeve_condition,
-            "price": price,
-            "comments": comments,
-            "allow_offers": allow_offers,
-            "status": status,
-            "external_id": external_id,
-            "location": location,
-            "weight": weight,
-            "format_quantity": format_quantity,
-        }
-        data = omit_none(data)
-        if data:
-            self.client._post(self.data['resource_url'], data)
+    @property
+    def price(self):
+        return Price(self.client, self.fetch('price'))
+
+    @price.setter
+    def price(self, value):
+        self.changes['price'] = value
 
     def __repr__(self):
         return '<Listing {0!r} {1!r}>'.format(self.id, self.release.data['description'])
