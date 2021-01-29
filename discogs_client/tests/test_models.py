@@ -179,10 +179,12 @@ class ModelsTestCase(DiscogsClientTestCase):
         """Listing can be manipulated"""
         # Fetch users inventory from the filesystem
         u = self.d.user('example')
-        self.assertEqual(len(u.inventory), 1)
 
         # Fetch listing
         listing = u.inventory[0]
+        method, url, data, headers = self.d._fetcher.requests[1]
+        self.assertEqual(method, 'GET')
+        self.assertEqual(url, '/users/example/inventory?page=1&per_page=50')
 
         # Test fetching listing information
         self.assertEqual(listing.status, 'For Sale')
@@ -202,13 +204,19 @@ class ModelsTestCase(DiscogsClientTestCase):
             'allow_offers': False,
         }
         self.assertEqual(listing.changes, expected)
+        
+        # Test saving
+        listing.save()
+        method, url, data, headers = self.d._fetcher.requests[2]
+        self.assertEqual(method, 'POST')
+        self.assertEqual(url, '/marketplace/listings/150899904')
+        self.assertEqual(data, expected)
 
-        # Saving results in HTTPError: 404: Resource not found
-        # listing.save()
-        # method, url, data, headers = self.m._fetcher.last_request
-        # self.assertEqual(method, 'POST')
-        # self.assertEqual(url, '/marketplace/listings/150899904')
-        # self.assertEqual(data['listing_id'], '150899904')
+        # Refresh
+        method, url, data, headers = self.d._fetcher.requests[3]
+        self.assertEqual(method, 'GET')
+        self.assertEqual(url, '/marketplace/listings/150899904')
+
 
     def test_collection(self):
         """Collection folders can be manipulated"""
