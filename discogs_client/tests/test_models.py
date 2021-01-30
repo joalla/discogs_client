@@ -197,6 +197,8 @@ class ModelsTestCase(DiscogsClientTestCase):
         # Test manipulating listing
         listing.status = 'Draft'
         listing.price = 1.99
+        # Test unsaved price
+        self.assertEqual(listing.price.value, 1.99)
         listing.allow_offers = False
         expected = {
             'status': 'Draft',

@@ -686,6 +686,12 @@ class Listing(PrimaryAPIObject):
 
     @property
     def price(self):
+        # Get unsaved price.value from changes
+        if 'price' in self.changes:
+            return Price(self.client, {
+                'value': self.changes['price'],
+                'currency': self.data['price']['currency']
+            })
         return Price(self.client, self.fetch('price'))
 
     @price.setter
