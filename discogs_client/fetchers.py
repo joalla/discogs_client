@@ -58,7 +58,8 @@ class UserTokenRequestsFetcher(Fetcher):
     def __init__(self, user_token):
         self.user_token = user_token
 
-    def fetch(self, client, method, url, data=None, headers=None, json=True):
+    def fetch(self, client, method, url, data=None, headers=None, json_format=True):
+        data = json.dumps(data) if json_format and data else data
         resp = requests.request(method, url, params={'token':self.user_token},
                                 data=data, headers=headers)
         self.rate_limit = resp.headers.get(
