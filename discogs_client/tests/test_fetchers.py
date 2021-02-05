@@ -25,12 +25,12 @@ class FetcherTestCase(DiscogsClientTestCase):
 
         self.assertEqual(_fetcher.client.resource_owner_key, None)
         self.assertEqual(_fetcher.client.resource_owner_secret, None)
-        
+
         query_string = b'oauth_token=token&oauth_token_secret=secret'
         token, secret = _fetcher.store_token_from_qs(query_string)
         self.assertEqual(token, 'token')
         self.assertEqual(secret, 'secret')
-        
+
         _fetcher.forget_token()
         self.assertEqual(_fetcher.client.resource_owner_key, None)
         self.assertEqual(_fetcher.client.resource_owner_secret, None)
@@ -41,6 +41,18 @@ class FetcherTestCase(DiscogsClientTestCase):
 
         _fetcher.set_verifier('1234567890')
         self.assertEqual(_fetcher.client.verifier, '1234567890')
+
+    def test_request_backoff(self):
+        _fetcher = OAuth2Fetcher(
+            'consumer_key', 'consumer_secret', token=None, secret=None)
+
+        query_string = b'oauth_token=token&oauth_token_secret=secret'
+        token, secret = _fetcher.store_token_from_qs(query_string)
+
+        _fetcher.store_token(token, secret)
+
+        _fetcher.set_verifier('1234567890')
+        _fetcher.fetch(self.m, "GET", "asddsa")
 
 
 def suite():

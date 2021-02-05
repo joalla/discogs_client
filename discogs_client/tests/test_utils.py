@@ -41,6 +41,17 @@ class UtilsTestCase(DiscogsClientTestCase):
         self.assertEqual(p('2012-01-01T00:00:00'), datetime(2012, 1, 1, 0, 0, 0))
         self.assertEqual(p('2001-05-25T00:00:42'), datetime(2001, 5, 25, 0, 0, 42))
 
+    def test_backed_off_when_rate_limit_reached(self):
+        """
+        - Decorator function
+        - When we make a request
+        - it can keep track of the headers returned
+        - How much is there and how much is left
+        - If there is little left, start to ease off - either exponential or fib sequence
+        - It needs to know how much is left at the function level because better to wait before calling than after
+            - After we've already got the results so can return
+        """
+        pass
 
 def suite():
     suite = unittest.TestSuite()
