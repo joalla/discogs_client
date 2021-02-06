@@ -1,5 +1,5 @@
 import unittest
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client import utils
 
@@ -38,9 +38,10 @@ class UtilsTestCase(DiscogsClientTestCase):
 
     def test_parse_timestamp(self):
         p = utils.parse_timestamp
-        self.assertEqual(p('2012-01-01T00:00:00'), datetime(2012, 1, 1, 0, 0, 0))
-        self.assertEqual(p('2001-05-25T00:00:42'), datetime(2001, 5, 25, 0, 0, 42))
-
+        self.assertEqual(
+            p('2016-07-27T08:11:29-07:00'),
+            datetime(2016, 7, 27, 8, 11, 29, tzinfo=timezone(timedelta(days=-1, seconds=61200)))
+        )
 
 def suite():
     suite = unittest.TestSuite()
