@@ -6,9 +6,6 @@ from discogs_client import utils
 from discogs_client.exceptions import HTTPError, TooManyAttemptsError
 
 
-call_count = 0
-
-
 class UtilsTestCase(DiscogsClientTestCase):
     def test_update_qs(self):
         """update_qs helper works as intended"""
@@ -59,6 +56,8 @@ class UtilsTestCase(DiscogsClientTestCase):
         mock_ok_response = MagicMock()
         mock_ok_response.status_code = 200
 
+        call_count = 0
+
         @backoff(enabled=True)
         def always_fails():
             return mock_ratelimited_response
@@ -69,7 +68,7 @@ class UtilsTestCase(DiscogsClientTestCase):
 
         @backoff(enabled=True)
         def succeeds_after_x_calls():
-            global call_count
+            nonlocal call_count
             call_count += 1
             if call_count < 3:
                 return mock_ratelimited_response
