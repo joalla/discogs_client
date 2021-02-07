@@ -4,6 +4,8 @@ from urllib.parse import quote
 
 def parse_timestamp(timestamp):
     """Convert an ISO 8601 timestamp into a datetime."""
+    if ":" == timestamp[-3]:
+        timestamp = timestamp[:-3]+timestamp[-2:]
     return datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S%z')
 
 
