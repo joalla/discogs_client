@@ -3,6 +3,21 @@ class DiscogsAPIError(Exception):
     pass
 
 
+class TooManyAttemptsError(DiscogsAPIError):
+    """
+    Exception class for when the ratelimit for the API is hit too many times
+    consecutively and backing off has not helped.
+    """
+    def __init__(self):
+        self.msg = (
+            "Failed to make request due to the API"
+            "return 429, ratelimited response consecutively too many times. "
+            "Back off function has not helped."
+        )
+
+    def __str__(self):
+        return self.msg
+
 class ConfigurationError(DiscogsAPIError):
     """Exception class for problems with the configuration of this client."""
     def __init__(self, msg):

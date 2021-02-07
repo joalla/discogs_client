@@ -1,7 +1,12 @@
 import unittest
+from unittest.mock import patch, MagicMock
 from datetime import datetime
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client import utils
+from discogs_client.exceptions import HTTPError, TooManyAttemptsError
+
+
+call_count = 0
 
 
 class UtilsTestCase(DiscogsClientTestCase):
@@ -41,17 +46,52 @@ class UtilsTestCase(DiscogsClientTestCase):
         self.assertEqual(p('2012-01-01T00:00:00'), datetime(2012, 1, 1, 0, 0, 0))
         self.assertEqual(p('2001-05-25T00:00:42'), datetime(2001, 5, 25, 0, 0, 42))
 
-    def test_backed_off_when_rate_limit_reached(self):
-        """
-        - Decorator function
-        - When we make a request
-        - it can keep track of the headers returned
-        - How much is there and how much is left
-        - If there is little left, start to ease off - either exponential or fib sequence
-        - It needs to know how much is left at the function level because better to wait before calling than after
-            - After we've already got the results so can return
-        """
-        pass
+
+    @patch('discogs_client.utils.get_backoff_duration')
+    def test_backed_off_when_rate_limit_reached(self, patched_duration):
+
+        # Mock sleep duration returned so it doesn't effect tests speed
+        patched_duration.return_value = 0.00001
+        backoff = utils.backoff
+        mock_ratelimited_response = MagicMock()
+        mock_ratelimited_response.status_code = 429
+
+        mock_ok_response = MagicMock()
+        mock_ok_response.status_code = 200
+
+        @backoff(enabled=True)
+        def always_fails():
+            return mock_ratelimited_response
+
+        @backoff(enabled=True)
+        def returns_non_ratelimit_status_code():
+            return mock_ok_response
+
+        @backoff(enabled=True)
+        def succeeds_after_x_calls():
+            global call_count
+            call_count += 1
+            if call_count < 3:
+                return mock_ratelimited_response
+            else:
+                return mock_ok_response
+
+        @backoff(enabled=False)
+        def function_not_decorated_when_disabled():
+            return mock_ok_response
+
+
+        with self.assertRaises(TooManyAttemptsError):
+            always_fails()
+
+        self.assertEqual(mock_ok_response, returns_non_ratelimit_status_code())
+
+        self.assertEqual(mock_ok_response, succeeds_after_x_calls())
+
+        with patch('discogs_client.utils.get_backoff_duration') as patched_duration:
+            function_not_decorated_when_disabled()
+            self.assertEqual(0, patched_duration.call_count)
+
 
 def suite():
     suite = unittest.TestSuite()

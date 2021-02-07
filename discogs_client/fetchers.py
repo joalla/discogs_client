@@ -15,9 +15,7 @@ class Fetcher:
 
     (It's a slightly leaky abstraction designed to make testing easier.)
     """
-
-    # TODO: Sets a property that enables/disables back off
-
+    backoff_enabled = True
 
     def fetch(self, client, method, url, data=None, headers=None, json=True):
         """Fetch the given request
@@ -29,9 +27,8 @@ class Fetcher:
         """
         raise NotImplementedError()
 
-    @backoff
+    @backoff(backoff_enabled)
     def request(self, method, url, data, headers, params=None):
-        # TODO: Make sure they all pass it in in this order
         response = request(method=method, url=url, data=data, headers=headers, params=params)
         return response
 
@@ -54,7 +51,7 @@ class LoggingDelegator:
 class RequestsFetcher(Fetcher):
     """Fetches via HTTP from the Discogs API."""
     def fetch(self, client, method, url, data=None, headers=None, json=True):
-        resp = request(method, url, data=data, headers=headers)
+        resp = self.request(method, url, data=data, headers=headers)
         self.rate_limit = resp.headers.get(
                 'X-Discogs-Ratelimit')
         self.rate_limit_used = resp.headers.get(
@@ -71,8 +68,9 @@ class UserTokenRequestsFetcher(Fetcher):
 
     def fetch(self, client, method, url, data=None, headers=None, json_format=True):
         data = json.dumps(data) if json_format and data else data
-        resp = self.request(method, url, params={'token':self.user_token},
-                                data=data, headers=headers)
+        resp = self.request(
+            method, url, data=data, headers=headers, params={'token':self.user_token}
+        )
         self.rate_limit = resp.headers.get(
                 'X-Discogs-Ratelimit')
         self.rate_limit_used = resp.headers.get(
@@ -107,10 +105,10 @@ class OAuth2Fetcher(Fetcher):
 
     def fetch(self, client, method, url, data=None, headers=None, json_format=True):
         body = json.dumps(data) if json_format and data else data
-        # uri, headers, body = self.client.sign(url, http_method=method,
-                                              # body=body, headers=headers)
+        uri, headers, body = self.client.sign(url, http_method=method,
+                                              body=body, headers=headers)
 
-        resp = self.request(method, url, headers=headers, data=body)
+        resp = self.request(method, url, data=body, headers=headers)
         self.rate_limit = resp.headers.get(
                 'X-Discogs-Ratelimit')
         self.rate_limit_used = resp.headers.get(
