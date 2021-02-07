@@ -220,12 +220,6 @@ Get the `Label`'s parent label, if it exists:
     <Label "Warp Records Limited">
 
 
-### Backing off when your rate limit has been reached
-
-- We've implemented it backing off when the rate limit has been reached. This is enabled by default but can be switched off:
-
-    >>> d.
-
 ## Contributing
 1. Fork this repo
 2. Create a feature branch

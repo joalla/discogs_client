@@ -11,7 +11,7 @@ class TooManyAttemptsError(DiscogsAPIError):
     def __init__(self):
         self.msg = (
             "Failed to make request due to the API"
-            "return 429, ratelimited response consecutively too many times. "
+            "returning 429, rate limited response, consecutively too many times. "
             "Back off function has not helped."
         )
 
