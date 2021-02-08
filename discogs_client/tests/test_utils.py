@@ -43,19 +43,19 @@ class UtilsTestCase(DiscogsClientTestCase):
 
     def test_condition(self):
         self.assertRaises(TypeError, lambda: utils.Condition())
-        self.assertTrue(utils.Condition.MINT, 'Mint (M)')
-        self.assertTrue(utils.Condition.NEAR_MINT, 'Near Mint (NM or M-)')
+        self.assertEqual(utils.Condition.MINT, 'Mint (M)')
+        self.assertEqual(utils.Condition.NEAR_MINT, 'Near Mint (NM or M-)')
 
     def test_status(self):
         self.assertRaises(TypeError, lambda: utils.Status())
-        self.assertTrue(utils.Status.DRAFT, 'Draft')
-        self.assertTrue(utils.Status.FOR_SALE, 'For Sale')
+        self.assertEqual(utils.Status.DRAFT, 'Draft')
+        self.assertEqual(utils.Status.FOR_SALE, 'For Sale')
 
     def test_sort(self):
         self.assertRaises(TypeError, lambda: utils.Sort())
-        self.assertTrue(utils.Sort.By.ARTIST, 'artist')
-        self.assertTrue(utils.Sort.Order.ASCENDING, 'asc')
-        self.assertTrue(utils.Sort.Order.DESCENDING, 'desc')
+        self.assertEqual(utils.Sort.By.ARTIST, 'artist')
+        self.assertEqual(utils.Sort.Order.ASCENDING, 'asc')
+        self.assertEqual(utils.Sort.Order.DESCENDING, 'desc')
 
 def suite():
     suite = unittest.TestSuite()
