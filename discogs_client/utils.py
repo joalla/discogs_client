@@ -1,6 +1,5 @@
 from datetime import datetime
 from urllib.parse import quote
-from urllib.error import HTTPError
 from discogs_client.exceptions import TooManyAttemptsError
 from time import sleep
 from random import uniform
@@ -42,20 +41,17 @@ def backoff(enabled: bool = True):
             if not enabled:
                 return f(*args, **kwargs)
 
-            result = None
-            attempts = 0
-            while True:
-                attempts += 1
+            for i in range(0, MAX_ATTEMPTS):
                 result = f(*args, **kwargs)
 
                 if result.status_code != 429:
                     return result
-                elif attempts == MAX_ATTEMPTS:
-                    raise TooManyAttemptsError
 
-                duration = get_backoff_duration(attempts)
+                duration = get_backoff_duration(i)
                 sleep(duration)
 
-            return result
+            # Max attempts reached without returning, raise error
+            raise TooManyAttemptsError
+
         return wrapper
     return inner

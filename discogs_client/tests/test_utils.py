@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 from datetime import datetime
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client import utils
-from discogs_client.exceptions import HTTPError, TooManyAttemptsError
+from discogs_client.exceptions import TooManyAttemptsError
 
 
 class UtilsTestCase(DiscogsClientTestCase):
