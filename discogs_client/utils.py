@@ -24,11 +24,11 @@ def omit_none(dict_):
     return {k: v for k, v in dict_.items() if v is not None}
 
 
-def jitter(delay: int) -> int:
+def jitter(delay: int) -> float:
     return uniform(0, delay)
 
 
-def get_backoff_duration(exponent: int) -> int:
+def get_backoff_duration(exponent: int) -> float:
     sleep_duration = 2 ** exponent
     return jitter(sleep_duration)
 

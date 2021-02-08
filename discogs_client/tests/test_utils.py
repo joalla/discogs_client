@@ -48,7 +48,7 @@ class UtilsTestCase(DiscogsClientTestCase):
     def test_backed_off_when_rate_limit_reached(self, patched_duration):
 
         # Mock sleep duration returned so it doesn't effect tests speed
-        patched_duration.return_value = 0.00001
+        patched_duration.return_value = 0
         backoff = utils.backoff
         mock_ratelimited_response = MagicMock()
         mock_ratelimited_response.status_code = 429
