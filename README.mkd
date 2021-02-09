@@ -219,6 +219,13 @@ Get the `Label`'s parent label, if it exists:
     >>> label.parent_label
     <Label "Warp Records Limited">
 
+Disable exponential backoff when rate limit is hit (enabled by default):
+
+```python
+>>> import discogs_client
+>>> d = discogs_client.Client('ExampleApplication/0.1')
+>>> d.backoff_enabled = False
+```
 
 ## Contributing
 1. Fork this repo

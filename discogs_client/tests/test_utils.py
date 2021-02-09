@@ -58,37 +58,45 @@ class UtilsTestCase(DiscogsClientTestCase):
 
         call_count = 0
 
-        @backoff(enabled=True)
-        def always_fails():
-            return mock_ratelimited_response
+        class Tester:
+            # TODO: Move out of the function
+            def __init__(self):
+                self.backoff_enabled = True
 
-        @backoff(enabled=True)
-        def returns_non_ratelimit_status_code():
-            return mock_ok_response
-
-        @backoff(enabled=True)
-        def succeeds_after_x_calls():
-            nonlocal call_count
-            call_count += 1
-            if call_count < 3:
+            @backoff
+            def always_fails(self):
                 return mock_ratelimited_response
-            else:
+
+            @backoff
+            def returns_non_ratelimit_status_code(self):
                 return mock_ok_response
 
-        @backoff(enabled=False)
-        def function_not_decorated_when_disabled():
-            return mock_ok_response
+            @backoff
+            def succeeds_after_x_calls(self):
+                nonlocal call_count
+                call_count += 1
+                if call_count < 3:
+                    return mock_ratelimited_response
+                else:
+                    return mock_ok_response
 
+            @backoff
+            def function_not_decorated_when_disabled(self):
+                # TODO: Potentially rename function
+                return mock_ratelimited_response
+
+        test_class = Tester()
 
         with self.assertRaises(TooManyAttemptsError):
-            always_fails()
+            test_class.always_fails()
 
-        self.assertEqual(mock_ok_response, returns_non_ratelimit_status_code())
+        self.assertEqual(mock_ok_response, test_class.returns_non_ratelimit_status_code())
 
-        self.assertEqual(mock_ok_response, succeeds_after_x_calls())
+        self.assertEqual(mock_ok_response, test_class.succeeds_after_x_calls())
 
         with patch('discogs_client.utils.get_backoff_duration') as patched_duration:
-            function_not_decorated_when_disabled()
+            test_class.backoff_enabled = False
+            test_class.function_not_decorated_when_disabled()
             self.assertEqual(0, patched_duration.call_count)
 
 

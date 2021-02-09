@@ -27,7 +27,7 @@ class Fetcher:
         """
         raise NotImplementedError()
 
-    @backoff(backoff_enabled)
+    @backoff
     def request(self, method, url, data, headers, params=None):
         response = request(method=method, url=url, data=data, headers=headers, params=params)
         return response
