@@ -46,10 +46,11 @@ class UtilsTestCase(DiscogsClientTestCase):
 
     @patch('discogs_client.utils.get_backoff_duration')
     def test_backed_off_when_rate_limit_reached(self, patched_duration):
-
         # Mock sleep duration returned so it doesn't effect tests speed
         patched_duration.return_value = 0
+
         backoff = utils.backoff
+
         mock_ratelimited_response = MagicMock()
         mock_ratelimited_response.status_code = 429
 
@@ -58,8 +59,7 @@ class UtilsTestCase(DiscogsClientTestCase):
 
         call_count = 0
 
-        class Tester:
-            # TODO: Move out of the function
+        class BackoffTestClass:
             def __init__(self):
                 self.backoff_enabled = True
 
@@ -82,16 +82,14 @@ class UtilsTestCase(DiscogsClientTestCase):
 
             @backoff
             def function_not_decorated_when_disabled(self):
-                # TODO: Potentially rename function
                 return mock_ratelimited_response
 
-        test_class = Tester()
+        test_class = BackoffTestClass()
 
         with self.assertRaises(TooManyAttemptsError):
             test_class.always_fails()
 
         self.assertEqual(mock_ok_response, test_class.returns_non_ratelimit_status_code())
-
         self.assertEqual(mock_ok_response, test_class.succeeds_after_x_calls())
 
         with patch('discogs_client.utils.get_backoff_duration') as patched_duration:
