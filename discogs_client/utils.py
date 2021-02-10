@@ -1,13 +1,11 @@
 from datetime import datetime
+from dateutil.parser import parse
 from urllib.parse import quote
 
 
-def parse_timestamp(timestamp):
+def parse_timestamp(timestamp: str) -> datetime:
     """Convert an ISO 8601 timestamp into a datetime."""
-    if ":" == timestamp[-3]:
-        # Colon in timezone string, re-create timestamp string without colon in timezone
-        timestamp = timestamp[:-3]+timestamp[-2:]
-    return datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S%z')
+    return parse(timestamp)
 
 
 def update_qs(url, params):
