@@ -150,13 +150,6 @@ class ModelsTestCase(DiscogsClientTestCase):
         # Fetch users inventory from the filesystem
         u = self.d.user('example')
         self.assertEqual(len(u.inventory), 1)
-        listing = u.inventory[0]
-        self.assertEqual(listing.status, 'For Sale')
-        self.assertEqual(listing.price.value, 149.99)
-        self.assertEqual(listing.allow_offers, True)
-        self.assertEqual(listing.id, 150899904)
-        self.assertEqual(listing.seller.username, 'example')
-        self.assertEqual(listing.release.id, 2992668)
 
         # Stub out expected responses
         self.m._fetcher.fetcher.responses = {
@@ -181,6 +174,51 @@ class ModelsTestCase(DiscogsClientTestCase):
         self.assertEqual(method, 'POST')
         self.assertEqual(url, '/marketplace/listings')
         self.assertEqual(data['release_id'], '1')
+
+    def test_listing(self):
+        """Listing can be manipulated"""
+        # Fetch users inventory from the filesystem
+        u = self.d.user('example')
+
+        # Fetch listing
+        listing = u.inventory[0]
+        method, url, data, headers = self.d._fetcher.requests[1]
+        self.assertEqual(method, 'GET')
+        self.assertEqual(url, '/users/example/inventory?page=1&per_page=50')
+
+        # Test fetching listing information
+        self.assertEqual(listing.status, 'For Sale')
+        self.assertEqual(listing.price.value, 149.99)
+        self.assertEqual(listing.allow_offers, True)
+        self.assertEqual(listing.id, 150899904)
+        self.assertEqual(listing.seller.username, 'example')
+        self.assertEqual(listing.release.id, 2992668)
+
+        # Test manipulating listing
+        listing.status = 'Draft'
+        listing.price = 1.99
+        # Test unsaved price
+        self.assertEqual(listing.price.value, 1.99)
+        listing.allow_offers = False
+        expected = {
+            'status': 'Draft',
+            'price': 1.99,
+            'allow_offers': False,
+        }
+        self.assertEqual(listing.changes, expected)
+        
+        # Test saving
+        listing.save()
+        method, url, data, headers = self.d._fetcher.requests[2]
+        self.assertEqual(method, 'POST')
+        self.assertEqual(url, '/marketplace/listings/150899904')
+        self.assertEqual(data, expected)
+
+        # Refresh
+        method, url, data, headers = self.d._fetcher.requests[3]
+        self.assertEqual(method, 'GET')
+        self.assertEqual(url, '/marketplace/listings/150899904')
+
 
     def test_collection(self):
         """Collection folders can be manipulated"""

@@ -664,22 +664,39 @@ class List(PrimaryAPIObject):
 
 class Listing(PrimaryAPIObject):
     id = SimpleField()
-    status = SimpleField()
-    allow_offers = SimpleField()
-    condition = SimpleField()
-    sleeve_condition = SimpleField()
+    status = SimpleField(writable=True)
+    allow_offers = SimpleField(writable=True)
+    condition = SimpleField(writable=True)
+    sleeve_condition = SimpleField(writable=True)
     ships_from = SimpleField()
-    comments = SimpleField()
+    comments = SimpleField(writable=True)
     audio = SimpleField()
     url = SimpleField(key='uri')
-    price = ObjectField('Price')
     release = ObjectField('Release')
     seller = ObjectField('User')
     posted = SimpleField(transform=parse_timestamp)
+    weight = SimpleField(writable=True)
+    location = SimpleField(writable=True)
+    format_quantity = SimpleField(writable=True)
+    external_id = SimpleField(writable=True)
 
     def __init__(self, client, dict_):
         super(Listing, self).__init__(client, dict_)
         self.data['resource_url'] = '{0}/marketplace/listings/{1}'.format(client._base_url, dict_['id'])
+
+    @property
+    def price(self):
+        # Get unsaved price.value from changes
+        if 'price' in self.changes:
+            return Price(self.client, {
+                'value': self.changes['price'],
+                'currency': self.data['price']['currency']
+            })
+        return Price(self.client, self.fetch('price'))
+
+    @price.setter
+    def price(self, value):
+        self.changes['price'] = value
 
     def __repr__(self):
         return '<Listing {0!r} {1!r}>'.format(self.id, self.release.data['description'])
