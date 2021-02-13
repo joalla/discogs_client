@@ -613,6 +613,7 @@ class CollectionItemInstance(PrimaryAPIObject):
     rating = SimpleField()
     folder_id = SimpleField()
     notes = SimpleField()
+    date_added = SimpleField(transform=parse_timestamp)
     release = ObjectField('Release', key='basic_information')
 
     def __init__(self, client, dict_):

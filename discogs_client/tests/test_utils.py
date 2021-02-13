@@ -1,7 +1,8 @@
 import unittest
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client import utils
+from dateutil.tz import tzutc, tzoffset
 
 
 class UtilsTestCase(DiscogsClientTestCase):
@@ -38,8 +39,22 @@ class UtilsTestCase(DiscogsClientTestCase):
 
     def test_parse_timestamp(self):
         p = utils.parse_timestamp
-        self.assertEqual(p('2012-01-01T00:00:00'), datetime(2012, 1, 1, 0, 0, 0))
-        self.assertEqual(p('2001-05-25T00:00:42'), datetime(2001, 5, 25, 0, 0, 42))
+        self.assertEqual(
+            p('2016-07-27T08:11:29-07:00'),
+            datetime(2016, 7, 27, 8, 11, 29, tzinfo=tzoffset(None, -25200))
+        )
+        self.assertEqual(
+            p('2055-07-27T08:11:29-07:00'),
+            datetime(2055, 7, 27, 8, 11, 29, tzinfo=timezone(timedelta(hours=-7)))
+        )
+        self.assertEqual(
+            p('1930-07-27T08:11:29-00:00'),
+            datetime(1930, 7, 27, 8, 11, 29, tzinfo=timezone.utc)
+        )
+        self.assertEqual(
+            p('1930-07-27T08:11:29-00:00'),
+            datetime(1930, 7, 27, 8, 11, 29, tzinfo=tzutc())
+        )
 
     def test_condition(self):
         self.assertRaises(TypeError, lambda: utils.Condition())
@@ -56,6 +71,7 @@ class UtilsTestCase(DiscogsClientTestCase):
         self.assertEqual(utils.Sort.By.ARTIST, 'artist')
         self.assertEqual(utils.Sort.Order.ASCENDING, 'asc')
         self.assertEqual(utils.Sort.Order.DESCENDING, 'desc')
+
 
 def suite():
     suite = unittest.TestSuite()

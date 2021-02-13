@@ -1,11 +1,12 @@
 from datetime import datetime
+from dateutil.parser import parse
 from urllib.parse import quote
 from enum import Enum
 
 
-def parse_timestamp(timestamp):
+def parse_timestamp(timestamp: str) -> datetime:
     """Convert an ISO 8601 timestamp into a datetime."""
-    return datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S')
+    return parse(timestamp)
 
 
 def update_qs(url, params):
