@@ -2,6 +2,7 @@ import unittest
 from datetime import datetime, timezone, timedelta
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client import utils
+from dateutil.tz import tzutc, tzoffset
 
 
 class UtilsTestCase(DiscogsClientTestCase):
@@ -40,7 +41,19 @@ class UtilsTestCase(DiscogsClientTestCase):
         p = utils.parse_timestamp
         self.assertEqual(
             p('2016-07-27T08:11:29-07:00'),
-            datetime(2016, 7, 27, 8, 11, 29, tzinfo=timezone(timedelta(days=-1, seconds=61200)))
+            datetime(2016, 7, 27, 8, 11, 29, tzinfo=tzoffset(None, -25200))
+        )
+        self.assertEqual(
+            p('2055-07-27T08:11:29-07:00'),
+            datetime(2055, 7, 27, 8, 11, 29, tzinfo=timezone(timedelta(hours=-7)))
+        )
+        self.assertEqual(
+            p('1930-07-27T08:11:29-00:00'),
+            datetime(1930, 7, 27, 8, 11, 29, tzinfo=timezone.utc)
+        )
+        self.assertEqual(
+            p('1930-07-27T08:11:29-00:00'),
+            datetime(1930, 7, 27, 8, 11, 29, tzinfo=tzutc())
         )
 
 def suite():
