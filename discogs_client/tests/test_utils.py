@@ -41,6 +41,21 @@ class UtilsTestCase(DiscogsClientTestCase):
         self.assertEqual(p('2012-01-01T00:00:00'), datetime(2012, 1, 1, 0, 0, 0))
         self.assertEqual(p('2001-05-25T00:00:42'), datetime(2001, 5, 25, 0, 0, 42))
 
+    def test_condition(self):
+        self.assertRaises(TypeError, lambda: utils.Condition())
+        self.assertEqual(utils.Condition.MINT, 'Mint (M)')
+        self.assertEqual(utils.Condition.NEAR_MINT, 'Near Mint (NM or M-)')
+
+    def test_status(self):
+        self.assertRaises(TypeError, lambda: utils.Status())
+        self.assertEqual(utils.Status.DRAFT, 'Draft')
+        self.assertEqual(utils.Status.FOR_SALE, 'For Sale')
+
+    def test_sort(self):
+        self.assertRaises(TypeError, lambda: utils.Sort())
+        self.assertEqual(utils.Sort.By.ARTIST, 'artist')
+        self.assertEqual(utils.Sort.Order.ASCENDING, 'asc')
+        self.assertEqual(utils.Sort.Order.DESCENDING, 'desc')
 
 def suite():
     suite = unittest.TestSuite()
