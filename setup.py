@@ -24,6 +24,7 @@ setup(
         install_requires=[
             'requests',
             'oauthlib',
+            'python-dateutil',
             ],
         packages=[
             'discogs_client',
