@@ -219,12 +219,42 @@ Get the `Label`'s parent label, if it exists:
     >>> label.parent_label
     <Label "Warp Records Limited">
 
+## Back off when API rate limit is hit
+
 Backing off when API rate limit is hit is enabled by default and can be disabled as follows:
 
 ```python
 >>> import discogs_client
 >>> d = discogs_client.Client('ExampleApplication/0.1')
 >>> d.backoff_enabled = False
+```
+
+## Listing
+
+As an authenticated user you can add, edit and delete your own `Listing`s
+
+```python
+from discogs_client import Condition, Status, Sort
+# Add new listing
+me.inventory.add_listing(
+    release=15246519,                       # Also accepts Release object
+    condition=Condition.MINT,               # condition set to 'Mint (M)'
+    price=29.99,
+    status=Status.DRAFT,                    # status set to 'Draft'
+    sleeve_condition=Condition.NEAR_MINT    # sleeve condition set to 'Near Mint (NM or M-)'
+)
+
+# Get most expensive listing and update its price 
+inventory = me.inventory    # Get up to date inventory
+inventory.sort(             # Sort by price in descending order
+    Sort.By.PRICE,          # == 'price'
+    Sort.Order.DESCENDING)  # == 'desc'
+listing = inventory[0]      # Get the first item, i.e. most expensive
+listing.price = 34.99       # Update its price
+listing.save()              # Save changes made to listing
+
+# Delete the listing
+listing.delete()
 ```
 
 ## Contributing
