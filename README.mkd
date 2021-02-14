@@ -243,7 +243,7 @@ listing = inventory[0]      # Get the first item, i.e. most expensive
 listing.price = 34.99       # Update its price
 listing.save()              # Save changes made to listing
 
-# Delete the listing :P
+# Delete the listing
 listing.delete()
 ```
 ## Contributing
