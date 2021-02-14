@@ -1,0 +1,39 @@
+name: Compare version numbers in setup.py and release tag
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [created, published]
+
+jobs:
+  check_versions:
+
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Show setup.py version
+      run: |
+        VERSION=$(python setup.py --version)
+        echo "setup.py contains version $VERSION"
+
+    - name: Show latest tag version
+      run: |
+        TAG=${{ github.event.release.tag_name }}
+        echo "Latest release tag contains version $TAG"
+
+    ##- uses: oprypin/find-latest-tag@v1
+    ##  with:
+    ##    repository: discogs_client/rest.js  # The repository to scan.
+    ##    releases-only: true  # We know that all relevant tags have a GitHub release for them.
+    ##  id: joalla  # The step ID to refer to later.
+ 
+    #- run: echo "Latest release tag is at version ${{ steps.joalla.outputs.tag }}"
