@@ -179,3 +179,13 @@ class Client:
         """Return a User object representing the OAuth-authorized user."""
         resp = self._get(self._base_url + '/oauth/identity')
         return models.User(self, resp)
+
+    @property
+    def backoff_enabled(self) -> bool:
+        return self._fetcher.backoff_enabled
+
+    @backoff_enabled.setter
+    def backoff_enabled(self, value: bool) -> None:
+        if not isinstance(value, bool):
+            raise ValueError("Backoff enabled toggle should be of type bool")
+        self._fetcher.backoff_enabled = value

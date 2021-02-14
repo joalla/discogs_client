@@ -1,4 +1,9 @@
 import unittest
+from unittest.mock import patch, MagicMock
+from datetime import datetime
+from discogs_client.tests import DiscogsClientTestCase
+from discogs_client import utils
+from discogs_client.exceptions import TooManyAttemptsError
 from datetime import datetime, timezone, timedelta
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client import utils
@@ -71,6 +76,60 @@ class UtilsTestCase(DiscogsClientTestCase):
         self.assertEqual(utils.Sort.By.ARTIST, 'artist')
         self.assertEqual(utils.Sort.Order.ASCENDING, 'asc')
         self.assertEqual(utils.Sort.Order.DESCENDING, 'desc')
+
+
+    @patch('discogs_client.utils.get_backoff_duration')
+    def test_backed_off_when_rate_limit_reached(self, patched_duration):
+        # Mock sleep duration returned so it doesn't effect tests speed
+        patched_duration.return_value = 0
+
+        backoff = utils.backoff
+
+        mock_ratelimited_response = MagicMock()
+        mock_ratelimited_response.status_code = 429
+
+        mock_ok_response = MagicMock()
+        mock_ok_response.status_code = 200
+
+        call_count = 0
+
+        class BackoffTestClass:
+            def __init__(self):
+                self.backoff_enabled = True
+
+            @backoff
+            def always_fails(self):
+                return mock_ratelimited_response
+
+            @backoff
+            def returns_non_ratelimit_status_code(self):
+                return mock_ok_response
+
+            @backoff
+            def succeeds_after_x_calls(self):
+                nonlocal call_count
+                call_count += 1
+                if call_count < 3:
+                    return mock_ratelimited_response
+                else:
+                    return mock_ok_response
+
+            @backoff
+            def function_not_decorated_when_disabled(self):
+                return mock_ratelimited_response
+
+        test_class = BackoffTestClass()
+
+        with self.assertRaises(TooManyAttemptsError):
+            test_class.always_fails()
+
+        self.assertEqual(mock_ok_response, test_class.returns_non_ratelimit_status_code())
+        self.assertEqual(mock_ok_response, test_class.succeeds_after_x_calls())
+
+        with patch('discogs_client.utils.get_backoff_duration') as patched_duration:
+            test_class.backoff_enabled = False
+            test_class.function_not_decorated_when_disabled()
+            self.assertEqual(0, patched_duration.call_count)
 
 
 def suite():

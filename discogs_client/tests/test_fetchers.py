@@ -25,12 +25,12 @@ class FetcherTestCase(DiscogsClientTestCase):
 
         self.assertEqual(_fetcher.client.resource_owner_key, None)
         self.assertEqual(_fetcher.client.resource_owner_secret, None)
-        
+
         query_string = b'oauth_token=token&oauth_token_secret=secret'
         token, secret = _fetcher.store_token_from_qs(query_string)
         self.assertEqual(token, 'token')
         self.assertEqual(secret, 'secret')
-        
+
         _fetcher.forget_token()
         self.assertEqual(_fetcher.client.resource_owner_key, None)
         self.assertEqual(_fetcher.client.resource_owner_secret, None)
