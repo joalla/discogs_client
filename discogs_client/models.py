@@ -507,8 +507,29 @@ class Release(PrimaryAPIObject):
         else:
             return None
 
+    @property
+    def marketplace_stats(self):
+        release_id = self.fetch('id')
+        if release_id:
+            return MarketplaceStats(self.client, {'id': release_id})
+        else:
+            return None
+
     def __repr__(self):
         return '<Release {0!r} {1!r}>'.format(self.id, self.title)
+
+
+class MarketplaceStats(PrimaryAPIObject):
+    num_for_sale = SimpleField()
+    blocked_from_sale = SimpleField()
+    lowest_price = ObjectField('Price')
+
+    def __init__(self, client, dict_):
+        super(MarketplaceStats, self).__init__(client, dict_)
+        self.data['resource_url'] = '{0}/marketplace/stats/{1}'.format(client._base_url, dict_['id'])
+
+    def __repr__(self):
+        return '<MarketplaceStats {0!r} for sale>'.format(self.num_for_sale)
 
 
 class Master(PrimaryAPIObject):
@@ -792,6 +813,7 @@ class ListItem(SecondaryAPIObject):
 CLASS_MAP = {
     'artist': Artist,
     'release': Release,
+    'marketplacestats': MarketplaceStats,
     'master': Master,
     'label': Label,
     'price': Price,
