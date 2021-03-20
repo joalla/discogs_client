@@ -206,7 +206,7 @@ class ModelsTestCase(DiscogsClientTestCase):
             'allow_offers': False,
         }
         self.assertEqual(listing.changes, expected)
-        
+
         # Test saving
         listing.save()
         method, url, data, headers = self.d._fetcher.requests[2]
@@ -282,6 +282,20 @@ class ModelsTestCase(DiscogsClientTestCase):
         me = self.d.identity()
         self.assertEqual(me.data['consumer_name'], 'Test Client')
         self.assertEqual(me, self.d.user('example'))
+
+    def test_marketplace_stats(self):
+        """Release stats can be fetched and parsed"""
+        stats = self.d.release(1).marketplace_stats
+
+        # Assert that returned stats are correct.
+        self.assertEqual(stats.num_for_sale, 10)
+        self.assertEqual(stats.lowest_price.value, 100)
+        self.assertEqual(stats.lowest_price.currency, 'EUR')
+
+        # Assert that request URL and method is correct.
+        method, url, data, headers = self.d._fetcher.requests[0]
+        self.assertEqual(method, 'GET')
+        self.assertEqual(url, '/marketplace/stats/1')
 
 
 def suite():
