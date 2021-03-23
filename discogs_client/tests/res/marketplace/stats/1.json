@@ -1,0 +1,7 @@
+{
+  "num_for_sale": 10,
+  "lowest_price": {
+    "value": 100,
+    "currency": "EUR"
+  }
+}
