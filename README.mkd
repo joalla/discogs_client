@@ -26,11 +26,13 @@ $ pip install python3-discogs-client
 >>> d = discogs_client.Client('ExampleApplication/0.1')
 ```
 
+_Have a look at the [quickstart section](https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html) of our documentation pages._
+
 ### Authorization (optional)
 
 There are a couple of different authorization methods you can choose from depending on your requirements.
 
-#### OAuth authentication ####
+#### OAuth authentication
 
 This method will allow your application to make requests on behalf of any user who logs in.
 
@@ -70,7 +72,7 @@ u"I'm Joe Bloggs (example) from Portland, Oregon."
 4
 ```
 
-#### User-token authentication ####
+#### User-token authentication
 
 This is one of the simplest ways to authenticate and become able to perform requests requiring authentication, such as search (see below). The downside is that you'll be limited to the information only your user account can see (i.e., no requests on behalf of other users).
 
@@ -79,6 +81,10 @@ For this, you'll need to generate a user-token from your developer settings on t
 ```python
 >>> d = discogs_client.Client('ExampleApplication/0.1', user_token="my_user_token")
 ```
+
+#### More information
+
+_Have a look at the [authentication section](https://python3-discogs-client.readthedocs.org/en/latest/authentication.html) of our documentation pages._
 
 ### Fetching data
 
@@ -111,163 +117,12 @@ You can drill down as far as you like.
 134
 ```
 
-## Artist
+_Have a look at the [fetching data section](https://python3-discogs-client.readthedocs.org/en/latest/fetching_data.html) of our documentation pages._
 
-Query for an artist using the artist's name:
 
-```python
->>> artist = d.artist(956139)
->>> print artist
-<Artist "...">
->>> 'name' in artist.data.keys()
-True
-```
+## Marketplace listing
 
-### Special properties
-
-Get a list of `Artist`s representing this artist's aliases:
-
-```python
->>> artist.aliases
-[...]
-```
-
-Get a list of `Release`s by this artist by page number:
-
-```python
->>> artist.releases.page(1)
-[...]
-```
-
-## Release
-
-Query for a release using its Discogs ID:
-
-```python
->>> release = d.release(221824)
-```
-
-### Special properties
-
-Get the title of this `Release`:
-
-```python
->>> release.title
-'...'
-```
-
-Get a list of all `Artist`s associated with this `Release`:
-
-```python
->>> release.artists
-[<Artist "...">]
-```
-
-Get the tracklist for this `Release`:
-
-```python
->>> release.tracklist
-[...]
-```
-
-Get the `MasterRelease` for this `Release`:
-
-```python
->>> release.master
-<MasterRelease "...">
-```
-
-Get a list of all `Label`s for this `Release`:
-
-```python
->>> release.labels
-[...]
-```
-
-## MasterRelease
-
-Query for a master release using its Discogs ID:
-
-```python
->>> master_release = d.master(120735)
-```
-
-### Special properties
-
-Get the key `Release` for this `MasterRelease`:
-
-```python
->>> master_release.main_release
-<Release "...">
-```
-
-Get the title of this `MasterRelease`:
-
-```python
->>> master_release.title
-'...'
->>> master_release.title == master_release.main_release.title
-True
-```
-
-Get a list of `Release`s representing other versions of this `MasterRelease` by page number:
-
-```python
->>> master_release.versions.page(1)
-[...]
-```
-
-Get the tracklist for this `MasterRelease`:
-
-```python
->>> master_release.tracklist
-[...]
-```
-
-## Label
-
-Query for a label using the label's name:
-
-```python
->>> label = d.label(6170)
-```
-
-### Special properties
-
-Get a list of `Release`s from this `Label` by page number:
-
-```python
->>> label.releases.page(1)
-[...]
-```
-
-Get a list of `Label`s representing sublabels associated with this `Label`:
-
-```python
->>> label.sublabels
-[...]
-```
-
-Get the `Label`'s parent label, if it exists:
-
-```python
->>> label.parent_label
-<Label "Warp Records Limited">
-```
-
-## Back off and auto retry when API rate limit is hit
-
-Backing off and auto retry when API rate limit is hit is enabled by default and can be disabled as follows:
-
-```python
->>> import discogs_client
->>> d = discogs_client.Client('ExampleApplication/0.1')
->>> d.backoff_enabled = False
-```
-
-## Listing
-
-As an authenticated user you can add, edit and delete your own `Listing`s
+As an authenticated user you can add, edit and delete your own marketplace `Listing`s.
 
 ```python
 from discogs_client import Condition, Status, Sort
@@ -279,25 +134,18 @@ me.inventory.add_listing(
     status=Status.DRAFT,                    # status set to 'Draft'
     sleeve_condition=Condition.NEAR_MINT    # sleeve condition set to 'Near Mint (NM or M-)'
 )
-
-# Get most expensive listing and update its price 
-inventory = me.inventory    # Get up to date inventory
-inventory.sort(             # Sort by price in descending order
-    Sort.By.PRICE,          # == 'price'
-    Sort.Order.DESCENDING)  # == 'desc'
-listing = inventory[0]      # Get the first item, i.e. most expensive
-listing.price = 34.99       # Update its price
-listing.save()              # Save changes made to listing
-
-# Delete the listing
-listing.delete()
 ```
 
+_To learn how to update your inventory and delete `Listing`s, have a look at the [marketplace listing section](https://python3-discogs-client.readthedocs.org/en/latest/listing.html) of our documentation pages._
+
+
 ## Contributing
+
 1. Fork this repo
 2. Create a feature branch
 3. Open a pull-request
 
-### For more information
 
-Check the included documentation, or just spin up a REPL and use `dir()` on things :)
+## For more information
+
+Check the [discogs_client python package documentation](python3-discogs-client.readthedocs.org/en/latest/discogs_client.html), or just spin up a REPL and use `dir()` on things :)

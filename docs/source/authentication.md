@@ -1,4 +1,4 @@
-## Authentication
+# Authentication
 
 There are two forms of authentication the Discogs API allows: OAuth and
 Discogs Auth
@@ -15,7 +15,7 @@ seller account).
 
 We will cover both forms of authentication below.
 
-### Discogs Authentication
+## User-token Authentication
 
 This is the more simple of the two methods of authenticating. Assuming you have generated a Discogs User Token in your Discogs developer settings, you can simply supply your token to the `Client` class:
 
@@ -26,7 +26,7 @@ ds = dc.Client('my_user_agent/1.0', user_token='my_user_token')
 
 That's it! You are now free to make authenticated requests.
 
-### OAuth Authentication
+## OAuth Authentication
 
 OAuth is an open protocol commonly used for authorization (and in this case, authentication as well). For more information on the OAuth specification, please visit the OAuth website: http://oauth.net/
 

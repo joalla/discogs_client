@@ -1,6 +1,6 @@
-## Quickstart
+# Quickstart
 
-### Instantiating the client object
+## Instantiating the client object
 
 ```python
 >>> import discogs_client
@@ -27,7 +27,7 @@ artists = release.artists
 As you can see, once you fetch data from an endpoint, you can call various
 properties and methods on those objects.
 
-### Searching
+## Searching
 
 Simple example:
 
@@ -54,7 +54,7 @@ print(results.page(1))
 ```
 
 
-### Most other objects
+## Most other objects
 
 Objects contain many callable properties. For a full list of properties, call the Python `dir()` function with the object as a parameter.
 
