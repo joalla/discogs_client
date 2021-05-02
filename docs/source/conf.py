@@ -64,4 +64,6 @@ html_theme_options = {
     'prev_next_buttons_location': 'bottom'
 }
 
+html_last_updated_fmt = "%b %d, %Y"
+
 myst_heading_anchors = 7
