@@ -1,14 +1,17 @@
 # Marketplace listing
 
-As an authenticated user you can add, edit and delete your own marketplace `Listing`s.
+As an authenticated user you can add, edit and delete your own marketplace listings.
 
-## Add new `Listing`
+## Add
 
 ```python
-from discogs_client import Condition, Status, Sort
-# Add new listing
+from discogs_client import Client, Condition, Status, Sort
+
+d = Client('user-agent', user_token='my_user_token')
+me = d.identity()
+
 me.inventory.add_listing(
-    release=15246519,                       # Also accepts Release object
+    release=15246519,                       # Also accepts an Release object
     condition=Condition.MINT,               # condition set to 'Mint (M)'
     price=29.99,
     status=Status.DRAFT,                    # status set to 'Draft'
@@ -16,7 +19,10 @@ me.inventory.add_listing(
 )
 ```
 
-## Update `Listing`
+See the module documentation for possible values of condition {class}`discogs_client.utils.Condition` and status {class}`discogs_client.utils.Status`.
+
+
+## Update
 
 Get the most expensive listing and update its price.
 
@@ -30,9 +36,12 @@ listing.price = 34.99       # Update its price
 listing.save()              # Save changes made to listing
 ```
 
-## Delete `Listing`
+See the module documentation for possible values of sort criteria and sort
+order {class}`discogs_client.utils.Sort`.
 
-Instantiate a listing object as descibed in the previous example and call
+## Delete
+
+Instantiate a listing object as described in the previous example and call
 
 ```python
 listing.delete()
