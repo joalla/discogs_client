@@ -122,7 +122,7 @@ _Have a look at the [fetching data section](https://python3-discogs-client.readt
 
 ## Marketplace listing
 
-As an authenticated user you can add, edit and delete your own marketplace `Listing`s.
+As an authenticated user you can add, edit and delete your own marketplace listings.
 
 ```python
 from discogs_client import Condition, Status, Sort
@@ -136,7 +136,7 @@ me.inventory.add_listing(
 )
 ```
 
-_To learn how to update your inventory and delete `Listing`s, have a look at the [marketplace listing section](https://python3-discogs-client.readthedocs.org/en/latest/listing.html) of our documentation pages._
+_To learn how to update your inventory and delete listings, have a look at the [marketplace listing section](https://python3-discogs-client.readthedocs.org/en/latest/listing.html) of our documentation pages._
 
 
 ## Contributing
@@ -148,4 +148,6 @@ _To learn how to update your inventory and delete `Listing`s, have a look at the
 
 ## For more information
 
-Check the [discogs_client python package documentation](python3-discogs-client.readthedocs.org/en/latest/discogs_client.html), or just spin up a REPL and use `dir()` on things :)
+- Read through [python3-discogs-client.readthedocs.org](https://pyhon3-discogs-client.readthedocs.org) for step by step instructions.
+- Check the [discogs_client Python package documentation](python3-discogs-client.readthedocs.org/en/latest/discogs_client.html) to find out details on specific modules, classes, methods, ...
+- Or just spin up a REPL and use `dir()` on things :)

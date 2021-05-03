@@ -1,6 +1,6 @@
 # Marketplace listing
 
-As an authenticated user you can add, edit and delete your own marketplace listings.
+As an authenticated user you can add, edit and delete your own marketplace `Listing`s.
 
 ## Add
 
@@ -41,10 +41,14 @@ order {class}`discogs_client.utils.Sort`.
 
 ## Delete
 
-Instantiate a listing object as described in the previous example and call
+Instantiate a `Listing` object as described in the previous example and call
 
 ```python
 listing.delete()
 ```
 
 to remove it.
+
+## More information
+
+View the module documentation at {class}`discogs_client.models.Inventory` and {class}`discogs_client.models.Listing`
