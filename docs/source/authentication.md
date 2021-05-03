@@ -17,11 +17,11 @@ We will cover both forms of authentication below.
 
 ## User-token Authentication
 
-This is the more simple of the two methods of authenticating. Assuming you have generated a Discogs User Token in your Discogs developer settings, you can simply supply your token to the `Client` class:
+This is the simpler one of the two authentication methods. Assuming you have generated a Discogs User Token in your Discogs developer settings, you can simply supply it to the `Client` class:
 
 ```python
-import discogs_client as dc
-ds = dc.Client('my_user_agent/1.0', user_token='my_user_token')
+import discogs_client
+d = discogs_client.Client('my_user_agent/1.0', user_token='my_user_token')
 ```
 
 That's it! You are now free to make authenticated requests.
@@ -34,13 +34,13 @@ A Discogs consumer key and consumer secret are required for OAuth, and we can su
 
 Begin by importing the client library:
 ```python
-import discogs_client as dc
+import discogs_client
 ```
 
 1. Instantiating the `Client` class with the consumer key and secret:
 
     ```python
-    ds = dc.Client(
+    d = discogs_client.Client(
         'my_user_agent/1.0',
         consumer_key='my_consumer_key',
         consumer_secret='my_consumer_secret'
@@ -50,7 +50,7 @@ import discogs_client as dc
     You can also supply your OAuth token and token secret if you already have them saved, as so:
 
     ```python
-    ds = dc.Client(
+    d = discogs_client.Client(
         'my_user_agent/1.0',
         consumer_key='my_consumer_key',
         consumer_secret='my_consumer_secret',
@@ -62,21 +62,21 @@ import discogs_client as dc
 2. Calling the `set_consumer_key()` method
 
     ```python
-    ds = dc.Client('my_user_agent/1.0')
-    ds.set_consumer_key('my_consumer_key', 'my_consumer_secret')
+    d = discogs_client.Client('my_user_agent/1.0')
+    d.set_consumer_key('my_consumer_key', 'my_consumer_secret')
     ```
 
-These two methods do the same thing; their use is up to your preference. 
+These two method do the same thing; their use is up to your preference.
 
 From here, we need to finish the OAuth process.
 
 * Get authorization URL
 
     ```python
-    ds.get_authorize_url()
+    d.get_authorize_url()
     ```
 
-    This will return a tuple with the request token, request secret, and the authorization URL that your user needs to visit to accept your app's request to sign in on their behalf.
+    This will return a tuple with the request token, request secret, and the authorization URL that your user need to visit to accept your app's request to sign in on their behalf.
 
     If you are writing a web application, you can specify a `callback_url` string to this method to receive the request token and request secret in the HTTP response.
 
@@ -91,7 +91,7 @@ From here, we need to finish the OAuth process.
 From here, you are free to make OAuth-based requests. A smoke-test to verify everything is working is to call the `identity()` method:
 
 ```python
-me = ds.identity()
+me = d.identity()
 ```
 
 This will return a `User` object if everything is okay.
