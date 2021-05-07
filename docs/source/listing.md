@@ -1,6 +1,7 @@
 # Marketplace listing
 
-As an authenticated user you can add, edit and delete your own marketplace `Listing`s.
+As an authenticated user you can add, edit and delete your own marketplace
+`Listing`s.
 
 ## Add
 
@@ -19,7 +20,9 @@ me.inventory.add_listing(
 )
 ```
 
-See the module documentation for possible values of condition {class}`discogs_client.utils.Condition` and status {class}`discogs_client.utils.Status`.
+See the module documentation for possible values of condition
+{class}`discogs_client.utils.Condition` and status
+{class}`discogs_client.utils.Status`.
 
 
 ## Update
@@ -51,4 +54,5 @@ to remove it.
 
 ## More information
 
-View the module documentation at {class}`discogs_client.models.Inventory` and {class}`discogs_client.models.Listing`
+View the module documentation at {class}`discogs_client.models.Inventory` and
+{class}`discogs_client.models.Listing`

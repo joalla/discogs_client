@@ -1,17 +1,28 @@
 # python3-discogs-client
 
-This is an active fork of the official "Discogs API client for Python", which was deprecated by discogs.com as of June 2020. We think it is a very useful Python module and decided to continue maintaining it. If you'd like to contribute your code, you are very welcome to submit a pull-request as described [here](#contributing).
+This is an active fork of the official "Discogs API client for Python", which
+was deprecated by discogs.com as of June 2020. We think it is a very useful
+Python module and decided to continue maintaining it. If you'd like to
+contribute your code, you are very welcome to submit a pull-request as described
+[here](#contributing).
 
-[python3-discogs-client](https://pypi.org/project/python3-discogs-client/) enables you to query the Discogs database (discogs.com) through its REST-API for information on artists, releases, labels, users, Marketplace listings, and more. It also supports OAuth 1.0a authorization, which allows you to change user data such as profile information, collections and wantlists, inventory, and orders.
+[python3-discogs-client](https://pypi.org/project/python3-discogs-client/)
+enables you to query the Discogs database (discogs.com) through its REST-API for
+information on artists, releases, labels, users, Marketplace listings, and more.
+It also supports OAuth 1.0a authorization, which allows you to change user data
+such as profile information, collections and wantlists, inventory, and orders.
 
-Find usage information on this README page or search and ask in the API section of the Discogs developer forum at https://www.discogs.com/forum/topic/1082.
+Find usage information on this README page or search and ask in the API section
+of the Discogs developer forum at https://www.discogs.com/forum/topic/1082.
 
-[![Build Status](https://travis-ci.org/joalla/discogs_client.svg?branch=master)](https://travis-ci.org/joalla/discogs_client)
-[![Coverage Status](https://coveralls.io/repos/github/joalla/discogs_client/badge.svg)](https://coveralls.io/github/joalla/discogs_client)
+[![Coverage Status](
+https://coveralls.io/repos/github/joalla/discogs_client/badge.svg)](
+https://coveralls.io/github/joalla/discogs_client)
 
 ## Installation
 
-Install [the client from PyPI](https://pypi.org/project/python3-discogs-client/) using your favorite package manager.
+Install [the client from PyPI](https://pypi.org/project/python3-discogs-client/)
+using your favorite package manager.
 
 ```sh
 $ pip install python3-discogs-client
@@ -26,65 +37,41 @@ $ pip install python3-discogs-client
 >>> d = discogs_client.Client('ExampleApplication/0.1')
 ```
 
-_Have a look at the [quickstart section](https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html) of our documentation pages._
+_For more information, have a look at the
+[quickstart section](
+https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html)
+of our documentation pages._
 
 ### Authorization (optional)
 
-There are a couple of different authorization methods you can choose from depending on your requirements.
+There are two different authorization methods you can choose from depending on
+your requirements:
+[User-token](
+https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#user-token-authorization)
+and [OAuth](
+https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#oauth-authorization)
+authentication.
 
-#### OAuth authentication
-
-This method will allow your application to make requests on behalf of any user who logs in.
-
-For this, specify your app's consumer key and secret:
-
-```python
->>> d.set_consumer_key('key-here', 'secret-here')
->>> # Or you can do this when you instantiate the Client
-```
-
-Then go through the OAuth 1.0a process. In a web app, we'd specify a `callback_url`. In this example, we'll use the OOB flow.
-
-```python
->>> d.get_authorize_url()
-('request-token', 'request-secret', 'authorize-url-here')
-```
-    
-The client will hang on to the access token and secret, but in a web app, you'd want to persist those and pass them into a new `Client` instance on the next request.
-
-Next, visit the authorize URL, authenticate as a Discogs user, and get the verifier:
-
-```python
->>> d.get_access_token('verifier-here')
-('access-token-here', 'access-secret-here')
-```
-
-Now you can make requests on behalf of the user.
-
-```python
->>> me = d.identity()
->>> "I'm {0} ({1}) from {2}.".format(me.name, me.username, me.location)
-u"I'm Joe Bloggs (example) from Portland, Oregon."
->>> len(me.wantlist)
-3
->>> me.wantlist.add(d.release(5))
->>> len(me.wantlist)
-4
-```
 
 #### User-token authentication
 
-This is one of the simplest ways to authenticate and become able to perform requests requiring authentication, such as search (see below). The downside is that you'll be limited to the information only your user account can see (i.e., no requests on behalf of other users).
+This is the quickest way to authenticate and become able to perform requests
+requiring authentication, such as search (see below). The downside is that
+you'll be limited to the information only your user account can see (i.e., no
+requests on behalf of other users).
 
-For this, you'll need to generate a user-token from your developer settings on the Discogs website.
+For this, you'll need to
+[generate a user-token from your developer settings](
+https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#user-token-authentication)
+on the Discogs website.
 
 ```python
 >>> d = discogs_client.Client('ExampleApplication/0.1', user_token="my_user_token")
 ```
 
-#### More information
-
-_Have a look at the [authentication section](https://python3-discogs-client.readthedocs.org/en/latest/authentication.html) of our documentation pages._
+_**Head to the [authentication section
+section](https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#oauth-authentication)
+of our docs to learn about the OAuth authentication method.**_
 
 ### Fetching data
 
@@ -117,7 +104,9 @@ You can drill down as far as you like.
 134
 ```
 
-_Have a look at the [fetching data section](https://python3-discogs-client.readthedocs.org/en/latest/fetching_data.html) of our documentation pages._
+_**Have a look at the [fetching data
+section](https://python3-discogs-client.readthedocs.org/en/latest/fetching_data.html)
+of our documentation pages.**_
 
 
 ## Marketplace listing
@@ -136,7 +125,10 @@ me.inventory.add_listing(
 )
 ```
 
-_To learn how to update your inventory and delete listings, have a look at the [marketplace listing section](https://python3-discogs-client.readthedocs.org/en/latest/listing.html) of our documentation pages._
+_**To learn how to update your inventory and delete listings, have a look at the
+[marketplace listing section](
+https://python3-discogs-client.readthedocs.org/en/latest/listing.html) of our
+docs.**_
 
 
 ## Contributing

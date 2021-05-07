@@ -1,5 +1,8 @@
 # Fetching data
 
+Note that the examples in this chapter are shown using a Python REPL and require
+an existing [Client object](quickstart.md) already.
+
 ## Artist
 
 Query for an artist using the artist's name:
@@ -99,7 +102,8 @@ Get the title of this `MasterRelease`:
 True
 ```
 
-Get a list of `Release`s representing other versions of this `MasterRelease` by page number:
+Get a list of `Release`s representing other versions of this `MasterRelease` by
+page number:
 
 ```python
 >>> master_release.versions.page(1)
