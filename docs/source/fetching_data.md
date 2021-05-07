@@ -9,7 +9,7 @@ Query for an artist using the artist's name:
 
 ```python
 >>> artist = d.artist(956139)
->>> print artist
+>>> print(artist)
 <Artist "...">
 >>> 'name' in artist.data.keys()
 True
@@ -119,7 +119,7 @@ Get the tracklist for this `MasterRelease`:
 
 ## Label
 
-Query for a label using the label's name:
+Query for a label using the label's ID:
 
 ```python
 >>> label = d.label(6170)

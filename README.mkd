@@ -40,7 +40,7 @@ $ pip install python3-discogs-client
 _For more information, have a look at the
 [quickstart section](
 https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html)
-of our documentation pages._
+in our documentation pages._
 
 ### Authorization (optional)
 
@@ -56,9 +56,7 @@ authentication.
 #### User-token authentication
 
 This is the quickest way to authenticate and become able to perform requests
-requiring authentication, such as search (see below). The downside is that
-you'll be limited to the information only your user account can see (i.e., no
-requests on behalf of other users).
+requiring authentication, such as search (see below).
 
 For this, you'll need to
 [generate a user-token from your developer settings](
@@ -69,9 +67,9 @@ on the Discogs website.
 >>> d = discogs_client.Client('ExampleApplication/0.1', user_token="my_user_token")
 ```
 
-_**Head to the [authentication section
+_Head to the [authentication
 section](https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#oauth-authentication)
-of our docs to learn about the OAuth authentication method.**_
+in our docs to learn about the OAuth authentication method._
 
 ### Fetching data
 
@@ -104,9 +102,12 @@ You can drill down as far as you like.
 134
 ```
 
-_**Have a look at the [fetching data
-section](https://python3-discogs-client.readthedocs.org/en/latest/fetching_data.html)
-of our documentation pages.**_
+_Have a look at the
+[searching](
+https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html#searching)
+and [fetching data](
+https://python3-discogs-client.readthedocs.org/en/latest/fetching_data.html)
+sections in our documentation pages._
 
 
 ## Marketplace listing
@@ -125,10 +126,10 @@ me.inventory.add_listing(
 )
 ```
 
-_**To learn how to update your inventory and delete listings, have a look at the
+_To learn how to update your inventory and delete listings, have a look at the
 [marketplace listing section](
-https://python3-discogs-client.readthedocs.org/en/latest/listing.html) of our
-docs.**_
+https://python3-discogs-client.readthedocs.org/en/latest/listing.html) in our
+docs._
 
 
 ## Contributing
@@ -140,6 +141,6 @@ docs.**_
 
 ## For more information
 
-- Read through [python3-discogs-client.readthedocs.org](https://pyhon3-discogs-client.readthedocs.org) for step by step instructions.
-- Check the [discogs_client Python package documentation](python3-discogs-client.readthedocs.org/en/latest/discogs_client.html) to find out details on specific modules, classes, methods, ...
+- Read through [python3-discogs-client.readthedocs.org](https://python3-discogs-client.readthedocs.org) for step by step instructions.
+- Check the [discogs_client Python package documentation](https://python3-discogs-client.readthedocs.org/en/latest/discogs_client.html) to find out details on specific modules, classes, methods, ...
 - Or just spin up a REPL and use `dir()` on things :)

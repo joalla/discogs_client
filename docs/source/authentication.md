@@ -30,17 +30,20 @@ import discogs_client
 d = discogs_client.Client('my_user_agent/1.0', user_token='my_user_token')
 ```
 
-That's it! You are now free to make authenticated requests.
+That's it! You are now free to make authenticated requests. The downside is
+that you'll be limited to the information only your user account can see
+(i.e., no requests on behalf of other users).
+
 
 
 ## OAuth Authentication
 
 OAuth is an open protocol commonly used for authorization (and in this case,
-authentication as well). For more information on the OAuth specification, please
-visit the OAuth website: http://oauth.net/
+authentication as well). For more information on the OAuth specification,
+please visit the OAuth website: http://oauth.net/
 
-A Discogs consumer key and consumer secret are required for OAuth, to get those
-go to the developer's section of your Discogs user account settings:
+A Discogs consumer key and consumer secret are required for OAuth, to get
+those go to the developer's section of your Discogs user account settings:
 
 ["Click user avatar on top right of screen" - "Settings" - "Developers"](
 https://www.discogs.com/settings/developers) - "Create
@@ -127,7 +130,7 @@ add a custom callback url.
 
     This will return a `User` object if everything is okay.
 
-### More information
+## More information
 
 Find out more details about the authentication methods in the module
-documentation: {class}`discogs_client.Client`
+documentation: {class}`discogs_client.client.Client`

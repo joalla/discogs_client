@@ -12,7 +12,7 @@ required for Discogs API requests, as it identifies your application to the
 Discogs servers.
 
 There are more parameters the `Client` class accepts on instantiation; please
-refer to the `Authorization` file for more details.
+refer to the [authentication chapter](authentication.md) for more details.
 
 Once instantiated, you can either start making requests to endpoints that do not
 require authentication, or you can authenticate and make requests to a wider
@@ -40,8 +40,8 @@ results = d.search('Can I borrow a feeling?')
 ```
 
 The search method allows for all of the parameters that the raw Discogs API
-allows. A full list of available parameters is found here:
-http://www.discogs.com/developers/#page:database,header:database-search
+allows. A full list of available parameters [is found
+here.](http://www.discogs.com/developers/#page:database,header:database-search)
 
 Examples using parameters:
 
@@ -62,7 +62,8 @@ print(results.page(1))
 
 ## Most other objects
 
-Objects contain many callable properties. For a full list of properties, call
+Objects contain many callable properties. Some examples are shown in the
+[fetching data section](fetching_data.md). For a full list of properties, call
 the Python `dir()` function with the object as a parameter.
 
 Also look into the documentation of the models module at
