@@ -8,6 +8,8 @@ discogs\_client.client module
    :members:
    :undoc-members:
    :show-inheritance:
+   :private-members:
+   :special-members:
 
 discogs\_client.exceptions module
 ---------------------------------

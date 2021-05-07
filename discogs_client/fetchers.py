@@ -20,10 +20,22 @@ class Fetcher:
     def fetch(self, client, method, url, data=None, headers=None, json=True):
         """Fetch the given request
 
-        Returns
-        -------
-        content : str (python2) or bytes (python3)
-        status_code : int
+        Args:
+            client: An instantiated client.Client object? FIXME Alistair
+            method (str): HTTP method to use
+            url (str): API endpoint URL
+            data (dict, optional): The request's body. Defaults to None.
+            headers (dict, optional): HTTP header's sent. Defaults to None.
+            json (bool, optional): If True content is returned as a JSON string,
+                else FIXME Alistair. Defaults to True.
+
+        Returns:
+            tuple:
+                - content (bytes): The content of the API response
+                - status_code (int): The status code returned by the API
+
+        Raises:
+            NotImplementedError: Is raised if FIXME Alistair
         """
         raise NotImplementedError()
 
@@ -67,6 +79,8 @@ class UserTokenRequestsFetcher(Fetcher):
         self.user_token = user_token
 
     def fetch(self, client, method, url, data=None, headers=None, json_format=True):
+        """Fetch the given request on the user's behalf
+        """
         data = json.dumps(data) if json_format and data else data
         resp = self.request(
             method, url, data=data, headers=headers, params={'token':self.user_token}
