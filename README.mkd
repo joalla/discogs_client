@@ -14,11 +14,6 @@ Find usage information on this README page or search and ask in the API section 
 Install [the client from PyPI](https://pypi.org/project/python3-discogs-client/) using your favorite package manager.
 
 ```sh
-$ pip install python3-discogs-client
-```
-or if you are running one of the linux distributions that require `python3` or `pip3` install using:
-
-```sh
 $ pip3 install python3-discogs-client
 ```
 
