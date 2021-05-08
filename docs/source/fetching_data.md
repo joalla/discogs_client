@@ -62,6 +62,18 @@ Get the tracklist for this `Release`:
 [...]
 ```
 
+Get details of the first track on this `Release`
+
+```python
+>>> release.tracklist[0].title
+[...]
+>>> release.tracklist[0].duration
+[...]
+```
+
+Find the available properties of a `Track` object in the module docs:
+{class}discogs_client.models.Track
+
 Get the `MasterRelease` for this `Release`:
 
 ```python
