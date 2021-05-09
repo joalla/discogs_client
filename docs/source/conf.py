@@ -67,3 +67,10 @@ html_theme_options = {
 html_last_updated_fmt = "%b %d, %Y"
 
 myst_heading_anchors = 7
+
+# -- autodoc tuning -------------------------------------------------
+# don't show docstring of parent classes on childs
+autodoc_inherit_docstrings = False
+
+# show docstring of class AND __init__ method
+autoclass_content = 'both'

@@ -9,7 +9,7 @@ discogs\_client.client module
    :undoc-members:
    :show-inheritance:
    :private-members:
-   :special-members:
+   :member-order: bysource
 
 discogs\_client.exceptions module
 ---------------------------------
@@ -18,6 +18,8 @@ discogs\_client.exceptions module
    :members:
    :undoc-members:
    :show-inheritance:
+   :private-members:
+   :member-order: bysource
 
 discogs\_client.fetchers module
 -------------------------------
@@ -26,6 +28,8 @@ discogs\_client.fetchers module
    :members:
    :undoc-members:
    :show-inheritance:
+   :private-members:
+   :member-order: bysource
 
 discogs\_client.models module
 -----------------------------
@@ -33,7 +37,8 @@ discogs\_client.models module
 .. automodule:: discogs_client.models
    :members:
    :undoc-members:
-   :show-inheritance:
+   :private-members:
+   :member-order: bysource
 
 discogs\_client.utils module
 ----------------------------
@@ -42,3 +47,14 @@ discogs\_client.utils module
    :members:
    :undoc-members:
    :show-inheritance:
+   :private-members:
+   :member-order: bysource
+
+discogs\_client.utils.Sort.By FIXME this is an experiment
+---------------------------------------------------------
+.. autoclass:: discogs_client.utils.Sort.By
+   :members:
+   :show-inheritance:
+   :private-members:
+   :special-members:
+   :member-order: bysource
