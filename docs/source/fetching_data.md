@@ -72,7 +72,7 @@ Get details of the first track on this `Release`
 ```
 
 Find the available properties of a `Track` object in the module docs:
-{class}discogs_client.models.Track
+{class}`discogs_client.models.Track`
 
 Get the `MasterRelease` for this `Release`:
 
