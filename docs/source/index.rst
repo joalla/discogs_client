@@ -10,11 +10,13 @@ python3-discogs-client documentation
    :maxdepth: 2
    :caption: Contents:
 
+   about.md
    quickstart.md
    authentication.md
    fetching_data.md
    listing.md
    requests_rate_limit.md
+   contribution.md
    discogs_client
 
 

@@ -42,7 +42,8 @@ _For more information, have a look at the
 https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html)
 in our documentation pages._
 
-### Authorization (optional)
+
+### Authorization
 
 There are two different authorization methods you can choose from depending on
 your requirements:
@@ -51,6 +52,10 @@ https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#use
 and [OAuth](
 https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#oauth-authorization)
 authentication.
+
+_Note that Authorization is an optional feature of the Discogs API but a lot of
+basic functionality, like searching for releases, artists, etc. requires users
+being authenticated already._
 
 
 #### User-token authentication
@@ -70,6 +75,7 @@ on the Discogs website.
 _Head to the [authentication
 section](https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#oauth-authentication)
 in our docs to learn about the OAuth authentication method._
+
 
 ### Fetching data
 
@@ -132,15 +138,17 @@ https://python3-discogs-client.readthedocs.org/en/latest/listing.html) in our
 docs._
 
 
+## For more information
+
+- Read through [python3-discogs-client.readthedocs.org](https://python3-discogs-client.readthedocs.org) for step by step instructions.
+- Check the [discogs_client Python package documentation](https://python3-discogs-client.readthedocs.org/en/latest/discogs_client.html) to find out details on specific modules, classes, methods, ...
+- Or just spin up a REPL and use `dir()` on things :)
+
+
 ## Contributing
 
 1. Fork this repo
 2. Create a feature branch
 3. Open a pull-request
 
-
-## For more information
-
-- Read through [python3-discogs-client.readthedocs.org](https://python3-discogs-client.readthedocs.org) for step by step instructions.
-- Check the [discogs_client Python package documentation](https://python3-discogs-client.readthedocs.org/en/latest/discogs_client.html) to find out details on specific modules, classes, methods, ...
-- Or just spin up a REPL and use `dir()` on things :)
+Some more helpful information on this topic can be found in the [contribution section in our docs](https://python3-discogs-client.readthedocs.org/en/latest/contribution.html).
