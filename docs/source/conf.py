@@ -66,6 +66,8 @@ html_theme_options = {
 
 html_last_updated_fmt = "%b %d, %Y"
 
+html_logo = '_static/discogs-vinyl-record-mark-50x50.png'
+
 myst_heading_anchors = 7
 
 # -- autodoc tuning -------------------------------------------------
