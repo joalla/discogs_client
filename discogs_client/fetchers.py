@@ -21,13 +21,12 @@ class Fetcher:
         """Fetch the given request
 
         Args:
-            client: An instantiated client.Client object? FIXME Alistair
-            method (str): HTTP method to use
-            url (str): API endpoint URL
+            client: An instantiated client.Client object.
+            method (str): HTTP method to use.
+            url (str): API endpoint URL.
             data (dict, optional): The request's body. Defaults to None.
             headers (dict, optional): HTTP header's sent. Defaults to None.
-            json (bool, optional): If True content is returned as a JSON string,
-                else FIXME Alistair. Defaults to True.
+            json (bool, optional): Defaults to True.
 
         Returns:
             tuple:
@@ -35,7 +34,8 @@ class Fetcher:
                 - status_code (int): The status code returned by the API
 
         Raises:
-            NotImplementedError: Is raised if FIXME Alistair
+            NotImplementedError: Is raised if a child class doesn't implement a
+                fetch method.
         """
         raise NotImplementedError()
 
@@ -118,6 +118,28 @@ class OAuth2Fetcher(Fetcher):
         self.client.verifier = verifier
 
     def fetch(self, client, method, url, data=None, headers=None, json_format=True):
+        """Fetches via HTTP from the Discogs API using OAuth authentication.
+
+        Parameters
+        ----------
+        client : object
+            an instantiated client.Client object.
+        method : str
+            HTTP method to use.
+        url : str
+            API endpoint URL.
+        data : dict, optional
+            The request's body, by default None.
+        headers : dict, optional
+            HTTP header's sent, by default None.
+        json_format : bool, optional
+            by default True.
+
+        Returns
+        -------
+        content : str (python2) or bytes (python3)
+        status_code : int
+        """
         body = json.dumps(data) if json_format and data else data
         uri, headers, body = self.client.sign(url, http_method=method,
                                               body=body, headers=headers)
