@@ -31,7 +31,7 @@ Install [the client from PyPI](https://pypi.org/project/python3-discogs-client/)
 using your favorite package manager.
 
 ```sh
-$ pip install python3-discogs-client
+$ pip3 install python3-discogs-client
 ```
 
 ## Quickstart
