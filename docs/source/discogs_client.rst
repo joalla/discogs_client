@@ -49,12 +49,3 @@ discogs\_client.utils module
    :show-inheritance:
    :private-members:
    :member-order: bysource
-
-discogs\_client.utils.Sort.By FIXME this is an experiment
----------------------------------------------------------
-.. autoclass:: discogs_client.utils.Sort.By
-   :members:
-   :show-inheritance:
-   :private-members:
-   :special-members:
-   :member-order: bysource
