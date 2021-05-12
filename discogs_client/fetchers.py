@@ -20,10 +20,33 @@ class Fetcher:
     def fetch(self, client, method, url, data=None, headers=None, json=True):
         """Fetch the given request
 
+        Parameters
+        ----------
+        client : object
+            Instantiated discogs_client.client.Client object.
+        method : str
+            HTTP method.
+        url : str
+            API endpoint URL.
+        data : dict, optional
+            data to be sent in the request's body, by default None.
+        headers : dict, optional
+            HTTP headers, by default None.
+        json_format : bool, optional
+            If True, an object passed with the "data" arg will be converted into
+            a JSON string, by default True.
+
         Returns
         -------
-        content : str (python2) or bytes (python3)
+        content : bytes
+            as returned by Python "Requests"
         status_code : int
+            as returned by Python "Requests"
+
+        Raises
+        ------
+        NotImplementedError
+            Is raised if a child class doesn't implement a fetch method.
         """
         raise NotImplementedError()
 
@@ -44,13 +67,38 @@ class LoggingDelegator:
         return self.requests[-1] if self.requests else None
 
     def fetch(self, client, method, url, data=None, headers=None, json=True):
+        """Appends passed "fetcher" to a requests list and returns result of
+        fetcher.fetch method"""
         self.requests.append((method, url, data, headers))
         return self.fetcher.fetch(client, method, url, data, headers, json)
 
 
 class RequestsFetcher(Fetcher):
-    """Fetches via HTTP from the Discogs API."""
+    """Fetches via HTTP from the Discogs API (unauthenticated)"""
     def fetch(self, client, method, url, data=None, headers=None, json=True):
+        """
+        Parameters
+        ----------
+        client : object
+            Unused in this subclass.
+        method : str
+            HTTP method.
+        url : str
+            API endpoint URL.
+        data : dict, optional
+            data to be sent in the request's body, by default None.
+        headers : dict, optional
+            HTTP headers, by default None.
+        json_format : bool, optional
+            Unused in this subclass, by default True.
+
+        Returns
+        -------
+        content : bytes
+            as returned by Python "Requests"
+        status_code : int
+            as returned by Python "Requests"
+        """
         resp = self.request(method, url, data=data, headers=headers)
         self.rate_limit = resp.headers.get(
                 'X-Discogs-Ratelimit')
@@ -62,11 +110,36 @@ class RequestsFetcher(Fetcher):
 
 
 class UserTokenRequestsFetcher(Fetcher):
-    """Fetches via HTTP from the Discogs API using user_token authentication"""
+    """Fetches via HTTP from the Discogs API using User-token authentication"""
     def __init__(self, user_token):
         self.user_token = user_token
 
     def fetch(self, client, method, url, data=None, headers=None, json_format=True):
+        """Fetch the given request on the user's behalf
+
+        Parameters
+        ----------
+        client : object
+            Unused in this subclass.
+        method : str
+            HTTP method.
+        url : str
+            API endpoint URL.
+        data : dict, optional
+            data to be sent in the request's body, by default None.
+        headers : dict, optional
+            HTTP headers, by default None.
+        json_format : bool, optional
+            If True, an object passed with the "data" arg will be converted into
+            a JSON string, by default True.
+
+        Returns
+        -------
+        content : bytes
+            as returned by Python "Requests"
+        status_code : int
+            as returned by Python "Requests"
+        """
         data = json.dumps(data) if json_format and data else data
         resp = self.request(
             method, url, data=data, headers=headers, params={'token':self.user_token}
@@ -104,6 +177,31 @@ class OAuth2Fetcher(Fetcher):
         self.client.verifier = verifier
 
     def fetch(self, client, method, url, data=None, headers=None, json_format=True):
+        """Fetch the given request on the user's behalf
+
+        Parameters
+        ----------
+        client : object
+            Unused in this subclass.
+        method : str
+            HTTP method.
+        url : str
+            API endpoint URL.
+        data : dict, optional
+            Data to be sent in the request's body, by default None.
+        headers : dict, optional
+            HTTP headers, by default None.
+        json_format : bool, optional
+            If True, an object passed with the "data" arg will be converted into
+            a JSON string, by default True.
+
+        Returns
+        -------
+        content : bytes
+            as returned by Python "Requests"
+        status_code : int
+            as returned by Python "Requests"
+        """
         body = json.dumps(data) if json_format and data else data
         uri, headers, body = self.client.sign(url, http_method=method,
                                               body=body, headers=headers)
@@ -127,6 +225,27 @@ class FilesystemFetcher(Fetcher):
         self.base_path = base_path
 
     def fetch(self, client, method, url, data=None, headers=None, json=True):
+        """Fetch the given request
+
+        Parameters
+        ----------
+        client : object
+            Instantiated discogs_client.client.Client object.
+        method : str
+            Unused in this subclass (this fetcher supports GET only).
+        url : str
+            API endpoint URL.
+        data : dict, optional
+            Unused in this subclass (this fetcher supports GET only).
+        headers : dict, optional
+            Unused in this subclass.
+        json_format : bool, optional
+
+        Returns
+        -------
+        content : bytes
+        status_code : int
+        """
         url = url.replace(client._base_url, '')
 
         if json:
@@ -193,4 +312,26 @@ class MemoryFetcher(Fetcher):
         self.responses = responses
 
     def fetch(self, client, method, url, data=None, headers=None, json=True):
+        """Fetch the given request
+
+        Parameters
+        ----------
+        client : object
+            Unused in this subclass.
+        method : str
+            Unused in this subclass (this fetcher supports GET only).
+        url : str
+            API endpoint URL.
+        data : dict, optional
+            Unused in this subclass (this fetcher supports GET only).
+        headers : dict, optional
+            Unused in this subclass.
+        json_format : bool, optional
+            Unused in this subclass
+
+        Returns
+        -------
+        content : bytes
+        status_code : int
+        """
         return self.responses.get(url, self.default_response)
