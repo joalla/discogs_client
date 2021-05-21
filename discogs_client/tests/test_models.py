@@ -1,5 +1,5 @@
 import unittest
-from discogs_client.models import Artist, Release, ListItem
+from discogs_client.models import Artist, Release, ListItem, CollectionValue
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client.exceptions import HTTPError
 
@@ -296,6 +296,20 @@ class ModelsTestCase(DiscogsClientTestCase):
         method, url, data, headers = self.d._fetcher.requests[0]
         self.assertEqual(method, 'GET')
         self.assertEqual(url, '/marketplace/stats/1')
+
+    def test_collection_value(self):
+        """Collection Value can be fetched and parsed"""
+        u = self.d.user("example")
+
+        self.assertEqual(isinstance(u.collection_value, CollectionValue), True)
+        self.assertEqual(u.collection_value.minimum, "£1.05")
+        self.assertEqual(u.collection_value.maximum, "£5")
+        self.assertEqual(u.collection_value.median, "£2.50")
+
+        # Assert that request URL and method is correct.
+        method, url, data, headers = self.d._fetcher.requests[0]
+        self.assertEqual(method, "GET")
+        self.assertEqual(url, "/users/example/collection/value")
 
 
 def suite():

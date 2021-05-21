@@ -609,6 +609,11 @@ class User(PrimaryAPIObject):
         resp = self.client._get(self.fetch('collection_folders_url'))
         return [CollectionFolder(self.client, d) for d in resp['folders']]
 
+    @property
+    def collection_value(self):
+        resp = self.client._get(f"{self.fetch('resource_url')}/collection/value")
+        return CollectionValue(self.client, resp)
+
     def __repr__(self):
         return '<User {0!r} {1!r}>'.format(self.id, self.username)
 
@@ -642,6 +647,18 @@ class CollectionItemInstance(PrimaryAPIObject):
 
     def __repr__(self):
         return '<CollectionItemInstance {0!r} {1!r}>'.format(self.id, self.release.title)
+
+
+class CollectionValue(PrimaryAPIObject):
+    maximum = SimpleField()
+    median = SimpleField()
+    minimum = SimpleField()
+
+    def __init__(self, client, dict_):
+        super(CollectionValue, self).__init__(client, dict_)
+
+    def __repr__(self):
+        return f"<CollectionValue {self.median}>"
 
 
 class CollectionFolder(PrimaryAPIObject):
@@ -826,4 +843,5 @@ CLASS_MAP = {
     'listing': Listing,
     'wantlistitem': WantlistItem,
     'ordermessage': OrderMessage,
+    'collectionvalue': CollectionValue,
 }
