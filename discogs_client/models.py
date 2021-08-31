@@ -763,11 +763,11 @@ class Order(PrimaryAPIObject):
     # Setting shipping is a little weird -- you can't change the
     # currency, and you use the 'shipping' key instead of 'value'
     @property
-    def shipping(self):
+    def shipping(self) -> Price:
         return Price(self.client, self.fetch('shipping'))
 
     @shipping.setter
-    def shipping(self, value):
+    def shipping(self, value) -> None:
         self.changes['shipping'] = value
 
     def __repr__(self):

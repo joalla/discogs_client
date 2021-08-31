@@ -6,6 +6,7 @@ from time import sleep
 from random import uniform
 from functools import wraps
 from enum import Enum
+from typing import Mapping, Any, Dict
 
 
 def parse_timestamp(timestamp: str) -> datetime:
@@ -13,7 +14,7 @@ def parse_timestamp(timestamp: str) -> datetime:
     return parse(timestamp)
 
 
-def update_qs(url, params):
+def update_qs(url: str, params: Mapping[Any, Any]) -> str:
     """A not-very-intelligent function to glom parameters onto a query string."""
     joined_qs = '&'.join('='.join((str(k), quote(str(v))))
                          for k, v in params.items())
@@ -21,7 +22,7 @@ def update_qs(url, params):
     return url + separator + joined_qs
 
 
-def omit_none(dict_):
+def omit_none(dict_: Mapping[Any, Any]) -> Dict[Any, Any]:
     """Removes any key from a dict that has a value of None."""
     return {k: v for k, v in dict_.items() if v is not None}
 

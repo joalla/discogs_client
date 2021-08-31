@@ -1,23 +1,27 @@
-import requests
 from requests.api import request
+from requests import Response
 from oauthlib import oauth1
 import json
 import os
 import re
 from discogs_client.utils import backoff
 from urllib.parse import parse_qsl
+from discogs_client.client import Client
+from abc import ABC, abstractmethod
+from typing import Mapping, Any
 
 
-class Fetcher:
+class Fetcher(ABC):
     """
     Base class for Fetchers, which wrap and normalize the APIs of various HTTP
     libraries.
 
     (It's a slightly leaky abstraction designed to make testing easier.)
     """
-    backoff_enabled = True
+    backoff_enabled: bool = True
 
-    def fetch(self, client, method, url, data=None, headers=None, json=True):
+    @abstractmethod
+    def fetch(self, client: Client, method: str, url: str, data: str = None, headers: Mapping[str, Any]=None, json=True):
         """Fetch the given request
 
         Parameters
@@ -51,7 +55,7 @@ class Fetcher:
         raise NotImplementedError()
 
     @backoff
-    def request(self, method, url, data, headers, params=None):
+    def request(self, method: str, url: str, data, headers, params=None) -> Response:
         response = request(method=method, url=url, data=data, headers=headers, params=params)
         return response
 
