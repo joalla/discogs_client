@@ -1,0 +1,58 @@
+[tool.poetry]
+name = "python3-discogs-client"
+version = "2.3.12"
+description = "Python API client for Discogs"
+repository = "https://github.com/joalla/discogs_client"
+authors = ["Alistair Hughes <ali.fhughes@gmail.com>", "J0J0 <jt@peek-a-boo.at"]
+
+[virtualenvs]
+in-project = true
+
+[tool.poetry.dependencies]
+python=">=3.6 <3.9"
+docopt = "0.6.1"
+requests = "2.20.0"
+oauthlib = "0.7.2"
+sh = "1.08"
+python-dateutil = "2.8.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.1.2"
+coverage = {version = "^5.3", extras = ["toml"]}
+pytest-cov = "^2.10.1"
+pytest-mock = "^3.3.1"
+black = "^20.8b1"
+flake8 = "^3.9.2"
+isort = "^5.8.0"
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["discogs_client"]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.isort]
+multi_line_output=3
+known_first_party=["discogs_client", "tests"]
+sections=["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+line_length=88
+include_trailing_comma=true
+force_grid_wrap=0
+use_parentheses=true
+
+[tool.black]
+line_length = 88
+
+[mypy]
+ignore_missing_imports=true
+strict_optional=true
+check_untyped_defs=true
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
