@@ -6,7 +6,6 @@ import os
 import re
 from discogs_client.utils import backoff
 from urllib.parse import parse_qsl
-from discogs_client.client import Client
 from abc import ABC, abstractmethod
 from typing import Mapping, Any
 
@@ -21,7 +20,7 @@ class Fetcher(ABC):
     backoff_enabled: bool = True
 
     @abstractmethod
-    def fetch(self, client: Client, method: str, url: str, data: str = None, headers: Mapping[str, Any]=None, json=True):
+    def fetch(self, client, method: str, url: str, data: str = None, headers: Mapping[str, Any]=None, json=True):
         """Fetch the given request
 
         Parameters

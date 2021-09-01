@@ -618,6 +618,14 @@ class User(PrimaryAPIObject):
         return '<User {0!r} {1!r}>'.format(self.id, self.username)
 
 
+class Price(SecondaryAPIObject):
+    currency = SimpleField()
+    value = SimpleField()
+
+    def __repr__(self):
+        return '<Price {0!r} {1!r}>'.format(self.value, self.currency)
+
+
 class WantlistItem(PrimaryAPIObject):
     id = SimpleField()
     rating = SimpleField(writable=True)
@@ -795,13 +803,6 @@ class Track(SecondaryAPIObject):
     def __repr__(self):
         return '<Track {0!r} {1!r}>'.format(self.position, self.title)
 
-
-class Price(SecondaryAPIObject):
-    currency = SimpleField()
-    value = SimpleField()
-
-    def __repr__(self):
-        return '<Price {0!r} {1!r}>'.format(self.value, self.currency)
 
 
 class Video(SecondaryAPIObject):
