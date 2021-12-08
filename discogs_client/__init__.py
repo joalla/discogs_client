@@ -1,5 +1,5 @@
-__version_info__ = 2, 2, 2
-__version__ = '2.2.2'
+__version__ = '2.3.12'
+__version_info__ = tuple(int(i) for i in __version__.split('.') if i.isdigit())
 
 from discogs_client.client import Client
 from discogs_client.models import Artist, Release, Master, Label, User, \
