@@ -1,6 +1,6 @@
 # Contribution
 
-There is several ways you can help improve python3-discogs-client.
+There are several ways you can help improve the `python3-discogs-client` library.
 
 - Help others in the [support section of our github repo](
   https://github.com/joalla/discogs_client/discussions/categories/support).
@@ -11,7 +11,7 @@ There is several ways you can help improve python3-discogs-client.
 - [Submit your fixes and features](#submitting).
 - [Chat with others](
   https://github.com/joalla/discogs_client/discussions/categories/projects)
-  about projects and collaboration around the Client.
+  about projects and collaborate around the Client.
 
 
 ## Submitting
@@ -21,7 +21,7 @@ Submit changes to the code or the documentation by forking our repo and submitti
 
 ## Test an unreleased feature
 
-Sometimes you'd want to use or test a feature that is not yet released, one reason being a pull request is not merged yet.
+Sometimes you might want to use or test a feature that has is yet released, such as a pull request is not merged yet.
 
 You can install from a development branch like this:
 
