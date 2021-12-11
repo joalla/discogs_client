@@ -17,7 +17,7 @@ True
 
 ### Special properties
 
-Get a list of `Artist`s representing this artist's aliases:
+Get a list of `Artist`s representing this artists' aliases:
 
 ```python
 >>> artist.aliases
