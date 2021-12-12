@@ -1,4 +1,4 @@
-# Fetching data
+# Fetching data using the REPL
 
 Note that the examples in this chapter are shown using a Python REPL and require
 an existing [Client object](quickstart.md) already.
