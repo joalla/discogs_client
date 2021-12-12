@@ -2,7 +2,7 @@
 Release workflow steps:
 
 - bump.sh (increments versions and creates git tag)
-- git push --tags (release workflow is triggered)
+- git push --follow-tags (release workflow is triggered)
 - fill in release notes into auto-generated github release
 - release.sh (builds package and uploads to Test-PyPI)
 
@@ -10,12 +10,12 @@ Troubleshooting:
 
 - retag.sh
   1) Deletes local and remote git tags
-  2) Makes sure local commits are pushed to remote
-  3) Creates tags and pushes tags again)
+  2) Creates tags with same version on current HEAD
+  3) and pushes commits and tags again
 
 Release notes are not automatically deleted on retag.sh usage. This for a
 reason: They might be copied over to a fixed release and shouldn't be lost.
 
-Optionally retag.sh accepts a second cli arg allowing to pass --options to the
-push in step 2 (e.g. --force-with-lease, use with caution)
+Optionally retag.sh accepts a third cli arg allowing to pass --options to the
+push in step 3 (e.g. --force-with-lease, use with caution)
 

@@ -1,12 +1,22 @@
 #!/bin/bash
+# 1) Deletes the git tag passed in $1:
+#    - locally
+#    - on the remote passed in $2
+# 2) Tags HEAD again with the given version number,
+# 3) and pushes commits and tags again to remote
+# Additional push options can be passed in $3.
 
-if [[ -z $1 ]]; then
-    echo "usage: ./retag.sh <version>  # omit v prefix"
+if [[ -z $1 ]] || [[ -z $2 ]]; then
+    echo "usage: ./retag.sh <version> <remote> [additional push options]"
     exit 1
 fi
-PUSH_OPTS="$2"
 
 set -x
 VERS=$1
+REMOTE=$2
+PUSH_OPTS="$3"
 
-git tag -d v$VERS; git push origin --delete v$VERS; git tag v$VERS; git push $PUSH_OPTS; git push --tags
+git tag -d $VERS
+git push $REMOTE --delete $VERS
+git tag $VERS
+git push $REMOTE --follow-tags $PUSH_OPTS
