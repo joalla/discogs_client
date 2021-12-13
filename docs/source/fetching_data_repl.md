@@ -1,6 +1,6 @@
 # Fetching data using the REPL
 
-Note that the examples in this chapter are shown using a Python REPL and require an existing [Client object](quickstart.md) already. Using the Python REPL can be an easy way to test and review data and information available using the Discogs API.
+Note that the examples in this chapter are shown using a Python REPL and require an existing [Client object](quickstart.md) already. Using the Python REPL can be an easy way to test and review the information and data available using the Discogs API.
 
 ## Artist
 
