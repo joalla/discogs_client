@@ -1,6 +1,6 @@
 # Fetching Release and Collection data using code
 
-In addition to fetching data using the Python REPL with an existing Client object, the code samples below show additional ways to fetch data from Discogs.
+Note that the examples in this chapter are shown using a Python REPL and require an existing [Client object](quickstart.md) already. Using the Python REPL can be an easy way to test and review data and information available using the Discogs API.
 
 Most data about releases can be queried without having to authenticate using your [Client object](https://github.com/joalla/discogs_client/blob/master/docs/source/quickstart.md).  Other data including search, querying the records in your collection, or fetching album art requires authentication.  See the [Authentication section](https://github.com/joalla/discogs_client/blob/master/docs/source/authentication.md) for more information.
 
@@ -78,4 +78,9 @@ Tracklist returns a list of tracks and track position on the album associated wi
 
 `print(d.release(20017387).tracklist[0].title)`
 
+<<<<<<< HEAD
 `Asking For A Friend`
+=======
+`Asking For A Friend`
+
+>>>>>>> a2cc239ff4df944240df5a00c50db0d9c2c74f33
