@@ -79,7 +79,3 @@ Tracklist returns a list of tracks and track position on the album associated wi
 `print(d.release(20017387).tracklist[0].title)`
 
 `Asking For A Friend`
-
-## Fetching from your Collection
-
-Once authenticated, you can fetch data about your collection, inlcuding folders, releases and more.  
