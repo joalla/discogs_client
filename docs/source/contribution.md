@@ -21,7 +21,7 @@ Submit changes to the code or the documentation by forking our repo and submitti
 
 ## Test an unreleased feature
 
-Sometimes you might want to use or test a feature that has is yet to be released, such as a pull request is not merged yet.
+Sometimes you might want to use or test a feature that has not been released yet, such as a pull request that needs to be tested.
 
 You can install from a development branch like this:
 
