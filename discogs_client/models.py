@@ -563,6 +563,7 @@ class Master(PrimaryAPIObject):
     title = SimpleField()
     data_quality = SimpleField()
     styles = SimpleField()
+    year = SimpleField()
     genres = SimpleField()
     images = SimpleField()
     url = SimpleField(key='uri')
