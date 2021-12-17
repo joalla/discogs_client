@@ -9,6 +9,9 @@
 #set -x
 PART=$1
 
+which bump2version
+[[ $? != 0 ]] && echo "bump2version package missing."; exit 1
+
 if [ -z $1 ]; then
     echo "Bumps version, commits and tags."
     echo "Usage: ./bump.s <major|minor|patch> [doit]"

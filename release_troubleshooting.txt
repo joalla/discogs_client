@@ -1,12 +1,5 @@
 
-Release workflow steps:
-
-- bump.sh (increments versions and creates git tag)
-- git push --follow-tags (release workflow is triggered)
-- fill in release notes into auto-generated github release
-- release.sh (builds package and uploads to Test-PyPI)
-
-Troubleshooting:
+Release Workflow Troubleshooting:
 
 - retag.sh
   1) Deletes local and remote git tags
