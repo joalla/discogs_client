@@ -80,9 +80,4 @@ Tracklist returns a list of tracks and track position on the album associated wi
 
 `print(d.release(20017387).tracklist[0].title)`
 
-<<<<<<< HEAD
-`Asking For A Friend`
-=======
-`Asking For A Friend`
 
->>>>>>> a2cc239ff4df944240df5a00c50db0d9c2c74f33

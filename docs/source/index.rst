@@ -14,7 +14,7 @@ python3-discogs-client documentation
    quickstart.md
    authentication.md
    fetching_data.md
-   fetching_data-repl.md
+   fetching_data_repl.md
    listing.md
    requests_rate_limit.md
    contribution.md
