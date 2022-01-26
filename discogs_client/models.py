@@ -515,6 +515,14 @@ class Release(PrimaryAPIObject):
         else:
             return None
 
+    @property
+    def price_suggestions(self):
+        release_id = self.fetch('id')
+        if release_id:
+            return PriceSuggestions(self.client, {'id': release_id})
+        else:
+            return None
+
     def __repr__(self):
         return '<Release {0!r} {1!r}>'.format(self.id, self.title)
 
@@ -532,11 +540,30 @@ class MarketplaceStats(PrimaryAPIObject):
         return '<MarketplaceStats {0!r} for sale>'.format(self.num_for_sale)
 
 
+class PriceSuggestions(PrimaryAPIObject):
+    very_good = ObjectField("Price", key="Very Good (VG)")
+    good_plus = ObjectField("Price", key="Good Plus (G+)")
+    near_mint = ObjectField("Price", key="Near Mint (NM or M-)")
+    good = ObjectField("Price", key="Good (G)")
+    very_good_plus = ObjectField("Price", key="Very Good Plus (VG+)")
+    mint = ObjectField("Price", key="Mint (M)")
+    fair = ObjectField("Price", key="Fair (F)")
+    poor = ObjectField("Price", key="Poor (P)")
+
+    def __init__(self, client, dict_):
+        super(PriceSuggestions, self).__init__(client, dict_)
+        self.data['resource_url'] = '{0}/marketplace/price_suggestions/{1}'.format(client._base_url, dict_['id'])
+
+    def __repr__(self) -> str:
+        return '<PriceSuggestions Price for Mint (M) is {0!r}>'.format(self.mint)
+
+
 class Master(PrimaryAPIObject):
     id = SimpleField()
     title = SimpleField()
     data_quality = SimpleField()
     styles = SimpleField()
+    year = SimpleField()
     genres = SimpleField()
     images = SimpleField()
     url = SimpleField(key='uri')
@@ -831,6 +858,7 @@ CLASS_MAP = {
     'artist': Artist,
     'release': Release,
     'marketplacestats': MarketplaceStats,
+    'pricesuggestions': PriceSuggestions,
     'master': Master,
     'label': Label,
     'price': Price,
