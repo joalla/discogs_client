@@ -18,6 +18,7 @@ python3-discogs-client documentation
    listing.md
    requests_rate_limit.md
    contribution.md
+   writing_docs.md
    discogs_client
 
 

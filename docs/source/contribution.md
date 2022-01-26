@@ -4,8 +4,7 @@ There are several ways you can help improve the `python3-discogs-client` library
 
 - Help others in the [support section of our github repo](
   https://github.com/joalla/discogs_client/discussions/categories/support).
-- [Improve the documentation](
-  https://github.com/joalla/discogs_client/tree/master/docs).
+- [Improve the documentation](##Writing Documentation).
 - [Suggest and discuss fixes and features](
   https://github.com/joalla/discogs_client/discussions/categories/ideas).
 - [Submit your fixes and features](#submitting).
@@ -39,3 +38,7 @@ source:
 ```
 pip install -r requirements.txt --update
 ```
+
+## Writing Documentation
+
+You can help keep the documentation current by editing or adding new pages to the documentation.  Please see the [Writing Documentation page](writing_docs.md) for more information on how to clone the repository, edit the documentation, and build the documentation.
