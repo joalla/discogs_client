@@ -78,6 +78,8 @@ Tracklist returns a list of tracks and track position on the album associated wi
 [<Track 'A1' 'Asking For A Friend'>, <Track 'A2' 'He Said She Said'>, <Track 'A3' 'California'>, <Track 'A4' 'Violent Delights'>, <Track 'A5' 'How Not To Drown '>, <Track 'B1' 'Final Girl'>, <Track 'B2' 'Good Girls'>, <Track 'B3' 'Lullabies'>, <Track 'B4' 'Nightmares'>, <Track 'B5' "Better If You Don't">]
 ```
 
-```print(d.release(20017387).tracklist[0].title)
-Asking For A Friend```
+```
+print(d.release(20017387).tracklist[0].title)
+Asking For A Friend
+```
 
