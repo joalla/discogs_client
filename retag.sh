@@ -19,4 +19,5 @@ PUSH_OPTS="$3"
 git tag -d $VERS
 git push $REMOTE --delete $VERS
 git tag $VERS
-git push $REMOTE --follow-tags $PUSH_OPTS
+git push
+git push $REMOTE --tags --follow-tags $PUSH_OPTS
