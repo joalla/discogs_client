@@ -6,11 +6,21 @@ You can help keep the documentation up to date by submitting pull requests to th
 
 The first step is to fork the repository.  In the upper right hand corner of Github, click the ```Fork``` button.  This will create a copy of the repository in your account.
 
-The second step is to clone the ```python3-discogs-client``` library to your computer.  From the ```python3-discogs-client``` fork you just created, press the ```Code``` button and copy the ```git``` URL and clone it in your code editor of choice.  Create a new branch in git and start editing the documentation.
+The second step is to clone the ```python3-discogs-client``` library to your computer.  From the ```python3-discogs-client``` fork you just created, press the ```Code``` button and copy the ```git``` URL and clone it in your code editor of choice. or use the terminal:
+
+```
+git clone <git url>
+```
+
+  Create a new branch in git and start editing the documentation:
+
+  ```
+  git checkout -b my_docs_changes_branch
+  ```
 
 ## Edit Files
 
-Documentatoin files are in the ```docs/source``` directory.  You can edit the files in this directory to add or update content.  
+Documentation files are in the ```docs/source``` directory.  You can edit the files in this directory to add or update content.  
 
 Almost all documentation is written using the Markdown format.  The exception is the ```index.rst``` page, which is written in reStructuredText format.  If you are adding a new page or pages, please add them to the menu structure in reStructuredText format in the ```index.rst``` page.
 
