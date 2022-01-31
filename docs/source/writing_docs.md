@@ -12,11 +12,11 @@ The second step is to clone the ```python3-discogs-client``` library to your com
 git clone <git url>
 ```
 
-  Create a new branch in git and start editing the documentation:
+Create a new branch in git and start editing the documentation:
 
-  ```
-  git checkout -b my_docs_changes_branch
-  ```
+```
+git checkout -b my_docs_changes_branch
+```
 
 ## Edit Files
 
