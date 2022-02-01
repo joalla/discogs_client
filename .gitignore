@@ -6,3 +6,5 @@ dist/
 .coverage
 env/
 build/
+.39venv/
+.venv/
