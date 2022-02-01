@@ -48,6 +48,12 @@ Check the command line input to make sure no errors occurred.  If there is an er
 
 Open `docs/build/html/index.html` in your web browser to review the changes.  After you are satisfied with the changes, commit them to your local repository and push to your fork.
 
+For some changes it's necessary to clean up before build:
+
+```
+make clean; make html
+```
+
 ## Create a Pull Request
 
 To create a pull request, please [read Github's documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) on forking and creating pull requests.
