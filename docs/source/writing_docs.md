@@ -40,12 +40,13 @@ Almost all documentation is written using the Markdown format.  The exception is
 
 After your changes are complete, you can build the documentation by running the ```make html``` command.  This will build the documentation in the ```docs/build/html``` directory.  
 
-
 Please note that as of this writing, Python 3.10 will not work.  Please use Python Python >=3.6 and <=3.9 when building the documentation.
 
-Check the command line input to make sure no errors occurred.  If there is an error, fix it, and re-run the command.
+Check the command line input to make sure no errors occurred.  If there is an error, fix it, and re-run the command. You can ignore warnings similar to this one:
 
-Open the pages you have edited in your web browser to review the changes.  After you are satisfied with the changes, commit the changes to your local repository.  
+`docstring of discogs_client.models.Artist.id:10: WARNING: Unexpected indentation.`
+
+Open `docs/build/html/index.html` in your web browser to review the changes.  After you are satisfied with the changes, commit them to your local repository and push to your fork.
 
 ## Create a Pull Request
 
