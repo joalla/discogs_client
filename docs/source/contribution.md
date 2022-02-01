@@ -4,7 +4,7 @@ There are several ways you can help improve the `python3-discogs-client` library
 
 - Help others in the [support section of our github repo](
   https://github.com/joalla/discogs_client/discussions/categories/support).
-- [Improve the documentation](##Writing Documentation).
+- [Improve the documentation](#Writing Documentation).
 - [Suggest and discuss fixes and features](
   https://github.com/joalla/discogs_client/discussions/categories/ideas).
 - [Submit your fixes and features](#submitting).
