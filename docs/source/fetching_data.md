@@ -1,6 +1,6 @@
 # Fetching Release and Collection data
 
-Note that the examples in this chapter are shown using example Python code with ```print``` statements to show the results and require an existing [Client object](quickstart.md). 
+Note that the examples in this chapter are shown using example Python code with `print` statements to show the results and require an existing [Client object](quickstart.md).
 
 Using the [Python REPL is another way to test and review data](fetching_data_repl.md) and information available using the Discogs API.
 
@@ -8,7 +8,7 @@ Most data about releases can be queried without having to authenticate using you
 
 ## Release Data
 
-Almost all data available on a Release page on the Discogs website is available using the ```python3-discogs-client``` library. If you were to run ```dir()``` on the ```release``` object, you would see the following list of all objects available to query, where 20017387 is the release ID.   Some common examples are shown below.
+Almost all data available on a Release page on the Discogs website is available using the `python3-discogs-client` library. If you were to run `dir()` on the `release` object, you would see the following list of all objects available to query, where 20017387 is the release ID.   Some common examples are shown below.
 
 ```
 # Authenticate using your Client object
