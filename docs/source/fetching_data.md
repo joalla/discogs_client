@@ -102,3 +102,6 @@ print(d.release(20017387).tracklist[0].title)
 Asking For A Friend
 ```
 
+## Collection Data
+
+TBA
