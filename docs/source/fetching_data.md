@@ -104,4 +104,65 @@ Asking For A Friend
 
 ## Collection Data
 
-TBA
+To access the collection an [authenticated Client object](authentication.md) is required.
+
+Assuming the Client object is called `d`:
+
+```
+me=d.identity()
+print(me)
+```
+
+will return:
+
+```
+<User 123456 'discogs_username'>
+```
+
+Loop through all the `releases` in the collection:
+
+```
+for item in me.collection_folders[0].releases:
+    print(item)
+```
+
+```
+<CollectionItemInstance 731053 'DJ-Kicks'>
+<CollectionItemInstance 2230329 'Drumlesson Zwei'>
+<CollectionItemInstance 6794957 'The K&D Sessions™'>
+...
+...
+```
+
+- Folder 0 is a special folder containing all the release in the user's collection
+- Folders 1 to n are any other collection folders manually created by the user.
+
+Find out more about the available attributes of a `CollectionItemInstance`:
+
+```
+print(dir(me.collection_folders[0].releases[123]:
+```
+
+```
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_known_invalid_keys', 'changes', 'client', 'data', 'date_added', 'delete', 'fetch', 'folder_id', 'id', 'notes', 'rating', 'refresh', 'release', 'save']
+```
+
+Get a full `release` object of a collection item:
+
+```
+print(me.collection_folders[0].releases[123].release)
+```
+
+```
+<Release 1692728 'Phylyps Trak II'>
+```
+
+Get the `title` of the `release`:
+
+```
+print(me.collection_folders[0].releases[123].release.title)
+```
+
+```
+Phylyps Trak II
+```
