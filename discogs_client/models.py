@@ -636,6 +636,7 @@ class WantlistItem(PrimaryAPIObject):
 # TODO: notes should be first-order (somehow); needs resource_url
 class CollectionItemInstance(PrimaryAPIObject):
     id = SimpleField()
+    instance_id = SimpleField()
     rating = SimpleField()
     folder_id = SimpleField()
     notes = SimpleField()
@@ -678,6 +679,11 @@ class CollectionFolder(PrimaryAPIObject):
         release_id = release.id if isinstance(release, Release) else release
         add_release_url = self.fetch('resource_url') + '/releases/{}'.format(release_id)
         self.client._post(add_release_url, None)
+
+    def delete_instance(self, instance):
+        if isinstance(instance, CollectionItemInstance):
+            delete_instance_url = self.fetch('resource_url') + '/releases/{0}/instances/{1}'.format(instance.id, instance.instance_id)
+            self.client._delete(delete_instance_url);
 
     def __repr__(self):
         return '<CollectionFolder {0!r} {1!r}>'.format(self.id, self.name)
