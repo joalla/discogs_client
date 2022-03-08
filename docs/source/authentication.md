@@ -13,6 +13,8 @@ as a proxy to make requests and change information about their Discogs account.
 This includes profile information, collection and wantlist information, and
 marketplace changes.
 
+Never share your user token keys and secrets with anyone.  You will want to make sure you don't commit them to your Git repository.
+
 We will cover both forms of authentication below.
 
 ## User-token Authentication
