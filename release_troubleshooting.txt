@@ -1,0 +1,14 @@
+
+Release Workflow Troubleshooting:
+
+- retag.sh
+  1) Deletes local and remote git tags
+  2) Creates tags with same version on current HEAD
+  3) and pushes commits and tags again
+
+Release notes are not automatically deleted on retag.sh usage. This for a
+reason: They might be copied over to a fixed release and shouldn't be lost.
+
+Optionally retag.sh accepts a third cli arg allowing to pass --options to the
+push in step 3 (e.g. --force-with-lease, use with caution)
+
