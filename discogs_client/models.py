@@ -680,10 +680,10 @@ class CollectionFolder(PrimaryAPIObject):
         add_release_url = self.fetch('resource_url') + '/releases/{}'.format(release_id)
         self.client._post(add_release_url, None)
 
-    def delete_instance(self, instance):
+    def remove_release(self, instance):
         if isinstance(instance, CollectionItemInstance):
-            delete_instance_url = self.fetch('resource_url') + '/releases/{0}/instances/{1}'.format(instance.id, instance.instance_id)
-            self.client._delete(delete_instance_url);
+            instance_url = self.fetch('resource_url') + '/releases/{0}/instances/{1}'.format(instance.id, instance.instance_id)
+            self.client._delete(instance_url);
 
     def __repr__(self):
         return '<CollectionFolder {0!r} {1!r}>'.format(self.id, self.name)
