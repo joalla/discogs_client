@@ -710,7 +710,6 @@ class CollectionFolder(PrimaryAPIObject):
     def remove_release(self, instance):
         if not isinstance(instance, CollectionItemInstance):
             raise TypeError('instance must be of type CollectionItemInstance')
-
         instance_url = self.fetch('resource_url') + '/releases/{0}/instances/{1}'.format(instance.id, instance.instance_id)
         self.client._delete(instance_url)
 
