@@ -1,4 +1,4 @@
-# Fetching Release and Collection data
+# Managing Release and Collection data
 
 Note that the examples in this chapter are shown using example Python code with `print` statements to show the results and require an existing [Client object](quickstart.md).
 
@@ -165,4 +165,14 @@ print(me.collection_folders[0].releases[123].release.title)
 
 ```
 Phylyps Trak II
+```
+### Removing a Release from a Collection Folder
+
+A release can be removed from a collection folder using `remove_release`, assuming the Client object is called `d`:
+```
+user = d.user("example")
+folder = user.collection_folders[1]
+releases = folder.releases
+# Delete the first instance in releases
+folder.remove_release(releases[0])
 ```
