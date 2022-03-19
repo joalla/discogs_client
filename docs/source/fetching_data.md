@@ -1,4 +1,4 @@
-# Fetching Release and Collection data
+# Managing Release and Collection data
 
 Note that the examples in this chapter are shown using example Python code with `print` statements to show the results and require an existing [Client object](quickstart.md).
 
@@ -167,9 +167,8 @@ print(me.collection_folders[0].releases[123].release.title)
 Phylyps Trak II
 ```
 
-### Adding or Removing release instances
 
-To add new releases to collection:
+### Adding a Release to a Collection Folder
 
 ```python
 me.collection_folders[0].add_release(17392219)
@@ -177,7 +176,18 @@ me.collection_folders[0].add_release(17392219)
 
 _`add_release` also accepts `Release` objects_
 
-To remove release instances from collection
+### Removing a Release from a Collection Folder
+
+Removing a single release instance by it's index:
+
+```
+folder = me.collection_folders[0]
+releases = folder.releases
+# Delete the first instance in releases
+folder.remove_release(releases[0])
+```
+
+To filter out which instance to remove we can use the attributes of the `release` object attached to the CollectionItemInstance:
 
 ```python
 folder = me.collection_folders[0]
@@ -186,4 +196,4 @@ for instance in folder.releases:
         folder.remove_release(instance)
 ```
 
-_`remove_release` accepts only `CollectionItemInstance` objects_
+_`remove_release` only accepts `CollectionItemInstance` objects_
