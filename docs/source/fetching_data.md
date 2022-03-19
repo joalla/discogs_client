@@ -175,7 +175,7 @@ To add new releases to collection:
 me.collection_folders[0].add_release(17392219)
 ```
 
-- `add_release` also accepts `Release` objects
+_`add_release` also accepts `Release` objects_
 
 To remove release instances from collection
 
@@ -186,4 +186,4 @@ for instance in folder.releases:
         folder.remove_release(instance)
 ```
 
-- `remove_release` accepts only `CollectionItemInstance` objects
+_`remove_release` accepts only `CollectionItemInstance` objects_
