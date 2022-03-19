@@ -166,3 +166,24 @@ print(me.collection_folders[0].releases[123].release.title)
 ```
 Phylyps Trak II
 ```
+
+### Adding or Removing release instances
+
+To add new releases to collection:
+
+```python
+me.collection_folders[0].add_release(17392219)
+```
+
+_`add_release` also accepts `Release` objects_
+
+To remove release instances from collection
+
+```python
+folder = me.collection_folders[0]
+for instance in folder.releases:
+    if instance.release.title == "Internet Protocol":
+        folder.remove_release(instance)
+```
+
+_`remove_release` accepts only `CollectionItemInstance` objects_
