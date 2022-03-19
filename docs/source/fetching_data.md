@@ -166,13 +166,34 @@ print(me.collection_folders[0].releases[123].release.title)
 ```
 Phylyps Trak II
 ```
+
+
+### Adding a Release to a Collection Folder
+
+```python
+me.collection_folders[0].add_release(17392219)
+```
+
+_`add_release` also accepts `Release` objects_
+
 ### Removing a Release from a Collection Folder
 
-A release can be removed from a collection folder using `remove_release`, assuming the Client object is called `d`:
+Removing a single release instance by it's index:
+
 ```
-user = d.user("example")
-folder = user.collection_folders[1]
+folder = me.collection_folders[0]
 releases = folder.releases
 # Delete the first instance in releases
 folder.remove_release(releases[0])
 ```
+
+To filter out which instance to remove we can use the attributes of the `release` object attached to the CollectionItemInstance:
+
+```python
+folder = me.collection_folders[0]
+for instance in folder.releases:
+    if instance.release.title == "Internet Protocol":
+        folder.remove_release(instance)
+```
+
+_`remove_release` only accepts `CollectionItemInstance` objects_
