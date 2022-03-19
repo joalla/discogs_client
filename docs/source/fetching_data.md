@@ -178,7 +178,7 @@ _`add_release` also accepts `Release` objects_
 
 ### Removing a Release from a Collection Folder
 
-Removing a single release instance by it's index:
+Removing a single release instance identified by it's index:
 
 ```
 folder = me.collection_folders[0]
@@ -187,7 +187,7 @@ releases = folder.releases
 folder.remove_release(releases[0])
 ```
 
-To filter out which instance to remove we can use the attributes of the `release` object attached to the CollectionItemInstance:
+To filter out which instance to remove we could also use the attributes of the `release` object attached to the CollectionItemInstance:
 
 ```python
 folder = me.collection_folders[0]
