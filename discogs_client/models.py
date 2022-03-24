@@ -636,6 +636,11 @@ class User(PrimaryAPIObject):
         resp = self.client._get(self.fetch('collection_folders_url'))
         return [CollectionFolder(self.client, d) for d in resp['folders']]
 
+    # TODO: Come up with a better name and whether this should be here
+    def collectionitems_by_release(self, release):
+        release_id = release.id if isinstance(release, Release) else release
+        return PaginatedList(self.client,self.fetch('resource_url') + "/collection/releases/{}".format(release_id) , "releases", CollectionItemInstance)
+
     @property
     def collection_value(self):
         resp = self.client._get(f"{self.fetch('resource_url')}/collection/value")
