@@ -637,11 +637,18 @@ class User(PrimaryAPIObject):
         return [CollectionFolder(self.client, d) for d in resp['folders']]
 
     def collection_items(self, release):
-        """
-        Fetch collection items by release, accepts Release object or release id
+        """Fetch collection items by release, accepts Release object or release id
 
-        Returns paginated list of CollectionItemInstance objects
+        Parameters
+        ----------
+        release : Release or int
+
+        Returns
+        -------
+        PaginatedList
+            PaginatedList of CollectionItemInstance objects
         """
+
         release_id = release.id if isinstance(release, Release) else release
         return PaginatedList(self.client,self.fetch('resource_url') + "/collection/releases/{}".format(release_id) , "releases", CollectionItemInstance)
 
