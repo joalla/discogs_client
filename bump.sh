@@ -17,7 +17,7 @@ fi
 
 if [ -z $1 ]; then
     echo "Bumps version, commits and tags."
-    echo "Usage: ./bump.s <major|minor|patch> [doit]"
+    echo "Usage: $0 <major|minor|patch> [doit]"
     exit 0
 fi
 
