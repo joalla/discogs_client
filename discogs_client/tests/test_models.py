@@ -47,6 +47,12 @@ class ModelsTestCase(DiscogsClientTestCase):
         self.assertTrue(isinstance(results[0], Artist))
         self.assertTrue(isinstance(results[1], Release))
 
+    def test_multiterm_search(self):
+        results = self.d.search('trash80' 'second term')
+        self.assertEqual(len(results), 13)
+        self.assertTrue(isinstance(results[0], Artist))
+        self.assertTrue(isinstance(results[1], Release))
+
     def test_utf8_search(self):
         uni_string = 'caf\xe9'
         try:
