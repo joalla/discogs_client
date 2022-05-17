@@ -136,12 +136,10 @@ class Client:
             ))
 
         if query:
-            if any([type(item) == bytes for item in query]):
-                fields['q'] = b' '.join(query)
-                print("DEBUG: bytes concat result: {}".format(fields))
-            else:
-                fields['q'] = ' '.join(query)
-                print("DEBUG: else concat result: {}".format(fields))
+            items = [
+                item.decode() if type(item) == bytes else item for item in query
+            ]
+            fields['q'] = ' '.join(items)
 
         return models.MixedPaginatedList(
             self,
