@@ -48,7 +48,19 @@ class ModelsTestCase(DiscogsClientTestCase):
         self.assertTrue(isinstance(results[1], Release))
 
     def test_multiterm_search(self):
-        results = self.d.search('trash80' 'second term')
+        results = self.d.search('trash', '80')
+        self.assertEqual(len(results), 13)
+        self.assertTrue(isinstance(results[0], Artist))
+        self.assertTrue(isinstance(results[1], Release))
+
+    def test_multiterm_bytes_search(self):
+        results = self.d.search(b'trash', b'80')
+        self.assertEqual(len(results), 13)
+        self.assertTrue(isinstance(results[0], Artist))
+        self.assertTrue(isinstance(results[1], Release))
+
+    def test_multiterm_mixed_search(self):
+        results = self.d.search('trash', b'80')
         self.assertEqual(len(results), 13)
         self.assertTrue(isinstance(results[0], Artist))
         self.assertTrue(isinstance(results[1], Release))
