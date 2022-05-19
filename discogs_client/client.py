@@ -131,7 +131,11 @@ class Client:
         function are serialized into the request's query string.
         """
         if query:
-            fields['q'] = ' '.join(query)
+            items = [
+                item.decode() if type(item) == bytes else item for item in query
+            ]
+            fields['q'] = ' '.join(items)
+
         return models.MixedPaginatedList(
             self,
             update_qs(self._base_url + '/database/search', fields),
