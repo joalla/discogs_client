@@ -130,11 +130,6 @@ class Client:
         (Artists, Releases, Masters, and Labels). The keyword arguments to this
         function are serialized into the request's query string.
         """
-        if type(query) is not tuple:
-            raise TypeError("{} method is expecting tuple, got {}.".format(
-                __name__, type(query)
-            ))
-
         if query:
             items = [
                 item.decode() if type(item) == bytes else item for item in query
