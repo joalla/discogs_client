@@ -147,8 +147,9 @@ docs._
 ## For more information
 
 - Read through [python3-discogs-client.readthedocs.org](https://python3-discogs-client.readthedocs.org) for step by step instructions.
-- Check the [discogs_client Python package documentation](https://python3-discogs-client.readthedocs.org/en/latest/discogs_client.html) to find out details on specific modules, classes, methods, ...
+- Check the [discogs_client Python package documentation](https://python3-discogs-client.readthedocs.org/en/latest/discogs_client.html) to find out details on specific modules, classes, methods, and more.
 - Or just spin up a REPL and use `dir()` on things :)
+- If you have questions or feature requests, please ask in the [discussion section](https://github.com/joalla/discogs_client/discussions).
 
 
 ## Contributing
