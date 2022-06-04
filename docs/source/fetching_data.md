@@ -211,7 +211,8 @@ for instance in release_instances:
 ```
 
 Once the release instance is created, you can query which collection folder the release 
-belongs to.  From there you can perform an action on the release, such as adding or removing the release from your collection:
+belongs to.  From there you can perform an action on the release, such as adding notes 
+or removing the release from your collection:
 
 ```python
 folder = me.collection_folders[instance.folder_id]
