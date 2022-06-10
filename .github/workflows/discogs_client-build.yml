@@ -22,6 +22,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install .
+        pip install nose coverage
     - name: Run Tests with coverage
       run: |
         if [ $(python -c "import sys; print(sys.version_info.minor)") -lt 7 ]; then
