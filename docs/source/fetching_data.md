@@ -200,20 +200,13 @@ _`remove_release` only accepts `CollectionItemInstance` objects_
 
 ## Collection Item Instances by Release
 
-As seen in the [Collection Data chapter](fetching_data.md), collection items can be accessed by iterating through a specific 
-folder or the whole collection.
+As seen in the [Collection Data chapter](fetching_data.md), collection items can be accessed by iterating through a specific folder or the whole collection.
 
-An alternative approach is using the `collection_items` method which can be faster than iterating through 
-the collection.  After passing this method a `release_id` or Release object, it will return a list of 
-`CollectionItemInstance` objects. 
+An alternative approach is using the `collection_items` method which can be faster than iterating through the collection.  After passing this method a `release_id` or Release object, it will return a list of `CollectionItemInstance` objects. 
 
-As it is possible that you have (or physically own) multiple copies of the same release inside one or more
-collection folders, using this method will return all copies of the release no matter which folder it is 
-located in.
+As it is possible that you have (or physically own) multiple copies of the same release inside one or more collection folders, using this method will return all copies of the release no matter which folder it is located in.
 
-The example code below will print all `CollectionItemInstances` of release 22155985.  The attributes of the 
-`CollectionItemInstances` will show additional information, such as the folder it is located in or the 
-details of the release.
+The example code below will print all `CollectionItemInstances` of release 22155985.  The attributes of the `CollectionItemInstances` will show additional information, such as the folder it is located in or the details of the release.
 
 ```python
 release_instances = me.collection_items(22155985)
