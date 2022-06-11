@@ -134,13 +134,26 @@ for item in me.collection_folders[0].releases:
 ...
 ```
 
+The items in the collection always are `CollectionItemInstance` objects.
+
+
+### Collection Items by Folder
+
 - Folder 0 is a special folder containing all the release in the user's collection
-- Folders 1 to n are any other collection folders manually created by the user.
+- Folder 1 is the "Uncategorized" folder.
+- Folders 2 to n are any other collection folders manually created by the user.
+
+To loop through the "Uncategorized" folder:
+
+```
+for item in me.collection_folders[1].releases:
+    print(item)
+```
 
 Find out more about the available attributes of a `CollectionItemInstance`:
 
 ```
-print(dir(me.collection_folders[0].releases[123]:
+print(dir(me.collection_folders[1].releases[123]:
 ```
 
 ```
@@ -150,7 +163,7 @@ print(dir(me.collection_folders[0].releases[123]:
 Get a full `release` object of a collection item:
 
 ```
-print(me.collection_folders[0].releases[123].release)
+print(me.collection_folders[1].releases[123].release)
 ```
 
 ```
@@ -160,7 +173,7 @@ print(me.collection_folders[0].releases[123].release)
 Get the `title` of the `release`:
 
 ```
-print(me.collection_folders[0].releases[123].release.title)
+print(me.collection_folders[1].releases[123].release.title)
 ```
 
 ```
@@ -168,41 +181,11 @@ Phylyps Trak II
 ```
 
 
-### Adding a Release to a Collection Folder
+### Collection Items by Release
 
-```python
-me.collection_folders[0].add_release(17392219)
-```
+As seen in the [Collection Items by Folder chapter](fetching_data.md#collection-items-by-folder), collection items can be accessed by iterating through a specific folder or the whole collection.
 
-_`add_release` also accepts `Release` objects_
-
-### Removing a Release from a Collection Folder
-
-Removing a single release instance identified by its index:
-
-```
-folder = me.collection_folders[0]
-releases = folder.releases
-# Delete the first instance in releases
-folder.remove_release(releases[0])
-```
-
-To filter out which instance to remove we could also use the attributes of the `release` object attached to the CollectionItemInstance:
-
-```python
-folder = me.collection_folders[0]
-for instance in folder.releases:
-    if instance.release.title == "Internet Protocol":
-        folder.remove_release(instance)
-```
-
-_`remove_release` only accepts `CollectionItemInstance` objects_
-
-## Collection Item Instances by Release
-
-As seen in the [Collection Data chapter](fetching_data.md), collection items can be accessed by iterating through a specific folder or the whole collection.
-
-An alternative approach is using the `collection_items` method which can be faster than iterating through the collection.  After passing this method a `release_id` or Release object, it will return a list of `CollectionItemInstance` objects. 
+An alternative approach is using the `collection_items` method which can be faster than iterating through the collection. After passing this method a `release_id` or Release object, it will return a list of `CollectionItemInstance` objects.
 
 As it is possible that you have (or physically own) multiple copies of the same release inside one or more collection folders, using this method will return all copies of the release no matter which folder it is located in.
 
@@ -211,12 +194,52 @@ The example code below will print all `CollectionItemInstances` of release 22155
 ```python
 release_instances = me.collection_items(22155985)
 for instance in release_instances:
-    print(instance) 
+    print(instance)
+    print(instance.folder_id)
+    print(instance.release)
 ```
 
-*Note: To remove an instance from the collection folder it belongs to, you need to fetch the
-correct folder (using `instance.folder_id`) to remove it. See the section
-"Removing a Release from a Collection Folder".*
+
+### Adding a Release to a Collection Folder
+
+```python
+me.collection_folders[2].add_release(17392219)
+```
+
+_`add_release` also accepts `Release` objects_
+
+
+### Removing a Release from a Collection Folder
+
+Removing a single release instance identified by its index:
+
+```
+folder = me.collection_folders[2]
+releases = folder.releases
+# Delete the first instance in releases
+folder.remove_release(releases[0])
+```
+
+To filter out which instance to remove we could also use the attributes of the `release` object attached to the CollectionItemInstance:
+
+```python
+folder = me.collection_folders[2]
+for instance in folder.releases:
+    if instance.release.title == "Internet Protocol":
+        folder.remove_release(instance)
+```
+
+Another approach to removing instances from collection folders if we know a release ID already would be to make use of the `collection_items` method. This way we could delete all the instances from all its containing folders:
+
+```python
+release_instances = me.collection_items(22155985)
+for instance in release_instances:
+    folder = me.collection_folders[instance.folder_id]
+    folder.remove_release(instance)
+```
+
+_`remove_release` only accepts `CollectionItemInstance` objects_
+
 
 ## Using '.fetch' to get other data
 
