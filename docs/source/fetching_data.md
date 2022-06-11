@@ -198,13 +198,14 @@ for instance in folder.releases:
 
 _`remove_release` only accepts `CollectionItemInstance` objects_
 
-### Managing Releases in multiple Collection Folders
+### Collection Item Instances
 
 It is possible that you have multiple instances of the same release inside one or more 
-collection folders. If you want to update or remove all of those instances, you can fetch 
-all instances of that release across all collection folders by `release_id` or Release object.
+collection folders. Using the `collection_items` method, you can iterate through all of your folders
+to find a release using the `release_id`.  If you want to update or remove all of those instances, 
+you can fetch all instances of that release across all collection folders by `release_id` or Release object.
 
-First, create an instance of the release:
+First, fetch all instances of the release:
 
 ```python
 release_instances = me.collection_items(22155985)
@@ -212,7 +213,7 @@ for instance in release_instances:
     print(instance) 
 ```
 
-This method returns a list of `CollectionItemInstance` objects.
+This method returns a list of `CollectionItemInstance` objects.  
 
 *Note: To remove an instance from the collection folder it belongs to, you need to fetch the 
 correct folder (using `instance.folder_id`) to remove it. See the section 
