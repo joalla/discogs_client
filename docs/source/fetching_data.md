@@ -200,7 +200,8 @@ _`remove_release` only accepts `CollectionItemInstance` objects_
 
 ### Managing Identical Releases
 
-It is possible to own multiple copies of the same release, each with its own information. You can create an instance of a an individual release in a collection folder.
+It is possible to own multiple copies of the same release, each with its own information. 
+You can create an instance of an individual release in a collection folder.
 
 First, create an instance of the release:
 
@@ -220,3 +221,22 @@ folder.remove_release(instance)
 ```
 
 To see a list of all available methods, use the `dir()` function. 
+
+## Using '.fetch' to get other data
+
+There may be some Discogs data that is not included in `discogs-client`.  You can use the 
+`.fetch` method to get any data from the Discogs API, including data that may not be included in 
+the `discogs-client`.
+
+An [authenticated Client object](authentication.md) is required.  To understand the Discogs API,
+see the [Discogs API documentation](https://www.discogs.com/developers/) or use the community
+[Postman collection](https://github.com/leopuleo/discogs-postman) to test the API.
+
+An example using the `.fetch` method:
+
+To query the number of ratings and average review for a release:
+
+`print(client.release(1026691).fetch("community")["rating"])`
+
+returns `{'count': 274, 'average': 4.38}`
+
