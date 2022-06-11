@@ -178,7 +178,7 @@ _`add_release` also accepts `Release` objects_
 
 ### Removing a Release from a Collection Folder
 
-Removing a single release instance identified by it's index:
+Removing a single release instance identified by its index:
 
 ```
 folder = me.collection_folders[0]
@@ -198,14 +198,24 @@ for instance in folder.releases:
 
 _`remove_release` only accepts `CollectionItemInstance` objects_
 
-### Collection Item Instances
+## Collection Item Instances by Release
 
-It is possible that you have multiple instances of the same release inside one or more 
-collection folders. Using the `collection_items` method, you can iterate through all of your folders
-to find a release using the `release_id`.  If you want to update or remove all of those instances, 
-you can fetch all instances of that release across all collection folders by `release_id` or Release object.
+As seen in the [Collection Data chapter](fetching_data.md), collection items can be accessed by iterating through a specific 
+folder or the whole collection.
 
-First, fetch all instances of the release:
+An alternative approach is using the `collection_items` method which can be faster than iterating through 
+the collection.  After passing this method a `release_id` or Release object, it will return a list of 
+`CollectionItemInstance` objects. 
+
+As it is possible that you have (or physically own) multiple copies of the same release inside one or more
+collection folders, using this method will return all copies of the release no matter which folder it is 
+located in.
+
+This example code prints all CollectionItemInstances of release 22155985. Via the attributes of the `CollectionItemInstances` we can receive additional information such as the folder it is located in or to get details of the actual release.
+
+The example code below will print all `CollectionItemInstances` of release 22155985.  The attributes of the 
+`CollectionItemInstances` will show additional information, such as the folder it is located in or the 
+details of the release.
 
 ```python
 release_instances = me.collection_items(22155985)
@@ -213,11 +223,9 @@ for instance in release_instances:
     print(instance) 
 ```
 
-This method returns a list of `CollectionItemInstance` objects.  
-
-*Note: To remove an instance from the collection folder it belongs to, you need to fetch the 
-correct folder (using `instance.folder_id`) to remove it. See the section 
-"Removing a Release from a Collection Folder"*.
+*Note: To remove an instance from the collection folder it belongs to, you need to fetch the
+correct folder (using `instance.folder_id`) to remove it. See the section
+"Removing a Release from a Collection Folder".*
 
 ## Using '.fetch' to get other data
 
