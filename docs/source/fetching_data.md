@@ -211,8 +211,6 @@ As it is possible that you have (or physically own) multiple copies of the same 
 collection folders, using this method will return all copies of the release no matter which folder it is 
 located in.
 
-This example code prints all CollectionItemInstances of release 22155985. Via the attributes of the `CollectionItemInstances` we can receive additional information such as the folder it is located in or to get details of the actual release.
-
 The example code below will print all `CollectionItemInstances` of release 22155985.  The attributes of the 
 `CollectionItemInstances` will show additional information, such as the folder it is located in or the 
 details of the release.
