@@ -134,7 +134,7 @@ for item in me.collection_folders[0].releases:
 ...
 ```
 
-The items in the collection always are `CollectionItemInstance` objects.
+The items in the collection always are `CollectionItemInstance` objects ({class}`discogs_client.models.CollectionItemInstance`).
 
 
 ### Collection Items by Folder
