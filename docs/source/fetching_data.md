@@ -160,7 +160,7 @@ print(dir(me.collection_folders[1].releases[123]:
 ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_known_invalid_keys', 'changes', 'client', 'data', 'date_added', 'delete', 'fetch', 'folder_id', 'id', 'notes', 'rating', 'refresh', 'release', 'save']
 ```
 
-Get a full `release` object of a collection item:
+Get a full {class}`.Release` object of a collection item:
 
 ```
 print(me.collection_folders[1].releases[123].release)
