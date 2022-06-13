@@ -106,7 +106,7 @@ Asking For A Friend
 
 To access the collection an [authenticated Client object](authentication.md) is required.
 
-Assuming the Client object is called `d`:
+Assuming the {class}`.Client` object is called `d`:
 
 ```
 me=d.identity()
@@ -119,7 +119,7 @@ will return:
 <User 123456 'discogs_username'>
 ```
 
-Loop through all the `releases` in the collection:
+Loop through _all_ the items in the collection:
 
 ```
 for item in me.collection_folders[0].releases:
@@ -150,7 +150,7 @@ for item in me.collection_folders[1].releases:
     print(item)
 ```
 
-Find out more about the available attributes of a `CollectionItemInstance`:
+Find out more about the available attributes of a {class}`.CollectionItemInstance`:
 
 ```
 print(dir(me.collection_folders[1].releases[123]:
@@ -170,7 +170,7 @@ print(me.collection_folders[1].releases[123].release)
 <Release 1692728 'Phylyps Trak II'>
 ```
 
-Get the `title` of the `release`:
+Get the {attr}`~.Release.title` of the {class}`.Release`:
 
 ```
 print(me.collection_folders[1].releases[123].release.title)
@@ -185,11 +185,11 @@ Phylyps Trak II
 
 As seen in the [Collection Items by Folder chapter](fetching_data.md#collection-items-by-folder), collection items can be accessed by iterating through a specific folder or the whole collection.
 
-An alternative approach is using the `collection_items` method which can be faster than iterating through the collection. After passing this method a `release_id` or Release object, it will return a list of `CollectionItemInstance` objects.
+An alternative approach is using the {meth}`.collection_items` method which can be faster than iterating through the collection. After passing this method a `release_id` or {class}`.Release` object, it will return a list of {class}`.CollectionItemInstance` objects.
 
 As it is possible that you have (or physically own) multiple copies of the same release inside one or more collection folders, using this method will return all copies of the release no matter which folder it is located in.
 
-The example code below will print all `CollectionItemInstances` of release 22155985.  The attributes of the `CollectionItemInstances` will show additional information, such as the folder it is located in or the details of the release.
+The example code below will print all {class}`.CollectionItemInstance`s of release 22155985. The attributes of the {class}`.CollectionItemInstance`s will show additional information, such as the folder it is located in or the details of the {class}`.Release`.
 
 ```python
 release_instances = me.collection_items(22155985)
@@ -206,7 +206,7 @@ for instance in release_instances:
 me.collection_folders[2].add_release(17392219)
 ```
 
-_`add_release` also accepts `Release` objects_
+_{meth}`.add_release` also accepts {class}`.Release` objects_
 
 
 ### Removing a Release from a Collection Folder
@@ -220,7 +220,7 @@ releases = folder.releases
 folder.remove_release(releases[0])
 ```
 
-To filter out which instance to remove we could also use the attributes of the `release` object attached to the CollectionItemInstance:
+To filter out which instance to remove we could also use the attributes of the {class}`.Release` object attached to the {class}`.CollectionItemInstance`:
 
 ```python
 folder = me.collection_folders[2]
@@ -229,7 +229,7 @@ for instance in folder.releases:
         folder.remove_release(instance)
 ```
 
-Another approach to removing instances from collection folders if we know a release ID already would be to make use of the `collection_items` method. This way we could delete all the instances from all its containing folders:
+Another approach to removing instances from collection folders if we know a release ID already would be to make use of the {meth}`.collection_items` method. This way we could delete all the instances from all its containing folders:
 
 ```python
 release_instances = me.collection_items(22155985)
@@ -238,14 +238,13 @@ for instance in release_instances:
     folder.remove_release(instance)
 ```
 
-_`remove_release` only accepts `CollectionItemInstance` objects_
+_{meth}`.remove_release` only accepts {class}`.CollectionItemInstance` objects_
 
 
 ## Using '.fetch' to get other data
 
-There may be some Discogs data that is not included in `discogs-client`.  You can use the 
-`.fetch` method to get any data from the Discogs API, including data that may not be included in 
-the `discogs-client`.
+There may be some Discogs data that is not included in `python3-discogs-client`.  You can use the
+`.fetch` method to get any data from the Discogs API, including data that may not be included in `python3-discogs-client`.
 
 An [authenticated Client object](authentication.md) is required.  To understand the Discogs API,
 see the [Discogs API documentation](https://www.discogs.com/developers/) or use the community
