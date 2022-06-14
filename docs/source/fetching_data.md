@@ -213,7 +213,7 @@ _{meth}`.add_release` also accepts {class}`.Release` objects_
 
 Removing a single release instance identified by its index:
 
-```
+```python
 folder = me.collection_folders[2]
 releases = folder.releases
 # Delete the first instance in releases
@@ -241,17 +241,17 @@ for instance in release_instances:
 _{meth}`.remove_release` only accepts {class}`.CollectionItemInstance` objects_
 
 
-## Using '.fetch' to get other data
+## Using 'fetch()' to get other data
 
-There may be some Discogs data that is not included in `python3-discogs-client`. You can use the `.fetch` method to get any data from the Discogs API, including data that may not be included in `python3-discogs-client`.
+You can use the {meth}`fetch` method to get any data from the Discogs API, including data that may not be included in `python3-discogs-client`.
 
 An [authenticated Client object](authentication.md) is required. To understand the Discogs API, see the [Discogs API documentation](https://www.discogs.com/developers/) or use the community [Postman collection](https://github.com/leopuleo/discogs-postman) to test the API.
 
-An example using the `.fetch` method:
+An example using the {meth}`fetch` method:
 
-To query the number of ratings and average review for a release:
+To query the number of ratings and average rating for a release:
 
-`print(client.release(1026691).fetch("community")["rating"])`
-
-returns `{'count': 274, 'average': 4.38}`
-
+```python
+print(client.release(1026691).fetch("community")["rating"])
+>>> {'count': 274, 'average': 4.38}
+```
