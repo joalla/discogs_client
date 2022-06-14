@@ -241,7 +241,7 @@ for instance in release_instances:
 _{meth}`.remove_release` only accepts {class}`.CollectionItemInstance` objects_
 
 
-## Using 'fetch()' to get other data
+## Using {meth}`~discogs_client.models.PrimaryAPIObject.fetch` to get other data
 
 You can use the {meth}`~discogs_client.models.PrimaryAPIObject.fetch` method to get any data from an object/resource, including data that may not be included in `python3-discogs-client`.
 
