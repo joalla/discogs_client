@@ -243,11 +243,11 @@ _{meth}`.remove_release` only accepts {class}`.CollectionItemInstance` objects_
 
 ## Using 'fetch()' to get other data
 
-You can use the {meth}`fetch` method to get any data from the Discogs API, including data that may not be included in `python3-discogs-client`.
+You can use the {meth}`.fetch` method to get any data from the Discogs API, including data that may not be included in `python3-discogs-client`.
 
 An [authenticated Client object](authentication.md) is required. To understand the Discogs API, see the [Discogs API documentation](https://www.discogs.com/developers/) or use the community [Postman collection](https://github.com/leopuleo/discogs-postman) to test the API.
 
-An example using the {meth}`fetch` method:
+An example using the {meth}`.fetch` method:
 
 To query the number of ratings and average rating for a release:
 
