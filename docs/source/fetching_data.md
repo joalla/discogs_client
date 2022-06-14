@@ -247,7 +247,7 @@ You can use the {meth}`~discogs_client.models.PrimaryAPIObject.fetch` method to 
 
 An [authenticated Client object](authentication.md) is required. To understand the Discogs API, see the [Discogs API documentation](https://www.discogs.com/developers/) or use the community [Postman collection](https://github.com/leopuleo/discogs-postman) to test the API.
 
-Examples of using the {meth}`~discogs_client.models.SecondaryAPIObject.fetch` method:
+Examples of using the {meth}`~discogs_client.models.PrimaryAPIObject.fetch` method:
 
 ```python
 release = client.release(1026691)
