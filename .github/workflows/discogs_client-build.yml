@@ -25,8 +25,4 @@ jobs:
         pip install nose coverage
     - name: Run Tests with coverage
       run: |
-        if [ $(python -c "import sys; print(sys.version_info.minor)") -lt 7 ]; then
-            nosetests
-        else
-            nosetests --with-coverage --cover-package=discogs_client
-        fi
+        python -m unittest
