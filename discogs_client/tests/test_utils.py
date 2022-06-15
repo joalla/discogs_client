@@ -63,13 +63,13 @@ class UtilsTestCase(DiscogsClientTestCase):
 
     def test_condition(self):
         self.assertRaises(TypeError, lambda: utils.Condition())
-        self.assertEqual(utils.Condition.MINT, 'Mint (M)')
-        self.assertEqual(utils.Condition.NEAR_MINT, 'Near Mint (NM or M-)')
+        self.assertEqual(utils.Condition.MINT.value, 'Mint (M)')
+        self.assertEqual(utils.Condition.NEAR_MINT.value, 'Near Mint (NM or M-)')
 
     def test_status(self):
         self.assertRaises(TypeError, lambda: utils.Status())
-        self.assertEqual(utils.Status.DRAFT, 'Draft')
-        self.assertEqual(utils.Status.FOR_SALE, 'For Sale')
+        self.assertEqual(utils.Status.DRAFT.value, 'Draft')
+        self.assertEqual(utils.Status.FOR_SALE.value, 'For Sale')
 
     def test_sort(self):
         self.assertRaises(TypeError, lambda: utils.Sort())
