@@ -19,6 +19,8 @@ class Client:
         self.verbose = False
         self._fetcher = RequestsFetcher()
 
+        self.previous_request = None
+
         if consumer_key and consumer_secret:
             self.set_consumer_key(consumer_key, consumer_secret)
             if token and secret:
@@ -84,6 +86,8 @@ class Client:
             raise ConfigurationError('Invalid or no User-Agent set.')
 
     def _request(self, method, url, data=None):
+        if method == "GET":
+            self.previous_request = url
         if self.verbose:
             print(' '.join((method, url)))
 

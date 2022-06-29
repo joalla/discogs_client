@@ -188,6 +188,7 @@ class PrimaryAPIObject(APIObject):
         self.client = client
         self._known_invalid_keys = []
         self.changes = {}
+        self.previous_request = client.previous_request
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
@@ -203,6 +204,7 @@ class PrimaryAPIObject(APIObject):
             data = self.client._get(self.data['resource_url'])
             self.data.update(data)
             self.changes = {}
+            self.previous_request = self.data.get('resource_url')
 
     def save(self):
         if self.data.get('resource_url'):
@@ -231,6 +233,12 @@ class PrimaryAPIObject(APIObject):
             return self.data[key]
         except KeyError:
             pass
+
+        # Object already refreshed from resource_url
+        # return default to prevent an unnecessary API call
+        if self.data.get('resource_url') == self.previous_request:
+            self._known_invalid_keys.append(key)
+            return default
 
         # Now refresh the object from its resource_url.
         # The key might exist but not be in our cache.
