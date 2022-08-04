@@ -106,7 +106,7 @@ Asking For A Friend
 
 To access the collection an [authenticated Client object](authentication.md) is required.
 
-Assuming the Client object is called `d`:
+Assuming the {class}`.Client` object is called `d`:
 
 ```
 me=d.identity()
@@ -119,7 +119,7 @@ will return:
 <User 123456 'discogs_username'>
 ```
 
-Loop through all the `releases` in the collection:
+Loop through _all_ the items in the collection:
 
 ```
 for item in me.collection_folders[0].releases:
@@ -134,33 +134,46 @@ for item in me.collection_folders[0].releases:
 ...
 ```
 
-- Folder 0 is a special folder containing all the release in the user's collection
-- Folders 1 to n are any other collection folders manually created by the user.
+The items in the collection always are {class}`.CollectionItemInstance` objects.
 
-Find out more about the available attributes of a `CollectionItemInstance`:
+
+### Collection Items by Folder
+
+- Folder 0 is a special folder containing all the release in the user's collection
+- Folder 1 is the "Uncategorized" folder.
+- Folders 2 to n are any other collection folders manually created by the user.
+
+To loop through the "Uncategorized" folder:
 
 ```
-print(dir(me.collection_folders[0].releases[123]:
+for item in me.collection_folders[1].releases:
+    print(item)
+```
+
+Find out more about the available attributes of a {class}`.CollectionItemInstance`:
+
+```
+print(dir(me.collection_folders[1].releases[123]:
 ```
 
 ```
 ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_known_invalid_keys', 'changes', 'client', 'data', 'date_added', 'delete', 'fetch', 'folder_id', 'id', 'notes', 'rating', 'refresh', 'release', 'save']
 ```
 
-Get a full `release` object of a collection item:
+Get a full {class}`.Release` object of a collection item:
 
 ```
-print(me.collection_folders[0].releases[123].release)
+print(me.collection_folders[1].releases[123].release)
 ```
 
 ```
 <Release 1692728 'Phylyps Trak II'>
 ```
 
-Get the `title` of the `release`:
+Get the {attr}`~.Release.title` of the {class}`.Release`:
 
 ```
-print(me.collection_folders[0].releases[123].release.title)
+print(me.collection_folders[1].releases[123].release.title)
 ```
 
 ```
@@ -168,32 +181,82 @@ Phylyps Trak II
 ```
 
 
+### Collection Items by Release
+
+As seen in the [Collection Items by Folder chapter](fetching_data.md#collection-items-by-folder), collection items can be accessed by iterating through a specific folder or the whole collection.
+
+An alternative approach is using the {meth}`.collection_items` method which can be faster than iterating through the collection. After passing this method a `release_id` or {class}`.Release` object, it will return a list of {class}`.CollectionItemInstance` objects.
+
+As it is possible that you have (or physically own) multiple copies of the same release inside one or more collection folders, using this method will return all copies of the release no matter which folder it is located in.
+
+The example code below will print all {class}`.CollectionItemInstance`s of release 22155985. The attributes of the {class}`.CollectionItemInstance`s will show additional information, such as the folder it is located in or the details of the {class}`.Release`.
+
+```python
+release_instances = me.collection_items(22155985)
+for instance in release_instances:
+    print(instance)
+    print(instance.folder_id)
+    print(instance.release)
+```
+
+
 ### Adding a Release to a Collection Folder
 
 ```python
-me.collection_folders[0].add_release(17392219)
+me.collection_folders[2].add_release(17392219)
 ```
 
-_`add_release` also accepts `Release` objects_
+_{meth}`.add_release` also accepts {class}`.Release` objects_
+
 
 ### Removing a Release from a Collection Folder
 
-Removing a single release instance identified by it's index:
+Removing a single release instance identified by its index:
 
-```
-folder = me.collection_folders[0]
+```python
+folder = me.collection_folders[2]
 releases = folder.releases
 # Delete the first instance in releases
 folder.remove_release(releases[0])
 ```
 
-To filter out which instance to remove we could also use the attributes of the `release` object attached to the CollectionItemInstance:
+To filter out which instance to remove we could also use the attributes of the {class}`.Release` object attached to the {class}`.CollectionItemInstance`:
 
 ```python
-folder = me.collection_folders[0]
+folder = me.collection_folders[2]
 for instance in folder.releases:
     if instance.release.title == "Internet Protocol":
         folder.remove_release(instance)
 ```
 
-_`remove_release` only accepts `CollectionItemInstance` objects_
+Another approach to removing instances from collection folders if we know a release ID already would be to make use of the {meth}`.collection_items` method. This way we could delete all the instances from all its containing folders:
+
+```python
+release_instances = me.collection_items(22155985)
+for instance in release_instances:
+    folder = me.collection_folders[instance.folder_id]
+    folder.remove_release(instance)
+```
+
+_{meth}`.remove_release` only accepts {class}`.CollectionItemInstance` objects_
+
+
+## Using {meth}`~discogs_client.models.PrimaryAPIObject.fetch` to get other data
+
+You can use the {meth}`~discogs_client.models.PrimaryAPIObject.fetch` method to get any data from an object, including data that may not be accessible via the objects properties.
+
+An [authenticated Client object](authentication.md) is required. To understand the Discogs API, see the [Discogs API documentation](https://www.discogs.com/developers/) or use the community [Postman collection](https://github.com/leopuleo/discogs-postman) to test the API.
+
+Examples of using the {meth}`~discogs_client.models.PrimaryAPIObject.fetch` method:
+
+```python
+release = client.release(1026691)
+
+print(release.id)
+>>> 1026691
+print(release.fetch('id'))
+>>> 1026691
+
+print(release.fetch('community')['rating'])
+>>> {'count': 274, 'average': 4.38}
+```

@@ -22,7 +22,7 @@ copyright = '2020-2022, The Joalla Team'
 author = 'The Joalla Team'
 
 # The full version, including alpha/beta/rc tags
-release = '2.3.14'
+release = '2.3.15'
 
 
 # -- General configuration ---------------------------------------------------
@@ -69,6 +69,12 @@ html_last_updated_fmt = "%b %d, %Y"
 html_logo = '_static/discogs-vinyl-record-mark-50x50.png'
 
 myst_heading_anchors = 7
+myst_enable_extensions = [
+    "substitution"
+]
+myst_substitutions = {
+  "class": "I'm a **substitution**"
+}
 
 # -- autodoc tuning -------------------------------------------------
 # don't show docstring of parent classes on childs
