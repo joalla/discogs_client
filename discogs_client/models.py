@@ -188,7 +188,7 @@ class PrimaryAPIObject(APIObject):
         self.client = client
         self._known_invalid_keys = []
         self.changes = {}
-        self.previous_request = client.previous_request
+        self.previous_request = None
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
