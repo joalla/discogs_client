@@ -502,6 +502,7 @@ class Release(PrimaryAPIObject):
     credits = ListField('Artist', key='extraartists')
     labels = ListField('Label')
     companies = ListField('Label')
+    community = ObjectField("communitydetails")
 
     def __init__(self, client, dict_):
         super(Release, self).__init__(client, dict_)
@@ -885,6 +886,27 @@ class ListItem(SecondaryAPIObject):
         return '<ListItem {0!r}>'.format(self.id)
 
 
+class CommunityDetails(SecondaryAPIObject):
+    status = SimpleField()
+    data_quality = SimpleField()
+    want = SimpleField()
+    have = SimpleField()
+    rating = ObjectField('Rating')
+    contributors = ListField("User")
+    submitter = ObjectField("User")
+
+    def __repr__(self):
+        return '<CommunityDetails want/have: {0!r}/{1!r}>'.format(self.want, self.have)
+
+
+class Rating(SecondaryAPIObject):
+    count = SimpleField()
+    average = SimpleField()
+
+    def __repr__(self):
+        return '<Rating avg: {0!r}>'.format(self.average)
+
+
 CLASS_MAP = {
     'artist': Artist,
     'release': Release,
@@ -903,4 +925,6 @@ CLASS_MAP = {
     'wantlistitem': WantlistItem,
     'ordermessage': OrderMessage,
     'collectionvalue': CollectionValue,
+    'communitydetails': CommunityDetails,
+    'rating': Rating,
 }
