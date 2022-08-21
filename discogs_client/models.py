@@ -887,13 +887,16 @@ class ListItem(SecondaryAPIObject):
 
 
 class CommunityDetails(SecondaryAPIObject):
-    status = SimpleField()
-    data_quality = SimpleField()
-    want = SimpleField()
-    have = SimpleField()
-    rating = ObjectField('Rating')
-    contributors = ListField("User")
-    submitter = ObjectField("User")
+    """
+    An object that wraps the community_details data found in a Release object.
+    """
+    status = SimpleField()  #:
+    data_quality = SimpleField()  #:
+    want = SimpleField()  #:
+    have = SimpleField()  #:
+    rating = ObjectField('Rating')  #:
+    contributors = ListField("User")  #:
+    submitter = ObjectField("User")  #:
 
     def __repr__(self):
         return '<CommunityDetails want/have: {0!r}/{1!r}>'.format(self.want, self.have)
