@@ -888,7 +888,7 @@ class ListItem(SecondaryAPIObject):
 
 class CommunityDetails(SecondaryAPIObject):
     """
-    An object that wraps the community_details data found in a Release object.
+    An object that wraps the "community" data found in a Release object.
     """
     status = SimpleField()  #:
     data_quality = SimpleField()  #:
