@@ -250,13 +250,15 @@ An [authenticated Client object](authentication.md) is required. To understand t
 Examples of using the {meth}`~discogs_client.models.PrimaryAPIObject.fetch` method:
 
 ```python
-release = client.release(1026691)
+release = d.release(1026691)
 
 print(release.id)
->>> 1026691
 print(release.fetch('id'))
->>> 1026691
-
 print(release.fetch('community')['rating'])
->>> {'count': 274, 'average': 4.38}
+```
+
+```python
+1026691
+1026691
+{'count': 274, 'average': 4.38}
 ```
