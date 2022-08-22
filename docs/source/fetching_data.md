@@ -122,7 +122,7 @@ print(community_details.contributors)
 [<User 1053297 'ManikRecs'>, <User 1241908 'neurosis76'>, <User 8867757 'silyn1'>, <User 3410038 'evasstra'>]
 ```
 
-There are some more attributes available. Find out about them in the reference docs of the {class}`~discogs_client.models.CommunityDetails` class.
+Additional attributes are also available. Learn more about them in the reference docs of the {class}`~discogs_client.models.CommunityDetails` class.
 
 ## Collection Data
 
