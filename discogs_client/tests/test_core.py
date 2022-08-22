@@ -34,12 +34,16 @@ class CoreTestCase(DiscogsClientTestCase):
 
         # Get a key that's not in our cache
         a.fetch('blorf')
-        self.assertEqual(len(self.d._fetcher.requests), 2)
+        # 6/2022: removed extra call to api in cases where last api point called is same as resource_url
+        # self.assertEqual(len(self.d._fetcher.requests), 2)
+        self.assertEqual(len(self.d._fetcher.requests), 1)
         self.assertTrue('blorf' in a._known_invalid_keys)
 
         # Now we know artists don't have blorves
         a.fetch('blorf')
-        self.assertEqual(len(self.d._fetcher.requests), 2)
+        # 6/2022: removed extra call to api in cases where last api point called is same as resource_url
+        # self.assertEqual(len(self.d._fetcher.requests), 2)
+        self.assertEqual(len(self.d._fetcher.requests), 1)
 
     def test_equality(self):
         """APIObjects of the same class are equal if their IDs are"""

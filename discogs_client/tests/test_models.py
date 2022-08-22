@@ -10,6 +10,13 @@ class ModelsTestCase(DiscogsClientTestCase):
         a = self.d.artist(1)
         self.assertEqual(a.name, 'Persuader, The')
 
+    def test_same_artist(self):
+        """Artists can be fetched and parsed multiple times"""
+        a = self.d.artist(1)
+        self.assertEqual(a.name, 'Persuader, The')
+        b = self.d.artist(1)
+        self.assertEqual(b.name, 'Persuader, The')
+
     def test_release(self):
         """Releases can be fetched and parsed"""
         r = self.d.release(1)
