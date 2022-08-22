@@ -888,7 +888,8 @@ class ListItem(SecondaryAPIObject):
 
 class CommunityDetails(SecondaryAPIObject):
     """
-    An object that wraps the "community" data found in a Release object.
+    An object that wraps the "community" data found in a :class:`.Release`
+    object.
     """
     status = SimpleField()  #:
     data_quality = SimpleField()  #:
@@ -904,7 +905,8 @@ class CommunityDetails(SecondaryAPIObject):
 
 class Rating(SecondaryAPIObject):
     """
-    An object that wraps the "community.rating" data found in a Release object.
+    An object that wraps the "community.rating" data found in a
+    :class:`.Release` object.
     """
     count = SimpleField()  #:
     average = SimpleField()  #:
