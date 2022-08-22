@@ -104,7 +104,7 @@ Asking For A Friend
 ### Community Details
 
 ```python
-release = client.release(15343679)
+release = d.release(15343679)
 community_details = release.community
 
 print(community_details)
