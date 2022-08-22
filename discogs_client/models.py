@@ -903,8 +903,11 @@ class CommunityDetails(SecondaryAPIObject):
 
 
 class Rating(SecondaryAPIObject):
-    count = SimpleField()
-    average = SimpleField()
+    """
+    An object that wraps the "community.rating" data found in a Release object.
+    """
+    count = SimpleField()  #:
+    average = SimpleField()  #:
 
     def __repr__(self):
         return '<Rating avg: {0!r}>'.format(self.average)
