@@ -101,6 +101,28 @@ print(d.release(20017387).tracklist[0].title)
 ```
 Asking For A Friend
 ```
+### Community Details
+
+```python
+release = d.release(15343679)
+community_details = release.community
+
+print(community_details)
+print(community_details.rating)
+print(community_details.want)
+print(community_details.have)
+print(community_details.contributors)
+```
+
+```
+<CommunityDetails want/have: 34/74>
+<Rating avg: 4.5>
+34
+74
+[<User 1053297 'ManikRecs'>, <User 1241908 'neurosis76'>, <User 8867757 'silyn1'>, <User 3410038 'evasstra'>]
+```
+
+Additional attributes are also available. Learn more about them in the reference docs of the {class}`~discogs_client.models.CommunityDetails` class.
 
 ## Collection Data
 

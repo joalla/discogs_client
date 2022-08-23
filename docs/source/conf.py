@@ -82,3 +82,11 @@ autodoc_inherit_docstrings = False
 
 # show docstring of class AND __init__ method
 autoclass_content = 'both'
+
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': True,
+    'show-inheritance': True,
+    'private-members': True,
+    'member-order': 'bysource',
+}
