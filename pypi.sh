@@ -4,8 +4,7 @@ python -m pip install --upgrade build twine
 echo
 echo "Cleaning up dist directory."
 echo
-rm -rf dist/*whl
-rm -rf dist/*tar.gz
+rm -rf dist/
 echo
 python -m build
 python -m twine upload --repository testpypi dist/*
