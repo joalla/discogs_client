@@ -499,6 +499,7 @@ class Release(PrimaryAPIObject):
     videos = ListField('Video')
     tracklist = ListField('Track')
     artists = ListField('Artist')
+    artists_sort = SimpleField()
     credits = ListField('Artist', key='extraartists')
     labels = ListField('Label')
     companies = ListField('Label')
