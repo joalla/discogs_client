@@ -483,26 +483,33 @@ class Artist(PrimaryAPIObject):
 
 
 class Release(PrimaryAPIObject):
-    id = SimpleField()
-    title = SimpleField()
-    year = SimpleField()
-    thumb = SimpleField()
-    data_quality = SimpleField()
-    status = SimpleField()
-    genres = SimpleField()
-    images = SimpleField()
-    country = SimpleField()
-    notes = SimpleField()
-    formats = SimpleField()
-    styles = SimpleField()
-    url = SimpleField(key='uri')
-    videos = ListField('Video')
-    tracklist = ListField('Track')
+    """An object describing a Discogs release."""
+    id = SimpleField()  #:
+    title = SimpleField()  #:
+    year = SimpleField()  #:
+    thumb = SimpleField()  #:
+    data_quality = SimpleField()  #:
+    status = SimpleField()  #:
+    genres = SimpleField()  #:
+    images = SimpleField()  #:
+    country = SimpleField()  #:
+    notes = SimpleField()  #:
+    formats = SimpleField()  #:
+    styles = SimpleField()  #:
+    url = SimpleField(key='uri')  #:
+    videos = ListField('Video')  #:
+    tracklist = ListField('Track')  #:
+    #: A list of ``Artist`` objects. Even though a release could be by one
+    #: artist only, this will always be a list.
     artists = ListField('Artist')
-    credits = ListField('Artist', key='extraartists')
-    labels = ListField('Label')
-    companies = ListField('Label')
-    community = ObjectField("communitydetails")
+    #: On multi-artist releases this attribute provides a string containing
+    #: artists joined together with keywords like "And", "Feat", "Vs", ...
+    #: Eg. "DJ ABC Feat MC Z".
+    artists_sort = SimpleField()
+    credits = ListField('Artist', key='extraartists')  #:
+    labels = ListField('Label')  #:
+    companies = ListField('Label')  #:
+    community = ObjectField("communitydetails")  #:
 
     def __init__(self, client, dict_):
         super(Release, self).__init__(client, dict_)
