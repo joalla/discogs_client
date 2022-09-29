@@ -471,11 +471,12 @@ class Artist(PrimaryAPIObject):
     members = ListField('Artist')  #:
     groups = ListField('Artist')  #:
     #: This attribute is only populated when an ``Artist`` object is requested
-    #: via the artists list of an ``Release`` object, and if it is a
-    #: multi-artist release. Usually only the first of the artists does contain
-    #: a keyword like  "And", "Feat", "Vs" that could be used to "join" artists
-    #: together into a single string. Also check out the artists_sort attribute
-    #: of a ``Release`` object.
+    #: via the ``artists`` list of a ``Release`` object, and if it is a
+    #: multi-artist release. Usually only the first ``Artist`` object in the
+    #: ``artists`` list contains a keyword such as "And", "Feat", "Vs", or
+    #: similar. This keyword could be used to combine artists together into a
+    #: single string, for example: "DJ ABC Feat MC Z". Also check out the
+    #: ``artists_sort`` attribute of a ``Release`` object.
     join = SimpleField()
 
     def __init__(self, client, dict_):
