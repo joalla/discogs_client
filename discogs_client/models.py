@@ -457,18 +457,26 @@ class MixedPaginatedList(BasePaginatedResponse):
 
 
 class Artist(PrimaryAPIObject):
-    id = SimpleField()
-    name = SimpleField()
-    real_name = SimpleField(key='realname')
-    images = SimpleField()
-    profile = SimpleField()
-    data_quality = SimpleField()
-    name_variations = SimpleField(key='namevariations')
-    url = SimpleField(key='uri')
-    urls = SimpleField()
-    aliases = ListField('Artist')
-    members = ListField('Artist')
-    groups = ListField('Artist')
+    """An object describing an artist"""
+    id = SimpleField()  #:
+    name = SimpleField()  #:
+    real_name = SimpleField(key='realname')  #:
+    images = SimpleField()  #:
+    profile = SimpleField()  #:
+    data_quality = SimpleField()  #:
+    name_variations = SimpleField(key='namevariations')  #:
+    url = SimpleField(key='uri')  #:
+    urls = SimpleField()  #:
+    aliases = ListField('Artist')  #:
+    members = ListField('Artist')  #:
+    groups = ListField('Artist')  #:
+    #: This attribute is only populated when an ``Artist`` object is requested
+    #: via the artists list of an ``Release`` object, and if it is a
+    #: multi-artist release. Usually only the first of the artists does contain
+    #: a keyword like  "And", "Feat", "Vs" that could be used to "join" artists
+    #: together into a single string. Also check out the artists_sort attribute
+    #: of a ``Release`` object.
+    join = SimpleField()
 
     def __init__(self, client, dict_):
         super(Artist, self).__init__(client, dict_)
@@ -544,9 +552,9 @@ class Release(PrimaryAPIObject):
 
 
 class MarketplaceStats(PrimaryAPIObject):
-    num_for_sale = SimpleField()
-    blocked_from_sale = SimpleField()
-    lowest_price = ObjectField('Price')
+    num_for_sale = SimpleField()  #:
+    blocked_from_sale = SimpleField()  #:
+    lowest_price = ObjectField('Price')  #:
 
     def __init__(self, client, dict_):
         super(MarketplaceStats, self).__init__(client, dict_)
@@ -557,14 +565,14 @@ class MarketplaceStats(PrimaryAPIObject):
 
 
 class PriceSuggestions(PrimaryAPIObject):
-    very_good = ObjectField("Price", key="Very Good (VG)")
-    good_plus = ObjectField("Price", key="Good Plus (G+)")
-    near_mint = ObjectField("Price", key="Near Mint (NM or M-)")
-    good = ObjectField("Price", key="Good (G)")
-    very_good_plus = ObjectField("Price", key="Very Good Plus (VG+)")
-    mint = ObjectField("Price", key="Mint (M)")
-    fair = ObjectField("Price", key="Fair (F)")
-    poor = ObjectField("Price", key="Poor (P)")
+    very_good = ObjectField("Price", key="Very Good (VG)")  #:
+    good_plus = ObjectField("Price", key="Good Plus (G+)")  #:
+    near_mint = ObjectField("Price", key="Near Mint (NM or M-)")  #:
+    good = ObjectField("Price", key="Good (G)")  #:
+    very_good_plus = ObjectField("Price", key="Very Good Plus (VG+)")  #:
+    mint = ObjectField("Price", key="Mint (M)")  #:
+    fair = ObjectField("Price", key="Fair (F)")  #:
+    poor = ObjectField("Price", key="Poor (P)")  #:
 
     def __init__(self, client, dict_):
         super(PriceSuggestions, self).__init__(client, dict_)
@@ -575,18 +583,18 @@ class PriceSuggestions(PrimaryAPIObject):
 
 
 class Master(PrimaryAPIObject):
-    id = SimpleField()
-    title = SimpleField()
-    data_quality = SimpleField()
-    styles = SimpleField()
-    year = SimpleField()
-    genres = SimpleField()
-    images = SimpleField()
-    url = SimpleField(key='uri')
-    videos = ListField('Video')
-    tracklist = ListField('Track')
-    main_release = ObjectField('Release', as_id=True)
-    versions = ObjectCollection('Release')
+    id = SimpleField()  #:
+    title = SimpleField()  #:
+    data_quality = SimpleField()  #:
+    styles = SimpleField()  #:
+    year = SimpleField()  #:
+    genres = SimpleField()  #:
+    images = SimpleField()  #:
+    url = SimpleField(key='uri')  #:
+    videos = ListField('Video')  #:
+    tracklist = ListField('Track')  #:
+    main_release = ObjectField('Release', as_id=True)  #:
+    versions = ObjectCollection('Release')  #:
 
     def __init__(self, client, dict_):
         super(Master, self).__init__(client, dict_)
@@ -597,17 +605,17 @@ class Master(PrimaryAPIObject):
 
 
 class Label(PrimaryAPIObject):
-    id = SimpleField()
-    name = SimpleField()
-    profile = SimpleField()
-    urls = SimpleField()
-    images = SimpleField()
-    contact_info = SimpleField()
-    data_quality = SimpleField()
-    url = SimpleField(key='uri')
-    sublabels = ListField('Label')
-    parent_label = ObjectField('Label', optional=True)
-    releases = ObjectCollection('Release')
+    id = SimpleField()  #:
+    name = SimpleField()  #:
+    profile = SimpleField()  #:
+    urls = SimpleField()  #:
+    images = SimpleField()  #:
+    contact_info = SimpleField()  #:
+    data_quality = SimpleField()  #:
+    url = SimpleField(key='uri')  #:
+    sublabels = ListField('Label')  #:
+    parent_label = ObjectField('Label', optional=True)  #:
+    releases = ObjectCollection('Release')  #:
 
     def __init__(self, client, dict_):
         super(Label, self).__init__(client, dict_)
@@ -618,22 +626,22 @@ class Label(PrimaryAPIObject):
 
 
 class User(PrimaryAPIObject):
-    id = SimpleField()
-    username = SimpleField()
-    releases_contributed = SimpleField()
-    num_collection = SimpleField()
-    num_wantlist = SimpleField()
-    num_lists = SimpleField()
-    rank = SimpleField()
-    rating_avg = SimpleField()
-    url = SimpleField(key='uri')
-    name = SimpleField(writable=True)
-    profile = SimpleField(writable=True)
-    location = SimpleField(writable=True)
-    home_page = SimpleField(writable=True)
-    registered = SimpleField(transform=parse_timestamp)
-    inventory = ObjectCollection('Listing', key='listings', url_key='inventory_url', list_class=Inventory)
-    wantlist = ObjectCollection('WantlistItem', key='wants', url_key='wantlist_url', list_class=Wantlist)
+    id = SimpleField()  #:
+    username = SimpleField()  #:
+    releases_contributed = SimpleField()  #:
+    num_collection = SimpleField()  #:
+    num_wantlist = SimpleField()  #:
+    num_lists = SimpleField()  #:
+    rank = SimpleField()  #:
+    rating_avg = SimpleField()  #:
+    url = SimpleField(key='uri')  #:
+    name = SimpleField(writable=True)  #:
+    profile = SimpleField(writable=True)  #:
+    location = SimpleField(writable=True)  #:
+    home_page = SimpleField(writable=True)  #:
+    registered = SimpleField(transform=parse_timestamp)  #:
+    inventory = ObjectCollection('Listing', key='listings', url_key='inventory_url', list_class=Inventory)  #:
+    wantlist = ObjectCollection('WantlistItem', key='wants', url_key='wantlist_url', list_class=Wantlist)  #:
 
     def __init__(self, client, dict_):
         super(User, self).__init__(client, dict_)
@@ -678,11 +686,11 @@ class User(PrimaryAPIObject):
 
 
 class WantlistItem(PrimaryAPIObject):
-    id = SimpleField()
-    rating = SimpleField(writable=True)
-    notes = SimpleField(writable=True)
-    notes_public = SimpleField(writable=True)
-    release = ObjectField('Release', key='basic_information')
+    id = SimpleField()  #:
+    rating = SimpleField(writable=True)  #:
+    notes = SimpleField(writable=True)  #:
+    notes_public = SimpleField(writable=True)  #:
+    release = ObjectField('Release', key='basic_information')  #:
 
     def __init__(self, client, dict_):
         super(WantlistItem, self).__init__(client, dict_)
@@ -694,13 +702,13 @@ class WantlistItem(PrimaryAPIObject):
 # TODO: folder_id should be a Folder object; needs folder_url
 # TODO: notes should be first-order (somehow); needs resource_url
 class CollectionItemInstance(PrimaryAPIObject):
-    id = SimpleField()
-    instance_id = SimpleField()
-    rating = SimpleField()
-    folder_id = SimpleField()
-    notes = SimpleField()
-    date_added = SimpleField(transform=parse_timestamp)
-    release = ObjectField('Release', key='basic_information')
+    id = SimpleField()  #:
+    instance_id = SimpleField()  #:
+    rating = SimpleField()  #:
+    folder_id = SimpleField()  #:
+    notes = SimpleField()  #:
+    date_added = SimpleField(transform=parse_timestamp)  #:
+    release = ObjectField('Release', key='basic_information')  #:
 
     def __init__(self, client, dict_):
         super(CollectionItemInstance, self).__init__(client, dict_)
@@ -710,9 +718,9 @@ class CollectionItemInstance(PrimaryAPIObject):
 
 
 class CollectionValue(PrimaryAPIObject):
-    maximum = SimpleField()
-    median = SimpleField()
-    minimum = SimpleField()
+    maximum = SimpleField()  #:
+    median = SimpleField()  #:
+    minimum = SimpleField()  #:
 
     def __init__(self, client, dict_):
         super(CollectionValue, self).__init__(client, dict_)
@@ -722,9 +730,9 @@ class CollectionValue(PrimaryAPIObject):
 
 
 class CollectionFolder(PrimaryAPIObject):
-    id = SimpleField()
-    name = SimpleField()
-    count = SimpleField()
+    id = SimpleField()  #:
+    name = SimpleField()  #:
+    count = SimpleField()  #:
 
     def __init__(self, client, dict_):
         super(CollectionFolder, self).__init__(client, dict_)
@@ -750,14 +758,14 @@ class CollectionFolder(PrimaryAPIObject):
 
 
 class List(PrimaryAPIObject):
-    id = SimpleField()
-    name = SimpleField()
-    description = SimpleField()
-    public = SimpleField()
-    url = SimpleField(key='uri')
-    date_changed = SimpleField(transform=parse_timestamp)
-    date_added = SimpleField(transform=parse_timestamp)
-    items = ListField('ListItem')
+    id = SimpleField()  #:
+    name = SimpleField()  #:
+    description = SimpleField()  #:
+    public = SimpleField()  #:
+    url = SimpleField(key='uri')  #:
+    date_changed = SimpleField(transform=parse_timestamp)  #:
+    date_added = SimpleField(transform=parse_timestamp)  #:
+    items = ListField('ListItem')  #:
 
     def __init__(self, client, dict_):
         super(List, self).__init__(client, dict_)
@@ -768,22 +776,22 @@ class List(PrimaryAPIObject):
 
 
 class Listing(PrimaryAPIObject):
-    id = SimpleField()
-    status = SimpleField(writable=True)
-    allow_offers = SimpleField(writable=True)
-    condition = SimpleField(writable=True)
-    sleeve_condition = SimpleField(writable=True)
-    ships_from = SimpleField()
-    comments = SimpleField(writable=True)
-    audio = SimpleField()
-    url = SimpleField(key='uri')
-    release = ObjectField('Release')
-    seller = ObjectField('User')
-    posted = SimpleField(transform=parse_timestamp)
-    weight = SimpleField(writable=True)
-    location = SimpleField(writable=True)
-    format_quantity = SimpleField(writable=True)
-    external_id = SimpleField(writable=True)
+    id = SimpleField()  #:
+    status = SimpleField(writable=True)  #:
+    allow_offers = SimpleField(writable=True)  #:
+    condition = SimpleField(writable=True)  #:
+    sleeve_condition = SimpleField(writable=True)  #:
+    ships_from = SimpleField()  #:
+    comments = SimpleField(writable=True)  #:
+    audio = SimpleField()  #:
+    url = SimpleField(key='uri')  #:
+    release = ObjectField('Release')  #:
+    seller = ObjectField('User')  #:
+    posted = SimpleField(transform=parse_timestamp)  #:
+    weight = SimpleField(writable=True)  #:
+    location = SimpleField(writable=True)  #:
+    format_quantity = SimpleField(writable=True)  #:
+    external_id = SimpleField(writable=True)  #:
 
     def __init__(self, client, dict_):
         super(Listing, self).__init__(client, dict_)
@@ -808,19 +816,19 @@ class Listing(PrimaryAPIObject):
 
 
 class Order(PrimaryAPIObject):
-    id = SimpleField()
-    next_status = SimpleField()
-    shipping_address = SimpleField()
-    additional_instructions = SimpleField()
-    url = SimpleField(key='uri')
-    status = SimpleField(writable=True)
-    fee = ObjectField('Price')
-    buyer = ObjectField('User')
-    seller = ObjectField('User')
-    created = SimpleField(transform=parse_timestamp)
-    last_activity = SimpleField(transform=parse_timestamp)
-    messages = ObjectCollection('OrderMessage', list_class=OrderMessagesList)
-    items = ListField('Listing')
+    id = SimpleField()  #:
+    next_status = SimpleField()  #:
+    shipping_address = SimpleField()  #:
+    additional_instructions = SimpleField()  #:
+    url = SimpleField(key='uri')  #:
+    status = SimpleField(writable=True)  #:
+    fee = ObjectField('Price')  #:
+    buyer = ObjectField('User')  #:
+    seller = ObjectField('User')  #:
+    created = SimpleField(transform=parse_timestamp)  #:
+    last_activity = SimpleField(transform=parse_timestamp)  #:
+    messages = ObjectCollection('OrderMessage', list_class=OrderMessagesList)  #:
+    items = ListField('Listing')  #:
 
     def __init__(self, client, dict_):
         super(Order, self).__init__(client, dict_)
@@ -841,53 +849,53 @@ class Order(PrimaryAPIObject):
 
 
 class OrderMessage(SecondaryAPIObject):
-    subject = SimpleField()
-    message = SimpleField()
-    to = ObjectField('User')
-    order = ObjectField('Order')
-    timestamp = SimpleField(transform=parse_timestamp)
+    subject = SimpleField()  #:
+    message = SimpleField()  #:
+    to = ObjectField('User')  #:
+    order = ObjectField('Order')  #:
+    timestamp = SimpleField(transform=parse_timestamp)  #:
 
     def __repr__(self):
         return '<OrderMessage to:{0!r}>'.format(self.to.username)
 
 
 class Track(SecondaryAPIObject):
-    duration = SimpleField()
-    position = SimpleField()
-    title = SimpleField()
-    artists = ListField('Artist')
-    credits = ListField('Artist', key='extraartists')
+    duration = SimpleField()  #:
+    position = SimpleField()  #:
+    title = SimpleField()  #:
+    artists = ListField('Artist')  #: FIXME could an artist in this list contain the "join" field as well?
+    credits = ListField('Artist', key='extraartists')  #:
 
     def __repr__(self):
         return '<Track {0!r} {1!r}>'.format(self.position, self.title)
 
 
 class Price(SecondaryAPIObject):
-    currency = SimpleField()
-    value = SimpleField()
+    currency = SimpleField()  #:
+    value = SimpleField()  #:
 
     def __repr__(self):
         return '<Price {0!r} {1!r}>'.format(self.value, self.currency)
 
 
 class Video(SecondaryAPIObject):
-    duration = SimpleField()
-    embed = SimpleField()
-    title = SimpleField()
-    description = SimpleField()
-    url = SimpleField(key='uri')
+    duration = SimpleField()  #:
+    embed = SimpleField()  #:
+    title = SimpleField()  #:
+    description = SimpleField()  #:
+    url = SimpleField(key='uri')  #:
 
     def __repr__(self):
         return '<Video {0!r}>'.format(self.title)
 
 
 class ListItem(SecondaryAPIObject):
-    id = SimpleField()
-    comment = SimpleField()
-    display_title = SimpleField()
-    type = SimpleField()
-    image_url = SimpleField()
-    url = SimpleField(key='uri')
+    id = SimpleField()  #:
+    comment = SimpleField()  #:
+    display_title = SimpleField()  #:
+    type = SimpleField()  #:
+    image_url = SimpleField()  #:
+    url = SimpleField(key='uri')  #:
 
     def __repr__(self):
         return '<ListItem {0!r}>'.format(self.id)
