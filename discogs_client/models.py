@@ -512,8 +512,9 @@ class Release(PrimaryAPIObject):
     #: artist only, this will always be a list.
     artists = ListField('Artist')
     #: On multi-artist releases this attribute provides a string containing
-    #: artists joined together with keywords like "And", "Feat", "Vs", ...
-    #: Eg. "DJ ABC Feat MC Z".
+    #: artists combinend together with a keyword such as "And", "Feat", "Vs",
+    #: or similar, for example "DJ ABC Feat MC Z". Also check out at the
+    #: ``join`` attribute of an ``Artist`` object.
     artists_sort = SimpleField()
     credits = ListField('Artist', key='extraartists')  #:
     labels = ListField('Label')  #:
