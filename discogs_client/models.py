@@ -517,7 +517,9 @@ class Release(PrimaryAPIObject):
     #: ``join`` attribute of an ``Artist`` object.
     artists_sort = SimpleField()
     credits = ListField('Artist', key='extraartists')  #:
-    labels = ListField('Label')  #:
+    #: A list of ``Label`` objects. Even though a release could have been
+    #: published on one label only, this will always be a list.
+    labels = ListField('Label')
     companies = ListField('Label')  #:
     community = ObjectField("communitydetails")  #:
 
@@ -618,6 +620,9 @@ class Label(PrimaryAPIObject):
     sublabels = ListField('Label')  #:
     parent_label = ObjectField('Label', optional=True)  #:
     releases = ObjectCollection('Release')  #:
+    #: The "catalog number" attribute is only populated when a ``Label``
+    #: object is fetched via a ``Release`` object, otherwise it is None.
+    catno = SimpleField()
 
     def __init__(self, client, dict_):
         super(Label, self).__init__(client, dict_)
