@@ -16,8 +16,8 @@ class Fetcher:
     (It's a slightly leaky abstraction designed to make testing easier.)
     """
     backoff_enabled = True
-    connect_timeout: Union[float, None] = None
-    read_timeout: Union[float, None] = None
+    connect_timeout: Union[float, int, None] = None
+    read_timeout: Union[float, int, None] = None
 
     def fetch(self, client, method, url, data=None, headers=None, json=True):
         """Fetch the given request
