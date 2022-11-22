@@ -1,4 +1,3 @@
-import requests
 from requests.api import request
 from oauthlib import oauth1
 import json
@@ -6,6 +5,7 @@ import os
 import re
 from discogs_client.utils import backoff
 from urllib.parse import parse_qsl
+from typing import Union
 
 
 class Fetcher:
@@ -16,6 +16,8 @@ class Fetcher:
     (It's a slightly leaky abstraction designed to make testing easier.)
     """
     backoff_enabled = True
+    connect_timeout: Union[float, None] = None
+    read_timeout: Union[float, None] = None
 
     def fetch(self, client, method, url, data=None, headers=None, json=True):
         """Fetch the given request
@@ -52,8 +54,11 @@ class Fetcher:
 
     @backoff
     def request(self, method, url, data, headers, params=None):
-        response = request(method=method, url=url, data=data, headers=headers, params=params)
-        return response
+        return request(
+            method=method, url=url, data=data,
+            headers=headers, params=params,
+            timeout=(self.connect_timeout, self.read_timeout)
+        )
 
 
 class LoggingDelegator:

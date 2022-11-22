@@ -1,4 +1,5 @@
 import json
+from typing import Union
 from urllib.parse import urlencode
 
 from discogs_client import models
@@ -193,3 +194,20 @@ class Client:
         if not isinstance(value, bool):
             raise ValueError("Backoff enabled toggle should be of type bool")
         self._fetcher.backoff_enabled = value
+
+    @property
+    def timeout(self):
+        """Return current client timeout parameters as tuple (connect, read)"""
+        return (self._fetcher.connect_timeout, self._fetcher.read_timeout)
+
+    def set_timeout(self,
+                    connect: Union[int, float] = 5,
+                    read: Union[int, float] = 10) -> None:
+        """Set request timeout parameters
+
+        Args:
+            connect (Union[int, float], optional): Time in seconds after which connect will timeout. Defaults to 5.
+            read (Union[int, float], optional): Time in seconds after which request will timeout. Defaults to 10.
+        """
+        self._fetcher.connect_timeout = connect
+        self._fetcher.read_timeout = read
