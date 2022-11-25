@@ -205,9 +205,12 @@ class Client:
                     read: Union[int, float] = 10) -> None:
         """Set request timeout parameters
 
-        Args:
-            connect (Union[int, float], optional): Time in seconds after which connect will timeout. Defaults to 5.
-            read (Union[int, float], optional): Time in seconds after which request will timeout. Defaults to 10.
+        Parameters
+        ----------
+            connect : (Union[int, float], optional)
+                Time in seconds after which connect will timeout. Defaults to 5.
+            read : (Union[int, float], optional)
+                Time in seconds after which request will timeout. Defaults to 10.
         """
         self._fetcher.connect_timeout = connect
         self._fetcher.read_timeout = read
