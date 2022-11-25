@@ -79,7 +79,7 @@ release.data.keys()
 
 ## Request timeouts
 
-By default the {class}`discogs_client.client.Client` does not timeout requests.
+By default the {class}`.Client` does not timeout requests.
 
 You can enable request timeouts like so
 
