@@ -116,8 +116,8 @@ class CoreTestCase(DiscogsClientTestCase):
         # self.d would throw AttributeError trying to access timeout properties on LoggingDelegator
         client = Client('')
         client._fetcher = MemoryFetcher({})
-        self.assertEqual(None, self.d.connection_timeout)
-        self.assertEqual(None, self.d.read_timeout)
+        self.assertEqual(None, client.connection_timeout)
+        self.assertEqual(None, client.read_timeout)
 
     def test_set_timeout_in_float(self):
         self.d.set_timeout(connect=1.23, read=7.42)
