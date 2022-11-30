@@ -196,9 +196,14 @@ class Client:
         self._fetcher.backoff_enabled = value
 
     @property
-    def timeout(self):
-        """Return current client timeout parameters as tuple (connect, read)"""
-        return (self._fetcher.connect_timeout, self._fetcher.read_timeout)
+    def connection_timeout(self):
+        """Return current client connection timeout"""
+        return self._fetcher.connect_timeout
+
+    @property
+    def read_timeout(self):
+        """Return current client read timeout"""
+        return self._fetcher.read_timeout
 
     def set_timeout(self,
                     connect: Union[int, float] = 5,
