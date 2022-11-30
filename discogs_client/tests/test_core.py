@@ -120,19 +120,26 @@ class CoreTestCase(DiscogsClientTestCase):
 
     def test_set_timeout_in_float(self):
         self.d.set_timeout(connect=1.23, read=7.42)
-        self.assertEqual((1.23, 7.42), self.d.timeout)
+        self.assertEqual(1.23, self.d.connection_timeout)
+        self.assertEqual(7.42, self.d.read_timeout)
 
     def test_set_timeout_in_int(self):
-        self.d.set_timeout(connect=3, read=6)
-        self.assertEqual((3, 6), self.d.timeout)
+        self.d.set_timeout(connect=3, read=6)        
+        self.assertEqual(3, self.d.connection_timeout)
+        self.assertEqual(6, self.d.read_timeout)
 
     def test_set_timeout_to_none(self):
         self.d.set_timeout(connect=5, read=None)
-        self.assertEqual((5, None), self.d.timeout)
+        self.assertEqual(5, self.d.connection_timeout)
+        self.assertEqual(None, self.d.read_timeout)
+
         self.d.set_timeout(connect=None, read=10)
-        self.assertEqual((None, 10), self.d.timeout)
+        self.assertEqual(None, self.d.connection_timeout)
+        self.assertEqual(10, self.d.read_timeout)
+
         self.d.set_timeout(connect=None, read=None)
-        self.assertEqual((None, None), self.d.timeout)
+        self.assertEqual(None, self.d.connection_timeout)
+        self.assertEqual(None, self.d.read_timeout)
 
 
 def suite():
