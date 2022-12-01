@@ -77,3 +77,18 @@ release = d.release(1)
 release.data.keys()
 ```
 
+## Request timeouts
+
+By default the {class}`.Client` does not timeout requests.
+
+You can enable request timeouts like so
+
+```python
+timeout_in_seconds = 5
+client.timeout(
+    connect=timeout_in_seconds,
+    read=timeout_in_seconds
+)
+```
+
+_Timeouts support integer and float values, you can also set either value to `None` to disable timeout for connect or read separately_

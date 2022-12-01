@@ -1,5 +1,6 @@
 import unittest
 from discogs_client import Client
+from discogs_client.fetchers import MemoryFetcher
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client.exceptions import ConfigurationError, HTTPError
 from datetime import datetime
@@ -109,6 +110,37 @@ class CoreTestCase(DiscogsClientTestCase):
         # Changing pagination settings invalidates the cache
         results.per_page = 10
         self.assertTrue(results._num_pages is None)
+
+    def test_timeout_defaults_to_none(self):
+        # Need to create client without LoggingDelegator here
+        # self.d would throw AttributeError trying to access timeout properties on LoggingDelegator
+        client = Client('')
+        client._fetcher = MemoryFetcher({})
+        self.assertEqual(None, client.connection_timeout)
+        self.assertEqual(None, client.read_timeout)
+
+    def test_set_timeout_in_float(self):
+        self.d.set_timeout(connect=1.23, read=7.42)
+        self.assertEqual(1.23, self.d.connection_timeout)
+        self.assertEqual(7.42, self.d.read_timeout)
+
+    def test_set_timeout_in_int(self):
+        self.d.set_timeout(connect=3, read=6)        
+        self.assertEqual(3, self.d.connection_timeout)
+        self.assertEqual(6, self.d.read_timeout)
+
+    def test_set_timeout_to_none(self):
+        self.d.set_timeout(connect=5, read=None)
+        self.assertEqual(5, self.d.connection_timeout)
+        self.assertEqual(None, self.d.read_timeout)
+
+        self.d.set_timeout(connect=None, read=10)
+        self.assertEqual(None, self.d.connection_timeout)
+        self.assertEqual(10, self.d.read_timeout)
+
+        self.d.set_timeout(connect=None, read=None)
+        self.assertEqual(None, self.d.connection_timeout)
+        self.assertEqual(None, self.d.read_timeout)
 
 
 def suite():
