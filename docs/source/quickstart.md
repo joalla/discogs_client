@@ -85,7 +85,7 @@ You can enable request timeouts like so
 
 ```python
 timeout_in_seconds = 5
-client.timeout(
+client.set_timeout(
     connect=timeout_in_seconds,
     read=timeout_in_seconds
 )
