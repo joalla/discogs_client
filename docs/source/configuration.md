@@ -1,4 +1,4 @@
-# Configuration
+# Optional Configuration
 
 ## Requests rate limiting
 
@@ -19,7 +19,7 @@ _Backing off and auto retry when API rate limit is hit_ is enabled by default an
 
 By default the {class}`.Client` does not timeout requests.
 
-You can enable request timeouts like so
+For example, to enable a request timeout of 5 seconds:
 
 ```python
 timeout_in_seconds = 5
