@@ -1,4 +1,4 @@
-# Contribution
+# Contributing
 
 There are several ways you can help improve the `python3-discogs-client` library.
 
