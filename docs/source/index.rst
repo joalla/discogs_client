@@ -16,7 +16,7 @@ python3-discogs-client documentation
    fetching_data.md
    fetching_data_repl.md
    listing.md
-   configuration.md
+   optional_configuration.md
    contributing.md
    writing_docs.md
    discogs_client
