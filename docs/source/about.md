@@ -14,7 +14,7 @@ Find usage information on these documentation pages, ask for help, suggest
 features and help others in the [discussion section of our github
 repo](https://github.com/joalla/discogs_client/discussions). If you'd like to
 contribute your code, you are welcome to submit a pull-request as described
-[here](contribution.md).
+[here](contributing.md).
 
 There also is the _long running_ thread ["Continuation of the Python Discogs API
 Client"](https://www.discogs.com/forum/thread/822690) on the Discogs developer
