@@ -158,4 +158,4 @@ docs._
 2. Create a feature branch
 3. Open a pull-request
 
-Some more helpful information on this topic can be found in the [contribution section in our docs](https://python3-discogs-client.readthedocs.org/en/latest/contribution.html).
+Some more helpful information on this topic can be found in the [contribution section in our docs](https://python3-discogs-client.readthedocs.org/en/latest/contributing.html).
