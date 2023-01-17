@@ -124,7 +124,7 @@ sections in our documentation pages._
 
 ## Marketplace listing
 
-Getting listings/releases from a user's inventory (this does not require authentication)
+Get listings/releases from a user's inventory (this does not require authentication)
 
 ```python
 >>> user = d.user('username')
