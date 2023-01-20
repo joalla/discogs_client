@@ -11,7 +11,7 @@ It also supports OAuth 1.0a authorization, which allows you to change user data
 such as profile information, collections and wantlists, inventory, and orders.
 
 Find usage information [on our documentation pages](
-<https://python3-discogs-client.readthedocs.org>),
+https://python3-discogs-client.readthedocs.org),
 ask for help, suggest features and help others in the [discussion section of our
 github repo](https://github.com/joalla/discogs_client/discussions). If you'd
 like to contribute your code, you are welcome to submit a pull-request as
@@ -22,8 +22,8 @@ Client"](https://www.discogs.com/forum/thread/822690) on the Discogs developer
 forum we use to announce releases and other news.
 
 [![Coverage Status](
-<https://coveralls.io/repos/github/joalla/discogs_client/badge.svg>)](
-<https://coveralls.io/github/joalla/discogs_client>)
+https://coveralls.io/repos/github/joalla/discogs_client/badge.svg)](
+https://coveralls.io/github/joalla/discogs_client)
 
 ## Installation
 
@@ -45,22 +45,24 @@ $ pip3 install python3-discogs-client
 
 _For more information, have a look at the
 [quickstart section](
-<https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html>)
+https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html)
 in our documentation pages._
+
 
 ### Authorization
 
 There are two different authorization methods you can choose from depending on
 your requirements:
 [User-token](
-<https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#user-token-authorization>)
+https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#user-token-authorization)
 and [OAuth](
-<https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#oauth-authorization>)
+https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#oauth-authorization)
 authentication.
 
 _Note that Authorization is an optional feature of the Discogs API but a lot of
 basic functionality, like searching for releases, artists, etc. requires users
 being authenticated already._
+
 
 #### User-token authentication
 
@@ -69,7 +71,7 @@ requiring authentication, such as search (see below).
 
 For this, you'll need to
 [generate a user-token from your developer settings](
-<https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#user-token-authentication>)
+https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#user-token-authentication)
 on the Discogs website.
 
 ```python
@@ -79,6 +81,7 @@ on the Discogs website.
 _Head to the [authentication
 section](https://python3-discogs-client.readthedocs.org/en/latest/authentication.html#oauth-authentication)
 in our docs to learn about the OAuth authentication method._
+
 
 ### Fetching data
 
@@ -113,10 +116,11 @@ You can drill down as far as you like.
 
 _Have a look at the
 [searching](
-<https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html#searching>)
+https://python3-discogs-client.readthedocs.org/en/latest/quickstart.html#searching)
 and [fetching data](
-<https://python3-discogs-client.readthedocs.org/en/latest/fetching_data.html>)
+https://python3-discogs-client.readthedocs.org/en/latest/fetching_data.html)
 sections in our documentation pages._
+
 
 ## Marketplace listing
 
@@ -155,8 +159,9 @@ me.inventory.add_listing(
 
 _To learn how to update your inventory and delete listings, have a look at the
 [marketplace listing section](
-<https://python3-discogs-client.readthedocs.org/en/latest/listing.html>) in our
+https://python3-discogs-client.readthedocs.org/en/latest/listing.html) in our
 docs._
+
 
 ## For more information
 
@@ -164,6 +169,7 @@ docs._
 - Check the [discogs_client Python package documentation](https://python3-discogs-client.readthedocs.org/en/latest/discogs_client.html) to find out details on specific modules, classes, methods, and more.
 - Or just spin up a REPL and use `dir()` on things :)
 - If you have questions or feature requests, please ask in the [discussion section](https://github.com/joalla/discogs_client/discussions).
+
 
 ## Contributing
 
