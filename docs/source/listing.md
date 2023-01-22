@@ -24,6 +24,17 @@ See the module documentation for possible values of condition
 {class}`discogs_client.utils.Condition` and status
 {class}`discogs_client.utils.Status`.
 
+## Read
+
+You do not have to be authenticated to read a user's public inventory.
+
+```python
+user = d.user('username')         # gets a user with username
+inventory = user.inventory        # get that user's inventory
+first_page = inventory.page(0)    # get the first page
+first_listing = first_page[0]     # get the first listing from that page
+release = first_listing.release   # get the release from the release
+````
 
 ## Update
 

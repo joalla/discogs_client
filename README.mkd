@@ -124,6 +124,25 @@ sections in our documentation pages._
 
 ## Marketplace listing
 
+Get listings/releases from a user's inventory (this does not require authentication)
+
+```python
+>>> user = d.user('username')
+>>> inventory = user.inventory
+>>> inventory.count
+1671
+>>> inventory.pages
+34
+>>> inventory.per_page = 100
+>>> inventory.pages
+17
+>>> first_page = inventory.page(0)
+>>> first_page[0]  # get the first listing on the page
+<Listing 2314412455 'Bing Crosby - Der Bingle (10")'>
+>>> first_listing.release
+<Release 2604203 'Der Bingle'>
+```
+
 As an authenticated user you can add, edit and delete your own marketplace listings.
 
 ```python
