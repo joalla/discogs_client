@@ -14,18 +14,19 @@ class Client:
     _authorize_url = 'https://www.discogs.com/oauth/authorize'
     _access_token_url = 'https://api.discogs.com/oauth/access_token'
 
-    def __init__(self, user_agent, consumer_key=None, consumer_secret=None, token=None, secret=None, user_token=None):
+    def __init__(self, user_agent, consumer_key=None, consumer_secret=None, token=None, secret=None, user_token=None,
+                 session=None):
         """An interface to the Discogs API."""
         self.user_agent = user_agent
         self.verbose = False
-        self._fetcher = RequestsFetcher()
+        self._fetcher = RequestsFetcher(session.request if session else None)
 
         if consumer_key and consumer_secret:
             self.set_consumer_key(consumer_key, consumer_secret)
             if token and secret:
                 self.set_token(token, secret)
         elif user_token is not None:
-            self._fetcher = UserTokenRequestsFetcher(user_token)
+            self._fetcher = UserTokenRequestsFetcher(user_token, session.request if session else None)
 
     def set_consumer_key(self, consumer_key, consumer_secret):
         self._fetcher = OAuth2Fetcher(consumer_key, consumer_secret)
@@ -51,8 +52,8 @@ class Client:
             params['oauth_callback'] = callback_url
         postdata = urlencode(params)
 
-        content, status_code = self._fetcher.fetch(self, 'POST', self._request_token_url, 
-                                                data=postdata, headers=params, json_format=False)
+        content, status_code = self._fetcher.fetch(self, 'POST', self._request_token_url,
+                                                   data=postdata, headers=params, json_format=False)
         if status_code != 200:
             raise AuthorizationError('Could not get request token.', status_code, content)
 

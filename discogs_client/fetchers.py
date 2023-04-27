@@ -53,8 +53,8 @@ class Fetcher:
         raise NotImplementedError()
 
     @backoff
-    def request(self, method, url, data, headers, params=None):
-        return request(
+    def request(self, session_request, method, url, data, headers, params=None):
+        return session_request(
             method=method, url=url, data=data,
             headers=headers, params=params,
             timeout=(self.connect_timeout, self.read_timeout)
@@ -63,6 +63,7 @@ class Fetcher:
 
 class LoggingDelegator:
     """Wraps a fetcher and logs all requests."""
+
     def __init__(self, fetcher):
         self.fetcher = fetcher
         self.requests = []
@@ -80,6 +81,10 @@ class LoggingDelegator:
 
 class RequestsFetcher(Fetcher):
     """Fetches via HTTP from the Discogs API (unauthenticated)"""
+
+    def __init__(self, session_request=request):
+        self.session_request = session_request
+
     def fetch(self, client, method, url, data=None, headers=None, json=True):
         """
         Parameters
@@ -104,20 +109,22 @@ class RequestsFetcher(Fetcher):
         status_code : int
             as returned by Python "Requests"
         """
-        resp = self.request(method, url, data=data, headers=headers)
+        resp = self.request(self.session_request, method, url, data=data, headers=headers)
         self.rate_limit = resp.headers.get(
-                'X-Discogs-Ratelimit')
+            'X-Discogs-Ratelimit')
         self.rate_limit_used = resp.headers.get(
-                'X-Discogs-Ratelimit-Used')
+            'X-Discogs-Ratelimit-Used')
         self.rate_limit_remaining = resp.headers.get(
-                'X-Discogs-Ratelimit-Remaining')
+            'X-Discogs-Ratelimit-Remaining')
         return resp.content, resp.status_code
 
 
 class UserTokenRequestsFetcher(Fetcher):
     """Fetches via HTTP from the Discogs API using User-token authentication"""
-    def __init__(self, user_token):
+
+    def __init__(self, user_token, session_request=request):
         self.user_token = user_token
+        self.session_request = session_request
 
     def fetch(self, client, method, url, data=None, headers=None, json_format=True):
         """Fetch the given request on the user's behalf
@@ -147,22 +154,24 @@ class UserTokenRequestsFetcher(Fetcher):
         """
         data = json.dumps(data) if json_format and data else data
         resp = self.request(
-            method, url, data=data, headers=headers, params={'token':self.user_token}
+            self.session_request, method, url, data=data, headers=headers, params={'token': self.user_token}
         )
         self.rate_limit = resp.headers.get(
-                'X-Discogs-Ratelimit')
+            'X-Discogs-Ratelimit')
         self.rate_limit_used = resp.headers.get(
-                'X-Discogs-Ratelimit-Used')
+            'X-Discogs-Ratelimit-Used')
         self.rate_limit_remaining = resp.headers.get(
-                'X-Discogs-Ratelimit-Remaining')
+            'X-Discogs-Ratelimit-Remaining')
         return resp.content, resp.status_code
 
 
 class OAuth2Fetcher(Fetcher):
     """Fetches via HTTP + OAuth 1.0a from the Discogs API."""
-    def __init__(self, consumer_key, consumer_secret, token=None, secret=None):
+
+    def __init__(self, consumer_key, consumer_secret, token=None, secret=None, session_request=request):
         self.client = oauth1.Client(consumer_key, client_secret=consumer_secret)
         self.store_token(token, secret)
+        self.session_request = session_request
 
     def store_token_from_qs(self, query_string):
         token_dict = dict(parse_qsl(query_string))
@@ -211,13 +220,13 @@ class OAuth2Fetcher(Fetcher):
         uri, headers, body = self.client.sign(url, http_method=method,
                                               body=body, headers=headers)
 
-        resp = self.request(method, url, data=body, headers=headers)
+        resp = self.request(self.session_request, method, url, data=body, headers=headers)
         self.rate_limit = resp.headers.get(
-                'X-Discogs-Ratelimit')
+            'X-Discogs-Ratelimit')
         self.rate_limit_used = resp.headers.get(
-                'X-Discogs-Ratelimit-Used')
+            'X-Discogs-Ratelimit-Used')
         self.rate_limit_remaining = resp.headers.get(
-                'X-Discogs-Ratelimit-Remaining')
+            'X-Discogs-Ratelimit-Remaining')
         return resp.content, resp.status_code
 
 
