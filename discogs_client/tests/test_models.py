@@ -9,6 +9,9 @@ class ModelsTestCase(DiscogsClientTestCase):
         """Artists can be fetched and parsed"""
         a = self.d.artist(1)
         self.assertEqual(a.name, 'Persuader, The')
+        a2 = self.d.release(1).credits[0]
+        self.assertEqual(a2.name, 'Jesper Dahlbäck')
+        self.assertEqual(a2.role, 'Music By [All Tracks By]')
 
     def test_same_artist(self):
         """Artists can be fetched and parsed multiple times"""
