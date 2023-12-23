@@ -1,3 +1,5 @@
+import Enum
+
 from datetime import datetime
 from dateutil.parser import parse
 from urllib.parse import quote
@@ -99,6 +101,7 @@ class Status(Enum):
 
 
 class Sort(Enum):
+    @enum.member
     class By(Enum):
         ADDED = 'added'
         ARTIST = 'artist'
@@ -120,6 +123,7 @@ class Sort(Enum):
         TITLE = 'title'
         YEAR = 'year'
 
+    @enum.member
     class Order(Enum):
         ASCENDING = 'asc'
         DESCENDING = 'desc'
