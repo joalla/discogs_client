@@ -38,9 +38,9 @@ Almost all documentation is written using the Markdown format.  The exception is
 
 ## Build the Documentation
 
-After your changes are complete, you can build the documentation by running the ```make html``` command.  This will build the documentation in the ```docs/build/html``` directory.  
+After your changes are complete, you can build the documentation by running the ```make html``` command.  This will build the documentation in the ```docs/build/html``` directory.
 
-Please note that as of this writing, Python 3.10 will not work.  Please use Python Python >=3.6 and <=3.9 when building the documentation.
+Please note that as of this writing, Python 3.10 will not work.  Please use Python Python >=3.8 when building the documentation.
 
 Check the command line input to make sure no errors occurred.  If there is an error, fix it, and re-run the command. You can ignore warnings similar to this one:
 
