@@ -1,4 +1,4 @@
-import Enum
+import enum
 
 from datetime import datetime
 from dateutil.parser import parse
