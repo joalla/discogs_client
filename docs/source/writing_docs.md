@@ -34,7 +34,7 @@ Almost all documentation is written using the Markdown format.  The exception is
 
 To build the documenation on your local machine change into the ```docs/``` directory and run ```make html```.  Find the output in the ```docs/build/html``` directory.
 
-We reommend using Python 3.9 or Python 3.11 for building the documentation.
+We recommend using Python 3.9 or Python 3.11 for building the documentation.
 
 Check the command line input to make sure no errors occurred.  If there is an error, fix it, and re-run the command. You can ignore warnings similar to this one:
 

@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('../../discogs_client/'))
 # -- Project information -----------------------------------------------------
 
 project = 'python3-discogs-client'
-copyright = '2020-2022, The Joalla Team'
+copyright = '2020-2024, The Joalla Team'
 author = 'The Joalla Team'
 
 # The full version, including alpha/beta/rc tags
