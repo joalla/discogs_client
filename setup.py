@@ -29,4 +29,11 @@ setup(
         packages=[
             'discogs_client',
             ],
-        )
+       extras_require={
+           "docs": [
+               "sphinx",
+               "sphinx-rtd-theme",
+               "myst-parser",
+           ],
+       }
+)
