@@ -1,4 +1,7 @@
-import enum
+import sys
+
+if sys.version_info >= (3,12):
+    import enum
 
 from datetime import datetime
 from dateutil.parser import parse
