@@ -1,4 +1,0 @@
-Jinja2<3.1
-Sphinx!=5.2.0.post0
-sphinx-rtd-theme
-myst-parser
