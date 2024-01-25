@@ -12,16 +12,10 @@ git clone <git url>
 
 ## Install Prerequisites
 
-Install Sphinx
+Being located in the root of the repo, install Sphinx and its requirements.
 
 ```
-pip install -r sphinx_requirements.txt
-```
-
-Install python3-discogs-client itself into your (virtual) development environment. This is required by Sphinx autodoc:
-
-```
-python setup.py develop
+pip install -e '.[docs]'
 ```
 
 ## Edit Files
@@ -38,9 +32,9 @@ Almost all documentation is written using the Markdown format.  The exception is
 
 ## Build the Documentation
 
-After your changes are complete, you can build the documentation by running the ```make html``` command.  This will build the documentation in the ```docs/build/html``` directory.
+To build the documenation on your local machine change into the ```docs/``` directory and run ```make html```.  Find the output in the ```docs/build/html``` directory.
 
-Please note that as of this writing, Python 3.10 will not work.  Please use Python Python >=3.8 when building the documentation.
+We recommend using Python 3.9 or Python 3.11 for building the documentation.
 
 Check the command line input to make sure no errors occurred.  If there is an error, fix it, and re-run the command. You can ignore warnings similar to this one:
 
