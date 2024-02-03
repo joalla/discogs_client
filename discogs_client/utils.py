@@ -1,7 +1,7 @@
 try:
     from enum import member
 except ImportError:
-    def member():
+    def member(*args, **kwargs):
         pass
 
 from datetime import datetime
