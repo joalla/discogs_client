@@ -1,7 +1,8 @@
-import sys
-
-if sys.version_info >= (3,12):
-    import enum
+try:
+    from enum import member
+except ImportError:
+    def member():
+        pass
 
 from datetime import datetime
 from dateutil.parser import parse
@@ -104,7 +105,7 @@ class Status(Enum):
 
 
 class Sort(Enum):
-    @enum.member
+    @member
     class By(Enum):
         ADDED = 'added'
         ARTIST = 'artist'
@@ -126,7 +127,7 @@ class Sort(Enum):
         TITLE = 'title'
         YEAR = 'year'
 
-    @enum.member
+    @member
     class Order(Enum):
         ASCENDING = 'asc'
         DESCENDING = 'desc'
