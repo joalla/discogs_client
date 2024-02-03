@@ -1,3 +1,9 @@
+try:
+    from enum import member
+except ImportError:
+    def member(func):
+        return func
+
 from datetime import datetime
 from dateutil.parser import parse
 from urllib.parse import quote
@@ -99,6 +105,7 @@ class Status(Enum):
 
 
 class Sort(Enum):
+    @member
     class By(Enum):
         ADDED = 'added'
         ARTIST = 'artist'
@@ -120,6 +127,7 @@ class Sort(Enum):
         TITLE = 'title'
         YEAR = 'year'
 
+    @member
     class Order(Enum):
         ASCENDING = 'asc'
         DESCENDING = 'desc'
