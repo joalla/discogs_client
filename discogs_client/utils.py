@@ -1,8 +1,8 @@
 try:
     from enum import member
 except ImportError:
-    def member(*args, **kwargs):
-        pass
+    def member(func):
+        return func
 
 from datetime import datetime
 from dateutil.parser import parse
