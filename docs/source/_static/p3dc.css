@@ -1,0 +1,11 @@
+html {
+    --pst-font-size-base: 14px;
+    --pst-header-height: 5rem;
+}
+
+@media (prefers-reduced-motion) {
+    .bd-sidebar-primary, .bd-sidebar-secondary {
+        transition-duration: 0s;
+    }
+}
+

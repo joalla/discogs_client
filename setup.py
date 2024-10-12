@@ -32,7 +32,7 @@ setup(
        extras_require={
            "docs": [
                "sphinx",
-               "sphinx-rtd-theme",
+               "pydata-sphinx-theme",
                "myst-parser",
            ],
        }
