@@ -224,7 +224,7 @@ class OAuth2Fetcher(Fetcher):
 class FilesystemFetcher(Fetcher):
     """Fetches from a directory of files."""
     default_response = json.dumps({'message': 'Resource not found.'}), 404
-    path_with_params = re.compile('(?P<dir>(\w+/)+)(?P<query>\w+)\?(?P<params>.*)')
+    path_with_params = re.compile(r'(?P<dir>(\w+/)+)(?P<query>\w+)\?(?P<params>.*)')
 
     def __init__(self, base_path):
         self.base_path = base_path
