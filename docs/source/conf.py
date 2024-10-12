@@ -50,24 +50,34 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
-
-html_theme_options = {
-    'collapse_navigation': False,
-    'navigation_depth': 8,
-    'sticky_navigation': True,
-    'prev_next_buttons_location': 'bottom'
-}
+html_theme = "pydata_sphinx_theme"
 
 html_last_updated_fmt = "%b %d, %Y"
-
 html_logo = '_static/discogs-vinyl-record-mark-50x50.png'
+html_context = {
+    "github_user": "joalla",
+    "github_repo": "discogs_client",
+    "github_version": "master",
+    "doc_path": "docs/source/",
+}
+html_theme_options = {
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/joalla/discogs_client",
+            "icon": "fa-brands fa-github",
+        },
+    ],
+    "use_edit_page_button": True,
+    "header_links_before_dropdown": 3,
+    "show_toc_level": 5,
+    "back_to_top_button": False,
+}
+html_title = ""
+html_static_path = ["_static"]
+html_css_files = ["p3dc.css"]
 
+# MyST extenstion configuration
 myst_heading_anchors = 7
 myst_enable_extensions = [
     "substitution"
