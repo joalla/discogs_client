@@ -71,7 +71,7 @@ html_theme_options = {
     "use_edit_page_button": True,
     "header_links_before_dropdown": 3,
     "show_toc_level": 5,
-    "back_to_top_button": False,
+    "back_to_top_button": True,
 }
 html_title = ""
 html_static_path = ["_static"]
