@@ -19,7 +19,7 @@ python3-discogs-client documentation
    optional_configuration.md
    contributing.md
    writing_docs.md
-   discogs_client
+   index_discogs_client
 
 
 Indices and tables
