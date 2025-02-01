@@ -763,6 +763,22 @@ class CollectionFolder(PrimaryAPIObject):
         instance_url = self.fetch('resource_url') + '/releases/{0}/instances/{1}'.format(instance.id, instance.instance_id)
         self.client._delete(instance_url)
 
+    def move_release(self, instance, target_folder_id):
+        """Move a collection item to another folder.
+
+        Moving to folder id 1 moves to the "Uncategorized" folder.
+        """
+        if not isinstance(instance, CollectionItemInstance):
+            raise TypeError('instance must be of type CollectionItemInstance')
+        instance_url = self.fetch('resource_url') + '/releases/{0}/instances/{1}'.format(instance.id, instance.instance_id)
+        data = {'folder_id': target_folder_id}
+        self.client._post(instance_url, data)
+
+    def uncategorize_release(self, instance):
+        """Move a collection item to the "Uncategorized" folder.
+        """
+        self.move_release(instance, 1)
+
     def __repr__(self):
         return '<CollectionFolder {0!r} {1!r}>'.format(self.id, self.name)
 
