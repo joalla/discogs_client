@@ -745,7 +745,7 @@ class CollectionFolder(PrimaryAPIObject):
     count = SimpleField()  #:
 
     def __init__(self, client, dict_):
-        super(CollectionFolder, self).__init__(client, dict_)
+        super().__init__(client, dict_)
 
     @property
     def releases(self):
@@ -754,14 +754,34 @@ class CollectionFolder(PrimaryAPIObject):
 
     def add_release(self, release):
         release_id = release.id if isinstance(release, Release) else release
-        add_release_url = self.fetch('resource_url') + '/releases/{}'.format(release_id)
-        self.client._post(add_release_url, None)
+        resource_url = self.fetch('resource_url')
+        self.client._post(f"{resource_url}/releases/{release_id}", None)
 
     def remove_release(self, instance):
+        """Remove a collection item entirely.
+        """
         if not isinstance(instance, CollectionItemInstance):
             raise TypeError('instance must be of type CollectionItemInstance')
-        instance_url = self.fetch('resource_url') + '/releases/{0}/instances/{1}'.format(instance.id, instance.instance_id)
-        self.client._delete(instance_url)
+        resource_url = self.fetch('resource_url')
+        self.client._delete(f"{resource_url}/releases/{instance.id}/instances/{instance.instance_id}")
+
+    def move_release(self, instance, target_folder_id):
+        """Move a collection item to another folder.
+
+        Moving to folder id 1 moves to the "Uncategorized" folder.
+        """
+        if not isinstance(instance, CollectionItemInstance):
+            raise TypeError('instance must be of type CollectionItemInstance')
+        resource_url = self.fetch('resource_url')
+        self.client._post(
+            f"{resource_url}/releases/{instance.id}/instances/{instance.instance_id}",
+            {"folder_id": target_folder_id},
+        )
+
+    def uncategorize_release(self, instance):
+        """Move a collection item to the "Uncategorized" folder.
+        """
+        self.move_release(instance, 1)
 
     def __repr__(self):
         return '<CollectionFolder {0!r} {1!r}>'.format(self.id, self.name)

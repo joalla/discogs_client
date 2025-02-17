@@ -231,7 +231,7 @@ me.collection_folders[2].add_release(17392219)
 _{meth}`.add_release` also accepts {class}`.Release` objects_
 
 
-### Removing a Release from a Collection Folder
+### Removing a Release from the Collection
 
 Removing a single release instance identified by its index:
 
@@ -242,6 +242,10 @@ releases = folder.releases
 folder.remove_release(releases[0])
 ```
 
+:::{caution}
+The {meth}`.remove_release` method deletes from the collection entirely. To remove an instance from a folder only, use the {meth}`.uncategorize_release` method.
+:::
+
 To filter out which instance to remove we could also use the attributes of the {class}`.Release` object attached to the {class}`.CollectionItemInstance`:
 
 ```python
@@ -251,16 +255,34 @@ for instance in folder.releases:
         folder.remove_release(instance)
 ```
 
-Another approach to removing instances from collection folders if we know a release ID already would be to make use of the {meth}`.collection_items` method. This way we could delete all the instances from all its containing folders:
+### Removing a Release from a Folder
+
+To remove a release from a collection folder, we need to know the release ID already and  make use of the {meth}`.collection_items` method. This way we could remove all the instances from all its containing folders (uncategorize them):
 
 ```python
 release_instances = me.collection_items(22155985)
 for instance in release_instances:
     folder = me.collection_folders[instance.folder_id]
-    folder.remove_release(instance)
+    folder.uncategorize_release(instance)
 ```
 
-_{meth}`.remove_release` only accepts {class}`.CollectionItemInstance` objects_
+### Moving a Release to a Different Folder
+
+To move a release from a collection folder to another one, again we need to know the release ID already and make use of the {meth}`.collection_items` method. We also need to know the ID of the target folder we want to move to (use {attr}`.collection_folders`). We move all the instances from all its containing folders to a specified target folder:
+
+```python
+release_instances = me.collection_items(22155985)
+target_folder = 1
+for folder in me.collection_folders:
+    if folder.name == "My Target Folder":
+        target_folder = folder.id
+
+for instance in release_instances:
+    folder = me.collection_folders[instance.folder_id]
+    folder.move_release(instance, target_folder)
+```
+
+_{meth}`.remove_release`, {meth}`.move_release` and {meth}`.uncategorize_release` only accept {class}`.CollectionItemInstance` objects_
 
 
 ## Using {meth}`~discogs_client.models.PrimaryAPIObject.fetch` to get other data

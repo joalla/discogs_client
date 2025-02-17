@@ -1,5 +1,5 @@
 import unittest
-from discogs_client.models import Artist, Release, ListItem, CollectionValue
+from discogs_client.models import Artist, Release, ListItem, CollectionValue, CollectionItemInstance
 from discogs_client.tests import DiscogsClientTestCase
 from discogs_client.exceptions import HTTPError
 
@@ -265,7 +265,6 @@ class ModelsTestCase(DiscogsClientTestCase):
         self.assertEqual(method, 'GET')
         self.assertEqual(url, '/marketplace/listings/150899904')
 
-
     def test_collection(self):
         """Collection folders can be manipulated"""
         # Fetch the users collection folders from the filesystem
@@ -313,6 +312,41 @@ class ModelsTestCase(DiscogsClientTestCase):
         method, url, data, headers = self.m._fetcher.last_request
         self.assertEqual(method, 'POST')
         self.assertEqual(url, '/users/example/collection/folders/1/releases/1')
+
+    def test_collection_move_release(self):
+        """Collection items can be moved to another folder"""
+        # Fetch the users collection folders from the filesystem
+        u = self.d.user("example")
+        self.assertEqual(u.collection_folders[2].id, 2)
+
+        # Mock expected responses for move_release test using "MemoryFetcher"
+        self.m._fetcher.fetcher.responses = {
+            "/users/example/collection/folders": (b'''
+                {"folders": [
+                    {"resource_url": "/users/example/collection/folders/0", "id": 0, "name": "All"},
+                    {"resource_url": "/users/example/collection/folders/1", "id": 1, "name": "Uncategorized folder"},
+                    {"resource_url": "/users/example/collection/folders/2", "id": 2, "name": "Collection folder 2"}
+                ]}
+            ''', 200),
+            # Mock the response of the POST request to the instance resource URL
+            "/users/example/collection/folders/1/releases/123456/instances/123": (b"", 204),
+        }
+
+        # Bind the user to the MemoryFetcher
+        u.client = self.m
+
+        # Mock a collection item instance
+        instance = CollectionItemInstance(
+            client=u.client,
+            dict_={"id": 123456, "instance_id": 123}
+        )
+        # Perform the move
+        u.collection_folders[1].move_release(instance, 2)
+
+        # Verify
+        method, url, _, _ = self.m._fetcher.last_request
+        self.assertEqual(method, "POST")
+        self.assertEqual(url, "/users/example/collection/folders/1/releases/123456/instances/123")
 
     def test_delete_object(self):
         """Can request DELETE on an APIObject"""

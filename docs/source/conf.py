@@ -80,7 +80,8 @@ html_css_files = ["p3dc.css"]
 # MyST extenstion configuration
 myst_heading_anchors = 7
 myst_enable_extensions = [
-    "substitution"
+    "substitution",
+    "colon_fence",
 ]
 myst_substitutions = {
   "class": "I'm a **substitution**"
