@@ -7,12 +7,12 @@ echo
 rm -rf dist/
 echo
 python -m build
-python -m twine upload --repository testpypi dist/*
+python -m twine upload --repository test-python3-discogs-client dist/*
 echo
 echo "Test install:"
 echo "python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps python3-discogs-client"
 echo
 echo "All good? Upload to real PyPI:"
-echo python3 -m twine upload dist/*
+echo python3 -m twine upload --repository python3-discogs-client dist/*
 echo
 
