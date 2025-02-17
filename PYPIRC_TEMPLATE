@@ -1,0 +1,15 @@
+[distutils]
+index-servers =
+    distutils
+    test-python3-discogs-client
+    python3-discogs-client
+
+[test-python3-discogs-client]
+  repository = https://test.pypi.org/legacy/
+  username = __token__
+  password = pypi-REDACTED-TOKEN
+
+[python3-discogs-client]
+  repository = https://upload.pypi.org/legacy/
+  username = __token__
+  password = pypi-REDACTED-TOKEN
