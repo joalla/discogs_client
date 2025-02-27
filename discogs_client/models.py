@@ -529,6 +529,8 @@ class Release(PrimaryAPIObject):
     def __init__(self, client, dict_):
         super(Release, self).__init__(client, dict_)
         self.data['resource_url'] = '{0}/releases/{1}'.format(client._base_url, dict_['id'])
+        if not 'year' in dict_:
+            dict_['year'] = None
 
     @property
     def master(self):
@@ -606,6 +608,8 @@ class Master(PrimaryAPIObject):
     def __init__(self, client, dict_):
         super(Master, self).__init__(client, dict_)
         self.data['resource_url'] = '{0}/masters/{1}'.format(client._base_url, dict_['id'])
+        if not 'year' in dict_:
+            dict_['year'] = None
 
     def __repr__(self):
         return '<Master {0!r} {1!r}>'.format(self.id, self.title)
