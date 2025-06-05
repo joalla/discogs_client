@@ -3,6 +3,7 @@ from typing import Union
 from urllib.parse import urlencode
 
 from discogs_client import models
+from discogs_client import ranking
 from discogs_client.exceptions import ConfigurationError, HTTPError, AuthorizationError
 from discogs_client.utils import update_qs
 from discogs_client.fetchers import RequestsFetcher, OAuth2Fetcher, UserTokenRequestsFetcher
@@ -126,6 +127,7 @@ class Client:
         return self._request('PUT', url, data)
 
     def search(self, *query, **fields):
+
         """
         Search the Discogs database. Returns a paginated list of objects
         (Artists, Releases, Masters, and Labels). The keyword arguments to this
@@ -136,7 +138,6 @@ class Client:
                 item.decode() if type(item) == bytes else item for item in query
             ]
             fields['q'] = ' '.join(items)
-
         return models.MixedPaginatedList(
             self,
             update_qs(self._base_url + '/database/search', fields),
@@ -184,6 +185,38 @@ class Client:
         """Return a User object representing the OAuth-authorized user."""
         resp = self._get(self._base_url + '/oauth/identity')
         return models.User(self, resp)
+    
+    def rank_artist(self,name,**kwargs):
+        yearRange,numResults,rankingType,alias = ranking.checkExceptions(kwargs)
+        if isinstance(name,int):
+            artist = self.artist(name)
+        else:
+            artist = ranking.findArtist(self.search(name, type = 'artist'))
+
+        artistReleases = ranking.artistYearAdjust(artist,yearRange)
+        statDic = ranking.artistAnalyzer({},artist,artistReleases)
+        if alias:
+            for a in artist.aliases:
+                aliasReleases = ranking.artistYearAdjust(a,yearRange)
+                statDic = ranking.artistAnalyzer(statDic,a,aliasReleases)
+        bayesianDic = ranking.bayesianSort(statDic,numResults,rankingType)
+        return [self.release(x[0]).title for x in bayesianDic]
+
+    def rank_label(self,name,**kwargs):
+        yearRange,numResults,rankingType,_ = ranking.checkExceptions(kwargs)
+        if isinstance(name,int):
+            label = self.label(name)
+        else:
+            label = ranking.findLabel(self.search(name, type = 'label'))
+
+        labelReleases = ranking.labelYearAdjust(label,yearRange)
+        statDic = ranking.labelAnalyzer(labelReleases)
+        
+        bayesianDic = ranking.bayesianSort(statDic,numResults,rankingType)
+        return [self.release(x[0]).title for x in bayesianDic]
+        
+    
+        
 
     @property
     def backoff_enabled(self) -> bool:

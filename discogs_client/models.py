@@ -557,6 +557,12 @@ class Release(PrimaryAPIObject):
     def __repr__(self):
         return '<Release {0!r} {1!r}>'.format(self.id, self.title)
 
+    def ratings(self):
+        count = self.community.rating.count
+        if count:
+            return [count,self.community.rating.average]
+        return [0,0]
+
 
 class MarketplaceStats(PrimaryAPIObject):
     num_for_sale = SimpleField()  #:
@@ -609,6 +615,12 @@ class Master(PrimaryAPIObject):
 
     def __repr__(self):
         return '<Master {0!r} {1!r}>'.format(self.id, self.title)
+
+    def ratings(self):
+        stats = [release.ratings() for release in self.versions]
+        count = sum([stat[0] for stat in stats])
+        rating = sum([stat[0] * stat[1] for stat in stats])/count
+        return [count,rating]
 
 
 class Label(PrimaryAPIObject):

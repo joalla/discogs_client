@@ -42,3 +42,12 @@ class AuthorizationError(HTTPError):
     def __init__(self, message, code, response):
         super(AuthorizationError, self).__init__(message, code)
         self.msg = '{0} Response: {1!r}'.format(self.msg, response)
+
+
+class UserInputError(DiscogsAPIError):
+    def __init__(self,msg):
+        self.msg = msg
+    def __str__(self):
+        return self.msg
+
+
