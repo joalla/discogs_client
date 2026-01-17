@@ -686,6 +686,25 @@ class User(PrimaryAPIObject):
         release_id = release.id if isinstance(release, Release) else release
         return PaginatedList(self.client,self.fetch('resource_url') + "/collection/releases/{}".format(release_id) , "releases", CollectionItemInstance)
 
+    def update_collection_item_field(self, instance, field_id, value):
+        """Update a user-defined custom field for a collection item.
+        Parameters
+        ----------
+        instance : CollectionItemInstance
+        field_id : int
+        value : str
+        """
+
+        if not isinstance(instance, CollectionItemInstance):
+            raise TypeError('instance must be of type CollectionItemInstance')
+
+        user_resource_url = self.fetch('resource_url')
+        folder_id = instance.folder_id
+        release_id = instance.id # Not to be confused with instance.instance_id
+        instance_id = instance.instance_id
+        url = f"{user_resource_url}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}"
+        self.client._post(url, {"value": value})
+
     def collection_fields(self):
         """Fetch user-defined custom fields for collection items.
 
