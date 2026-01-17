@@ -755,6 +755,24 @@ class CollectionItemInstance(PrimaryAPIObject):
     def __init__(self, client, dict_):
         super(CollectionItemInstance, self).__init__(client, dict_)
 
+    def find_note_by_field_id(self, field_id):
+        """Find a user-defined custom field note for this collection item.
+
+        Parameters
+        ----------
+        field_id : int
+
+        Returns
+        -------
+        Note or None
+            The Note object for the given field ID, or None if not found.
+        """
+
+        for note in self.notes or []:
+            if note.field_id == field_id:
+                return note
+        return None
+
     def __repr__(self):
         return '<CollectionItemInstance {0!r} {1!r}>'.format(self.id, self.release.title)
 
