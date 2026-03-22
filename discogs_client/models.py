@@ -354,18 +354,26 @@ class BasePaginatedResponse:
         return item
 
     def __getitem__(self, index):
-        page_index = index // self.per_page + 1
-        offset = index % self.per_page
-
-        try:
-            page = self.page(page_index)
-        except HTTPError as e:
-            if e.status_code == 404:
-                raise IndexError(e.msg)
-            else:
-                raise
-
-        return page[offset]
+    # Rather than trusting per_page metadata for offset math, we walk
+    # through actual page sizes sequentially. This handles cases where
+    # Discogs returns fewer items than per_page claims, which causes
+    # index-out-of-range errors when using the standard calculation:
+    # page_index = index // self.per_page + 1
+    # offset = index % self.per_page
+        current = 0
+        page_index = 1
+        while True:
+            try:
+                page = self.page(page_index)
+            except HTTPError as e:
+                if e.status_code == 404:
+                    raise IndexError(e.msg)
+                else:
+                    raise
+            if current + len(page) > index:
+                return page[index - current]
+            current += len(page)
+            page_index += 1
 
     def __len__(self):
         return self.count
