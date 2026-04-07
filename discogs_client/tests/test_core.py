@@ -111,6 +111,157 @@ class CoreTestCase(DiscogsClientTestCase):
         results.per_page = 10
         self.assertTrue(results._num_pages is None)
 
+    def test_pagination_with_short_page(self):
+        """Indexing walks actual page sizes when the API under-fills a page."""
+        client = Client('ua')
+        client._base_url = ''
+        client._fetcher = MemoryFetcher({
+            '/artists/1': (
+                b'{"id": 1, "name": "Badger", "releases_url": "/artists/1/releases"}',
+                200,
+            ),
+            '/artists/1/releases?page=1&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 2, "items": 2}, '
+                b'"releases": [{"id": 101, "type": "release", "title": "First"}]}',
+                200,
+            ),
+            '/artists/1/releases?page=2&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 2, "items": 2}, '
+                b'"releases": [{"id": 102, "type": "release", "title": "Second"}]}',
+                200,
+            ),
+        })
+
+        results = client.artist(1).releases
+
+        self.assertEqual(results.pages, 2)
+        self.assertEqual(len(results.page(1)), 1)
+        self.assertEqual(results[0].id, 101)
+        self.assertEqual(results[1].id, 102)
+        self.assertRaises(IndexError, lambda: results[2])
+
+    def test_pagination_with_varying_page_sizes(self):
+        """Indexing works correctly with pages of different actual sizes."""
+        client = Client('ua')
+        client._base_url = ''
+        client._fetcher = MemoryFetcher({
+            '/artists/1': (
+                b'{"id": 1, "name": "Badger", "releases_url": "/artists/1/releases"}',
+                200,
+            ),
+            '/artists/1/releases?page=1&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 3, "items": 8}, '
+                b'"releases": ['
+                b'{"id": 101, "type": "release", "title": "First"},'
+                b'{"id": 102, "type": "release", "title": "Second"},'
+                b'{"id": 103, "type": "release", "title": "Third"}'
+                b']}',
+                200,
+            ),
+            '/artists/1/releases?page=2&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 3, "items": 8}, '
+                b'"releases": ['
+                b'{"id": 104, "type": "release", "title": "Fourth"},'
+                b'{"id": 105, "type": "release", "title": "Fifth"}'
+                b']}',
+                200,
+            ),
+            '/artists/1/releases?page=3&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 3, "items": 8}, '
+                b'"releases": ['
+                b'{"id": 106, "type": "release", "title": "Sixth"},'
+                b'{"id": 107, "type": "release", "title": "Seventh"},'
+                b'{"id": 108, "type": "release", "title": "Eighth"}'
+                b']}',
+                200,
+            ),
+        })
+
+        results = client.artist(1).releases
+
+        # Verify we can access items across all pages
+        self.assertEqual(results[0].id, 101)
+        self.assertEqual(results[1].id, 102)
+        self.assertEqual(results[2].id, 103)
+        self.assertEqual(results[3].id, 104)  # First item on page 2
+        self.assertEqual(results[4].id, 105)  # Last item on page 2
+        self.assertEqual(results[5].id, 106)  # First item on page 3
+        self.assertEqual(results[7].id, 108)  # Last item
+
+        # Verify out-of-bounds access raises IndexError
+        self.assertRaises(IndexError, lambda: results[8])
+
+    def test_pagination_with_short_page_sequential_traversal(self):
+        """Verify sequential page walking works when all pages are short."""
+        client = Client('ua')
+        client._base_url = ''
+        client._fetcher = MemoryFetcher({
+            '/artists/1': (
+                b'{"id": 1, "name": "Badger", "releases_url": "/artists/1/releases"}',
+                200,
+            ),
+            '/artists/1/releases?page=1&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 4, "items": 4}, '
+                b'"releases": [{"id": 201, "type": "release", "title": "A"}]}',
+                200,
+            ),
+            '/artists/1/releases?page=2&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 4, "items": 4}, '
+                b'"releases": [{"id": 202, "type": "release", "title": "B"}]}',
+                200,
+            ),
+            '/artists/1/releases?page=3&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 4, "items": 4}, '
+                b'"releases": [{"id": 203, "type": "release", "title": "C"}]}',
+                200,
+            ),
+            '/artists/1/releases?page=4&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 4, "items": 4}, '
+                b'"releases": [{"id": 204, "type": "release", "title": "D"}]}',
+                200,
+            ),
+        })
+
+        results = client.artist(1).releases
+
+        # With per_page=50 but only 1 item per actual page,
+        # math-based indexing would fail. Sequential walking should work.
+        self.assertEqual(results[0].id, 201)
+        self.assertEqual(results[1].id, 202)
+        self.assertEqual(results[2].id, 203)
+        self.assertEqual(results[3].id, 204)
+        self.assertRaises(IndexError, lambda: results[4])
+
+    def test_pagination_404_exception_chaining(self):
+        """Verify that HTTPError 404 is properly chained when index is out of bounds."""
+        client = Client('ua')
+        client._base_url = ''
+        client._fetcher = MemoryFetcher({
+            '/artists/1': (
+                b'{"id": 1, "name": "Badger", "releases_url": "/artists/1/releases"}',
+                200,
+            ),
+            '/artists/1/releases?page=1&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 1, "items": 2}, '
+                b'"releases": ['
+                b'{"id": 301, "type": "release", "title": "Only"},'
+                b'{"id": 302, "type": "release", "title": "Two"}'
+                b']}',
+                200,
+            ),
+        })
+
+        results = client.artist(1).releases
+
+        # Access valid items
+        self.assertEqual(results[0].id, 301)
+        self.assertEqual(results[1].id, 302)
+
+        # Accessing beyond bounds should raise IndexError
+        # (which is chained from HTTPError 404)
+        with self.assertRaises(IndexError):
+            results[100]
+
     def test_timeout_defaults_to_none(self):
         # Need to create client without LoggingDelegator here
         # self.d would throw AttributeError trying to access timeout properties on LoggingDelegator
