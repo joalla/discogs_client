@@ -19,6 +19,7 @@ class Client:
         self.user_agent = user_agent
         self.verbose = False
         self._fetcher = RequestsFetcher()
+        self._trust_per_page = True  # Default: True
 
         if consumer_key and consumer_secret:
             self.set_consumer_key(consumer_key, consumer_secret)
@@ -219,3 +220,13 @@ class Client:
         """
         self._fetcher.connect_timeout = connect
         self._fetcher.read_timeout = read
+
+    @property
+    def trust_per_page(self) -> bool:
+        return self._trust_per_page
+
+    @trust_per_page.setter
+    def trust_per_page(self, value: bool) -> None:
+        if not isinstance(value, bool):
+            raise ValueError("trust_per_page must be a bool")
+        self._trust_per_page = value

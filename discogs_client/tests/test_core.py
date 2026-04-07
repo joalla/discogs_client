@@ -114,6 +114,7 @@ class CoreTestCase(DiscogsClientTestCase):
     def test_pagination_index_without_trust_per_page_and_short_pages(self):
         """Without trust_per_page, sequential page walking handles under-filled pages correctly."""
         client = Client('ua')
+        client.trust_per_page = False  # opt into sequential walk
         client._base_url = ''
         client._trust_per_page = False
         client._fetcher = MemoryFetcher({
