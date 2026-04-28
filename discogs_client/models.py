@@ -354,9 +354,15 @@ class BasePaginatedResponse:
         return item
 
     def __getitem__(self, index):
+        """Retrieve an item by its index.
+
+        By default, uses the API's ``per_page`` value to calculate the page
+        containing the item directly. If the API returns fewer items per page
+        than reported, this may yield incorrect results — set
+        ``client.trust_per_page = False`` to fall back to a sequential page
+        walk at the cost of performance.
+        """
         if self.client._trust_per_page:
-            # Directly jump to index using offset math.
-            # Default
             page_index = index // self.per_page + 1
             offset = index % self.per_page
 
@@ -364,29 +370,25 @@ class BasePaginatedResponse:
                 page = self.page(page_index)
             except HTTPError as e:
                 if e.status_code == 404:
-                    raise IndexError(e.msg)
-                else:
-                    raise
+                    raise IndexError(e.msg) from e
+                raise
 
             return page[offset]
 
-        else:
-            # Sequentially walks through each page until index or end of array reached.
-            # Opt-in
-            current = 0
-            page_index = 1
-            while True:
-                try:
-                    page = self.page(page_index)
-                except HTTPError as e:
-                    if e.status_code == 404:
-                        raise IndexError(e.msg)
-                    else:
-                        raise
-                if current + len(page) > index:
-                    return page[index - current]
-                current += len(page)
-                page_index += 1
+        # Fallback to sequential page loading if we're not trusting the per_page parameter
+        current = 0
+        page_index = 1
+        while True:
+            try:
+                page = self.page(page_index)
+            except HTTPError as e:
+                if e.status_code == 404:
+                    raise IndexError(e.msg) from e
+                raise
+            if current + len(page) > index:
+                return page[index - current]
+            current += len(page)
+            page_index += 1
 
 
     def __len__(self):
