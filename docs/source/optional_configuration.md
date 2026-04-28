@@ -30,3 +30,25 @@ client.set_timeout(
 ```
 
 _Timeouts support integer and float values, you can also set either value to `None` to disable timeout for connect or read separately_
+
+## Trust Discogs per page value
+
+When accessing paginated results by index (e.g. `results[42]`),
+python3-discogs-client uses the `per_page` value from the API response to
+calculate which page contains the item directly. This is fast, but assumes the
+API always returns exactly `per_page` items per page.
+
+If the API returns fewer items per page than the reported `per_page` value,
+this calculation can be off. In such cases, disable this behaviour to fall
+back to a sequential page walk:
+
+```python
+>>> import discogs_client
+>>> d = discogs_client.Client('ExampleApplication/0.1')
+>>> d.trust_per_page = False
+```
+
+:::{attention}
+The sequential fallback is slower for large result sets, as it must fetch pages
+one by one until it reaches the requested index.
+:::
