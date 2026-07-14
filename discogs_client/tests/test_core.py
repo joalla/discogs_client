@@ -111,6 +111,46 @@ class CoreTestCase(DiscogsClientTestCase):
         results.per_page = 10
         self.assertTrue(results._num_pages is None)
 
+    def test_pagination_index_without_trust_per_page_and_short_pages(self):
+        """Without trust_per_page, sequential page walking handles under-filled pages correctly."""
+        client = Client('ua')
+        client.trust_per_page = False  # opt into sequential walk
+        client._base_url = ''
+        client._trust_per_page = False
+        client._fetcher = MemoryFetcher({
+            '/artists/1': (
+                b'{"id": 1, "name": "Badger", "releases_url": "/artists/1/releases"}',
+                200,
+            ),
+            '/artists/1/releases?page=1&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 3, "items": 5}, '
+                b'"releases": ['
+                b'{"id": 101, "type": "release", "title": "A"},'
+                b'{"id": 102, "type": "release", "title": "B"}'
+                b']}',
+                200,
+            ),
+            '/artists/1/releases?page=2&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 3, "items": 5}, '
+                b'"releases": [{"id": 103, "type": "release", "title": "C"}]}',
+                200,
+            ),
+            '/artists/1/releases?page=3&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 3, "items": 5}, '
+                b'"releases": ['
+                b'{"id": 104, "type": "release", "title": "D"},'
+                b'{"id": 105, "type": "release", "title": "E"}'
+                b']}',
+                200,
+            ),
+        })
+
+        results = client.artist(1).releases
+        self.assertEqual(results[0].id, 101)  # page 1
+        self.assertEqual(results[2].id, 103)  # page 2, cross-page
+        self.assertEqual(results[4].id, 105)  # page 3, last item
+        self.assertRaises(IndexError, lambda: results[5])
+
     def test_timeout_defaults_to_none(self):
         # Need to create client without LoggingDelegator here
         # self.d would throw AttributeError trying to access timeout properties on LoggingDelegator
