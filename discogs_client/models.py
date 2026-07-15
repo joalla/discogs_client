@@ -710,6 +710,38 @@ class User(PrimaryAPIObject):
         release_id = release.id if isinstance(release, Release) else release
         return PaginatedList(self.client,self.fetch('resource_url') + "/collection/releases/{}".format(release_id) , "releases", CollectionItemInstance)
 
+    def update_collection_item_field(self, instance, field_id, value):
+        """Update a user-defined custom field for a collection item.
+        Parameters
+        ----------
+        instance : CollectionItemInstance
+        field_id : int
+        value : str
+        """
+
+        if not isinstance(instance, CollectionItemInstance):
+            raise TypeError('instance must be of type CollectionItemInstance')
+
+        user_resource_url = self.fetch('resource_url')
+        folder_id = instance.folder_id
+        release_id = instance.id # Not to be confused with instance.instance_id
+        instance_id = instance.instance_id
+        url = f"{user_resource_url}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}"
+        self.client._post(url, {"value": value})
+
+    def collection_fields(self):
+        """Fetch user-defined custom fields for collection items.
+
+        Returns
+        -------
+        dict[int, CollectionField]
+            Dictionary of collection fields and their possible values. Keyed by field ID.
+        """
+
+        resp = self.client._get(self.fetch('resource_url') + "/collection/fields")
+        # CollectionField's are keyed by their ID so they can be queried with field IDs from CollectionItemInstance's notes
+        return {int(field["id"]): CollectionField(self.client, field) for field in resp.get("fields", [])}
+
     @property
     def collection_value(self):
         resp = self.client._get(f"{self.fetch('resource_url')}/collection/value")
@@ -740,12 +772,30 @@ class CollectionItemInstance(PrimaryAPIObject):
     instance_id = SimpleField()  #:
     rating = SimpleField()  #:
     folder_id = SimpleField()  #:
-    notes = SimpleField()  #:
+    notes = ListField('Note')  #:
     date_added = SimpleField(transform=parse_timestamp)  #:
     release = ObjectField('Release', key='basic_information')  #:
 
     def __init__(self, client, dict_):
         super(CollectionItemInstance, self).__init__(client, dict_)
+
+    def find_note_by_field_id(self, field_id):
+        """Find a user-defined custom field note for this collection item.
+
+        Parameters
+        ----------
+        field_id : int
+
+        Returns
+        -------
+        Note or None
+            The Note object for the given field ID, or None if not found.
+        """
+
+        for note in self.notes or []:
+            if note.field_id == field_id:
+                return note
+        return None
 
     def __repr__(self):
         return '<CollectionItemInstance {0!r} {1!r}>'.format(self.id, self.release.title)
@@ -983,6 +1033,44 @@ class Rating(SecondaryAPIObject):
     def __repr__(self):
         return '<Rating avg: {0!r}>'.format(self.average)
 
+class CollectionField(SecondaryAPIObject):
+    """
+    An object that wraps a user-defined custom field that has been assigned to an collection item.
+    """
+    id = SimpleField()  #:
+    name = SimpleField()  #:
+    type = SimpleField()  #:
+    lines = SimpleField()  #:
+    position = SimpleField()  #:
+    public = SimpleField()  #:
+
+    @property
+    def options(self):
+        """Fetches the available options for the collection field.
+
+        Returns:
+            list: The list of available options for the collection field.
+        """
+        return self.fetch('options', [])
+
+    def __repr__(self):
+        return '<CollectionField {0!r} {1!r}>'.format(self.id, self.name)
+
+class Note(SecondaryAPIObject, dict):
+    """
+    An object that wraps a note assigned to a collection item.
+    """
+
+    field_id = SimpleField()  #:
+    value = SimpleField()  #:
+
+    def __init__(self, client, dict_):
+        SecondaryAPIObject.__init__(self, client, dict_)
+        # Inheriting from dict to preserve backwards compatibility for existing clients
+        dict.__init__(self, dict_)
+
+    def __repr__(self):
+        return '<Note {0!r} {1!r}>'.format(self.field_id, self.value)
 
 CLASS_MAP = {
     'artist': Artist,
@@ -1004,4 +1092,5 @@ CLASS_MAP = {
     'collectionvalue': CollectionValue,
     'communitydetails': CommunityDetails,
     'rating': Rating,
+    'note': Note,
 }
