@@ -1,10 +1,11 @@
 #!/bin/bash
 python -m pip install --upgrade pip
-python -m pip install --upgrade build twine
+python -m pip install --upgrade setuptools build twine packaging
 echo
 echo "Cleaning up dist directory."
 echo
 rm -rf dist/
+rm -rf *.egg-info
 echo
 python -m build
 python -m twine upload --repository test-python3-discogs-client dist/*
