@@ -78,9 +78,11 @@ class AuthorizationError(HTTPError):
 class MalformedResponseError(DiscogsAPIError):
     """
     Raised when the Discogs API returns a response body that cannot be
-    parsed as JSON. This is distinct from ``json.JSONDecodeError`` so that
-    callers have a stable, library-specific exception to catch and retry
-    on, without depending on the JSON parser's own exception type.
+    decoded as JSON, whether because the bytes aren't valid UTF-8
+    (``UnicodeDecodeError``) or the decoded text isn't valid JSON
+    (``json.JSONDecodeError``). This gives callers a stable,
+    library-specific exception to catch and retry on, without depending
+    on either of those parser-specific exception types.
 
     Attributes
     ----------
@@ -88,7 +90,7 @@ class MalformedResponseError(DiscogsAPIError):
         HTTP status code of the response that failed to decode.
     content : bytes
         Raw response body that could not be parsed as JSON.
-    original_exception : json.JSONDecodeError
+    original_exception : json.JSONDecodeError or UnicodeDecodeError
         The underlying decode error that triggered this exception.
     msg : str
         Human readable description including ``status_code`` and a repr

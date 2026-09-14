@@ -108,7 +108,7 @@ class Client:
 
         try:
             body = json.loads(content)
-        except json.JSONDecodeError as e:
+        except (json.JSONDecodeError, UnicodeDecodeError) as e:
             raise MalformedResponseError(status_code, content, e) from e
 
         if 200 <= status_code < 300:

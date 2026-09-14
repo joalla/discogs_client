@@ -23,6 +23,7 @@ class DiscogsClientTestCase(unittest.TestCase):
             '/500': (b'{"message": "mushroom"}', 500),
             '/204': (b'', 204),
             '/malformed': (b'<html>not json</html>', 200),
+            '/invalid_utf8': (b'\xff\xff\xff\xff', 200),
         }
         self.m = Client('ua')
         self.m._base_url = ''

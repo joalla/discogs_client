@@ -29,6 +29,15 @@ class FetcherTestCase(DiscogsClientTestCase):
             self.assertEqual(e.status_code, 200)
             self.assertIsInstance(e.original_exception, ValueError)
 
+        self.assertRaises(
+            MalformedResponseError, lambda: self.m._get('/invalid_utf8')
+        )
+
+        try:
+            self.m._get('/invalid_utf8')
+        except MalformedResponseError as e:
+            self.assertIsInstance(e.original_exception, UnicodeDecodeError)
+
     def test_oauth2_fetcher(self):
         _fetcher = OAuth2Fetcher(
             'consumer_key', 'consumer_secret', token=None, secret=None)
