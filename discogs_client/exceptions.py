@@ -42,3 +42,23 @@ class AuthorizationError(HTTPError):
     def __init__(self, message, code, response):
         super(AuthorizationError, self).__init__(message, code)
         self.msg = '{0} Response: {1!r}'.format(self.msg, response)
+
+
+class MalformedResponseError(DiscogsAPIError):
+    """
+    Raised when the Discogs API returns a response body that cannot be
+    parsed as JSON. This is distinct from ``json.JSONDecodeError`` so that
+    callers have a stable, library-specific exception to catch and retry
+    on, without depending on the JSON parser's own exception type.
+    """
+    def __init__(self, status_code, content, original_exception=None):
+        self.status_code = status_code
+        self.content = content
+        self.original_exception = original_exception
+        self.msg = (
+            'Discogs API returned a response that could not be parsed as '
+            'JSON (status code {0}): {1!r}'.format(status_code, content)
+        )
+
+    def __str__(self):
+        return self.msg
