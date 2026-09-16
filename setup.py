@@ -35,5 +35,8 @@ setup(
                "pydata-sphinx-theme",
                "myst-parser",
            ],
+           "lint": [
+               "ruff",
+           ],
        }
 )
