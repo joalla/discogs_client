@@ -1,8 +1,10 @@
 try:
     from enum import member
 except ImportError:
+
     def member(func):
         return func
+
 
 from datetime import datetime
 from dateutil.parser import parse
@@ -21,9 +23,8 @@ def parse_timestamp(timestamp: str) -> datetime:
 
 def update_qs(url, params):
     """A not-very-intelligent function to glom parameters onto a query string."""
-    joined_qs = '&'.join('='.join((str(k), quote(str(v))))
-                         for k, v in params.items())
-    separator = '&' if '?' in url else '?'
+    joined_qs = "&".join("=".join((str(k), quote(str(v)))) for k, v in params.items())
+    separator = "&" if "?" in url else "?"
     return url + separator + joined_qs
 
 
@@ -37,7 +38,7 @@ def jitter(delay: int) -> float:
 
 
 def get_backoff_duration(exponent: int) -> float:
-    sleep_duration = 2 ** exponent
+    sleep_duration = 2**exponent
     return jitter(sleep_duration)
 
 
@@ -46,6 +47,7 @@ def backoff(f):
     Wraps the request method of the Fetcher class to provide
     exponential backoff if rate limit is hit.
     """
+
     @wraps(f)
     def wrapper(self, *args, **kwargs):
 
@@ -77,18 +79,19 @@ def backoff(f):
 
 class Condition(Enum):
     """Conditions for media and sleeve"""
-    MINT = 'Mint (M)'
-    NEAR_MINT = 'Near Mint (NM or M-)'
-    VERY_GOOD_PLUS = 'Very Good Plus (VG+)'
-    VERY_GOOD = 'Very Good (VG)'
-    GOOD_PLUS = 'Good Plus (G+)'
-    GOOD = 'Good (G)'
-    FAIR = 'Fair (F)'
-    POOR = 'Poor (P)'
+
+    MINT = "Mint (M)"
+    NEAR_MINT = "Near Mint (NM or M-)"
+    VERY_GOOD_PLUS = "Very Good Plus (VG+)"
+    VERY_GOOD = "Very Good (VG)"
+    GOOD_PLUS = "Good Plus (G+)"
+    GOOD = "Good (G)"
+    FAIR = "Fair (F)"
+    POOR = "Poor (P)"
     # Special conditions for sleeve only
-    GENERIC = 'Generic'
-    NOT_GRADED = 'Not Graded'
-    NO_COVER = 'No Cover'
+    GENERIC = "Generic"
+    NOT_GRADED = "Not Graded"
+    NO_COVER = "No Cover"
 
     def __get__(self, object, type):
         return self.value
@@ -96,9 +99,10 @@ class Condition(Enum):
 
 class Status(Enum):
     """Status for a listing"""
-    FOR_SALE = 'For Sale'
-    DRAFT = 'Draft'
-    EXPIRED = 'Expired'
+
+    FOR_SALE = "For Sale"
+    DRAFT = "Draft"
+    EXPIRED = "Expired"
 
     def __get__(self, object, type):
         return self.value
@@ -107,33 +111,33 @@ class Status(Enum):
 class Sort(Enum):
     @member
     class By(Enum):
-        ADDED = 'added'
-        ARTIST = 'artist'
-        AUDIO = 'audio'
-        BUYER = 'buyer'
-        COUNTRY = 'country'
-        CREATED = 'created'
-        CATALOG_NUMBER = 'catno'
-        FORMAT = 'format'
-        ID = 'id'
-        ITEM = 'item'
-        LABEL = 'label'
-        LAST_ACTIVITY = 'last_activity'
-        LISTED = 'listed'
-        LOCATION = 'location'
-        PRICE = 'price'
-        RELEASED = 'released'
-        STATUS = 'status'
-        TITLE = 'title'
-        YEAR = 'year'
+        ADDED = "added"
+        ARTIST = "artist"
+        AUDIO = "audio"
+        BUYER = "buyer"
+        COUNTRY = "country"
+        CREATED = "created"
+        CATALOG_NUMBER = "catno"
+        FORMAT = "format"
+        ID = "id"
+        ITEM = "item"
+        LABEL = "label"
+        LAST_ACTIVITY = "last_activity"
+        LISTED = "listed"
+        LOCATION = "location"
+        PRICE = "price"
+        RELEASED = "released"
+        STATUS = "status"
+        TITLE = "title"
+        YEAR = "year"
 
     @member
     class Order(Enum):
-        ASCENDING = 'asc'
-        DESCENDING = 'desc'
+        ASCENDING = "asc"
+        DESCENDING = "desc"
 
     # Return value of the child Enum item
     def __getattr__(self, item):
-        if item != '_value_':
+        if item != "_value_":
             return getattr(self.value, item).value
         raise AttributeError
