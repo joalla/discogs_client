@@ -5,11 +5,11 @@ from itertools import permutations
 
 for name in sys.argv[1:]:
     print("doing {}".format(name))
-    root, next = name.split('?')
-    data, ext = next.split('.')
-    elems = data.split('&')
+    root, next = name.split("?")
+    data, ext = next.split(".")
+    elems = data.split("&")
     for permut in permutations(elems):
-        link_name = "{}?{}.{}".format(root, '&'.join(permut), ext)
+        link_name = "{}?{}.{}".format(root, "&".join(permut), ext)
         if link_name == name:
             continue
         os.symlink(name, link_name)
