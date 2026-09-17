@@ -27,6 +27,7 @@ class FetcherTestCase(DiscogsClientTestCase):
             self.m._get('/malformed')
         except MalformedResponseError as e:
             self.assertEqual(e.status_code, 200)
+            self.assertEqual(e.content, b'<html>not json</html>')
             self.assertIsInstance(e.original_exception, ValueError)
 
         self.assertRaises(
