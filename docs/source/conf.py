@@ -94,6 +94,10 @@ autodoc_inherit_docstrings = False
 # show docstring of class AND __init__ method
 autoclass_content = 'both'
 
+# render "Attributes" sections as compact :ivar:/:vartype: fields (like
+# Parameters do for functions), instead of one .. attribute:: block each
+napoleon_use_ivar = True
+
 autodoc_default_options = {
     'members': True,
     'undoc-members': True,

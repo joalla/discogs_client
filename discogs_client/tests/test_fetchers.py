@@ -1,7 +1,7 @@
 from discogs_client.fetchers import OAuth2Fetcher
 import unittest
 from discogs_client.tests import DiscogsClientTestCase
-from discogs_client.exceptions import HTTPError
+from discogs_client.exceptions import HTTPError, MalformedResponseError
 
 
 class FetcherTestCase(DiscogsClientTestCase):
@@ -18,6 +18,26 @@ class FetcherTestCase(DiscogsClientTestCase):
 
         self.assertRaises(HTTPError, lambda: self.m.release(1).title)
         self.assertTrue(self.m._get('/204') is None)
+
+        self.assertRaises(
+            MalformedResponseError, lambda: self.m._get('/malformed')
+        )
+
+        try:
+            self.m._get('/malformed')
+        except MalformedResponseError as e:
+            self.assertEqual(e.status_code, 200)
+            self.assertEqual(e.content, b'<html>not json</html>')
+            self.assertIsInstance(e.original_exception, ValueError)
+
+        self.assertRaises(
+            MalformedResponseError, lambda: self.m._get('/invalid_utf8')
+        )
+
+        try:
+            self.m._get('/invalid_utf8')
+        except MalformedResponseError as e:
+            self.assertIsInstance(e.original_exception, UnicodeDecodeError)
 
     def test_oauth2_fetcher(self):
         _fetcher = OAuth2Fetcher(

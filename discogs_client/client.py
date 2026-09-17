@@ -3,7 +3,9 @@ from typing import Union
 from urllib.parse import urlencode
 
 from discogs_client import models
-from discogs_client.exceptions import ConfigurationError, HTTPError, AuthorizationError
+from discogs_client.exceptions import (
+    ConfigurationError, HTTPError, AuthorizationError, MalformedResponseError,
+)
 from discogs_client.utils import update_qs
 from discogs_client.fetchers import RequestsFetcher, OAuth2Fetcher, UserTokenRequestsFetcher
 
@@ -104,7 +106,10 @@ class Client:
         if status_code == 204:
             return None
 
-        body = json.loads(content)
+        try:
+            body = json.loads(content)
+        except (json.JSONDecodeError, UnicodeDecodeError) as e:
+            raise MalformedResponseError(status_code, content, e) from e
 
         if 200 <= status_code < 300:
             return body
