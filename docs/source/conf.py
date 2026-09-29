@@ -22,7 +22,7 @@ copyright = '2020-2024, The Joalla Team'
 author = 'The Joalla Team'
 
 # The full version, including alpha/beta/rc tags
-release = '2.9'
+release = '2.10'
 
 
 # -- General configuration ---------------------------------------------------
