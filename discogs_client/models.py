@@ -477,6 +477,15 @@ class MixedPaginatedList(BasePaginatedResponse):
         if item['type'] in ('label', 'artist'):
             item['name'] = item['title']
 
+        # Search results use the singular 'genre' and 'style' keys, while
+        # releases and masters use 'genres' and 'styles'. Map them so these
+        # attributes don't trigger a request for the full object.
+        if item['type'] in ('release', 'master'):
+            if 'genre' in item:
+                item.setdefault('genres', item['genre'])
+            if 'style' in item:
+                item.setdefault('styles', item['style'])
+
         return CLASS_MAP[item['type']](self.client, item)
 
 
