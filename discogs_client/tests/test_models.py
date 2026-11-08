@@ -51,6 +51,33 @@ class ModelsTestCase(DiscogsClientTestCase):
         self.assertTrue(isinstance(results[0], Artist))
         self.assertTrue(isinstance(results[1], Release))
 
+    def test_search_result_genres_and_styles(self):
+        """Genres and styles of search results don't need an extra request"""
+        results = self.d.search('trash80')
+        release = results[1]
+        requests_made = len(self.d._fetcher.requests)
+        self.assertEqual(release.genres, ['Electronic'])
+        self.assertEqual(release.styles, ['Electro', 'Chiptune'])
+        self.assertEqual(len(self.d._fetcher.requests), requests_made)
+
+    def test_master_search_result_genres_and_styles(self):
+        """Master search results expose genres and styles too"""
+        self.m._fetcher.fetcher.responses = {
+            '/database/search?q=icarus&page=1&per_page=50': (
+                b'{"pagination": {"per_page": 50, "pages": 1, "page": 1, '
+                b'"urls": {}, "items": 1}, "results": [{"type": "master", '
+                b'"id": 4242, "title": "Trash80 - Icarus", '
+                b'"genre": ["Electronic"], "style": ["Chiptune"], '
+                b'"resource_url": "/masters/4242"}]}',
+                200,
+            ),
+        }
+        master = self.m.search('icarus')[0]
+        requests_made = len(self.m._fetcher.requests)
+        self.assertEqual(master.genres, ['Electronic'])
+        self.assertEqual(master.styles, ['Chiptune'])
+        self.assertEqual(len(self.m._fetcher.requests), requests_made)
+
     def test_bytes_search(self):
         results = self.d.search(b'trash80')
         self.assertEqual(len(results), 13)
